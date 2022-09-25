@@ -8,14 +8,14 @@ Created on Sat Sep 24 19:37:55 2022
 
 class FOT_optimizer:
     """
-    Initializes FOT instance
+    For finding transport plan from X to Y
     
-    data should have shape: (timeSteps, numFunc) 
+    X,Y should have shape: (timeSteps, numFunc) 
     or (timeSteps, numFunc, numDim) if numDim>1
             
     Inputs:
-        - source: set of functions to be transported, 
-        - target: set of functions being transported to
+        - X: numpy array, source functions 
+        - Y: numpy array, target functions
         
     Optional Inputs:
         - lr: learning rate for gradient descent
@@ -24,17 +24,17 @@ class FOT_optimizer:
          
     """
     
-    def __init__(self, source, target, 
+    def __init__(self, X, Y, 
                  lr=1e-9, eta = 1, gamma_h = 5):
         
-        self.X = source
-        self.Y = target
+        self.X = X
+        self.Y = Y
         
         self.U = self.get_basis(self.X)
         self.V = self.get_basis(self.Y)
         
-        self.k_x = self.X.shape[2]
-        self.k_y = self.Y.shape[2]
+        self.k_x = self.X.shape[1]
+        self.k_y = self.Y.shape[1]
         
         self.lr = lr
         self.eta = eta
@@ -51,12 +51,17 @@ class FOT_optimizer:
     
     
     # set parameters for optimization manually
-    def set_parameters(self):
-        pass
+    def set_parameters(self, **kwargs):
+        for key, value in kwargs.items():
+            if key in vars(self):
+                print(key + " updated from " + str(getattr(self, key)) + " to " + str(value))
+                setattr(self, key, value)
+            else:
+                print(key + " not a parameter.")
     
     
     # optimization
-    def optimize(self,X,Y):
+    def optimize(self):
         pass
     
     # steps of optimization
@@ -75,16 +80,11 @@ class FOT_optimizer:
     
     
 
-import numpy as np    
+import numpy as np
         
-FOT = FOT_optimizer(np.random.rand(3,3,3),np.random.rand(3,3,3))
+FOT = FOT_optimizer(np.random.rand(50,100,3),np.random.rand(50,100,3))
 
-print(FOT.lr)
-print(FOT.eta)
-print(FOT.gamma_h)
-print(FOT.X)
-print(FOT.Y)
-print(FOT.U)
-print(FOT.V)
-
+print(FOT.k_x)
+FOT.set_parameters(k_x=75, k_z = 30)
+print(FOT.k_x)
 
