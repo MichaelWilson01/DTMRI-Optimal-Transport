@@ -92,11 +92,11 @@ class FOT_optimizer:
         self.Lambda = temp[0:self.k_y,0:self.k_x]  
     
     def get_cost_matrix(self,X_tilde,Y):
-        # C = np.zeros(self.X.shape[0],self.Y.shape[0])
-        # for func in FOT.X:
-        #     np.vstack(C,np.mean((FOT.Y - func)**2,1))
-        # #return costMatrix
-        pass
+        C = np.zeros(self.X.shape[0],self.Y.shape[0])
+        for func in FOT.X:
+            C[a] = np.mean((FOT.Y - func)**2,1)
+            a=a+1
+        return C
     
     def get_pi_sinkhorn(self):
         pass
