@@ -99,7 +99,12 @@ class FOT_optimizer:
         self.C = C
     
     def update_pi_sinkhorn(self):
-        pass
+        n_x,n_y = np.shape(self.C)
+        Pi = np.exp(-self.C/self.gamma_h)
+        for i in range(100):
+            Pi = Pi / (Pi @ np.ones(n_y, 1))
+            Pi = Pi / (np.ones(1, n_x) @ Pi)
+            
   
     def update_lambda(self):
         pass
