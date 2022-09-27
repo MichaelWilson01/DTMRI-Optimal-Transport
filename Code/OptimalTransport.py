@@ -105,7 +105,6 @@ class FOT_optimizer:
             Pi = Pi / (Pi @ np.ones(n_y, 1))
             Pi = Pi / (np.ones(1, n_x) @ Pi)
             
-  
     def update_lambda(self):
         pass
     
