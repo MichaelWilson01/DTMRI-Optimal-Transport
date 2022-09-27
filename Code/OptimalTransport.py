@@ -37,6 +37,9 @@ class FOT_optimizer:
         self.k_y = self.Y.shape[1]
         
         self.Lambda = None
+        self.T = None
+        self.C = None
+        self.Pi = None
         
         self.max_iter = max_iter
         
@@ -54,20 +57,15 @@ class FOT_optimizer:
             raise ValueError("Data should have shape (numFunc,timeSteps), or (numFunc, numDim, timeSteps) if numDim>1. Instead, data has shape "+str(np.shape(functionData)))
         else: 
             return functionData
-    
-    
+       
     def get_basis(self,functionData):
-        
         #Get PCA Basis
         muF = np.mean(functionData,0)
         F_centered = functionData - muF
         C = F_centered.T@F_centered
-        U = np.linalg.svd(C)[0]
-        
+        U = np.linalg.svd(C)[0]        
         return U
-        #return basis_vectors, data_coord
-
-        
+     
     # set parameters for optimization manually
     def set_parameters(self, **kwargs):
         for key, value in kwargs.items():
@@ -78,26 +76,31 @@ class FOT_optimizer:
                 print(key + " is not a model parameter.")
     
     
-    # optimization
-    def optimize(self):
-        if FOT.Lambda==None:
-            print(self.Lambda)
-            self.initialize_lambda()
-            print(self.Lambda)
-        pass
+    # methods for optimization
+    def optimize_step(self):
+        #
+        if FOT.Lambda==None: self.initialize_lambda()
+        # Calculate Cost as a function of Lambda
+        self.get_cost_matrix()
+        # Estimate Pi with Lambda fixed, with sinkhorn
+        self.get_pi_sinkhorn()
+        # Updata Lambda with Pi fixed
+        self.update_lambda()  
     
     # methods for optimization    
     def initialize_lambda(self):
-        temp = self.V.T@self.U
+        temp = self.V.T @ self.U
         self.Lambda = temp[0:self.k_y,0:self.k_x]  
     
-    def get_cost_matrix(self,TX,Y):
-        C = np.zeros((TX.shape[0],Y.shape[0]))
+    def get_cost_matrix(self):
+        T = self.V @ self.Lambda @ self.U.T
+        TX = T@self.X
+        C = np.zeros((TX.shape[0],self.Y.shape[0]))
         for a in range(TX.shape[0]):
-            C[a] = np.mean(np.power(Y - TX[a],2),1)
-        return C
+            C[a] = np.mean(np.power(self.Y - TX[a],2),1)
+        self.C = C
     
-    def get_pi_sinkhorn(self):
+    def get_pi_sinkhorn(self,C,g):
         pass
     
     def get_gradient(self):
@@ -106,8 +109,12 @@ class FOT_optimizer:
     def update_lambda(self):
         pass
     
+    def optimize(self):
+        while not stopCondition:
+            self.optimize_step()
     
-
+    
+#testing stuff
 import numpy as np
 
 a=1
