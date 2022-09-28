@@ -132,6 +132,8 @@ class FOT_optimizer:
         for i in range(self.max_iter):
             print(i)
             self.optimize_step()
+            self.T = self.V @ self.Lambda @ self.U.T
+            
     
     
 
@@ -139,6 +141,8 @@ class FOT_optimizer:
 
 #testing stuff
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 a=1
 
@@ -146,18 +150,30 @@ numFunc = 200
 numDim = 3
 timeSteps = 50
 
-X=np.random.rand(numFunc,numDim,timeSteps)
-Y=np.random.rand(numFunc,numDim,timeSteps)
+X=np.zeros((numFunc,timeSteps))
+Y=np.zeros((numFunc,timeSteps))
 
-# for i in range(numFunc):
+for i in range(numFunc):
+    a,b,c,d=np.random.randn(4)
+    X[i] = (1+a)*np.power(np.sin(np.linspace(0,4*np.pi,timeSteps)),2)+(1+b)*np.cos(np.linspace(0,4*np.pi,timeSteps))
+    Y[i] = (1+c)*np.sin(np.linspace(0,4*np.pi,timeSteps))+(1+d)*np.power(np.cos(np.linspace(0,4*np.pi,timeSteps)),2)
+    
+
 #     for j in range(numDim):
 #         for k in range(timeSteps):
 #             X[i,j,k]=a
 #             Y[i,j,k]=a
 #             a=a+1
 
-FOT = FOT_optimizer(X,Y,max_iter=10,gamma_h=100.0)
+FOT = FOT_optimizer(X,Y,max_iter=1,lr=1e-5,gamma_h=1)
 FOT.optimize()
+for i in range(10):
+    FOT.optimize_step()
+    plt.figure(i)
+    plt.plot(FOT.T@X.T)
+    plt.show
+    
 
-TX = FOT.V @ FOT.Lambda @ FOT.U.T @ FOT.X
-Y = FOT.Y
+
+# TX = FOT.V @ FOT.Lambda @ FOT.U.T @ FOT.X
+# Y = FOT.Y
