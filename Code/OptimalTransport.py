@@ -25,15 +25,15 @@ class FOT_optimizer:
     """
     
     def __init__(self, X, Y, max_iter = 50,
-                 lr=1e-9, eta = 1, gamma_h = 5):
+                 lr=1e-9, eta = 1.0, gamma_h = 5.0):
                
         self.X = self.data_shaper(X)
         self.Y = self.data_shaper(Y)
         
         self.max_iter = max_iter
         
-        self.U = self.get_basis(self.X)
-        self.V = self.get_basis(self.Y)
+        self.U = self.get_pca_basis(self.X)
+        self.V = self.get_pca_basis(self.Y)
         
         self.k_x = self.X.shape[0]
         self.k_y = self.Y.shape[0]
@@ -57,7 +57,7 @@ class FOT_optimizer:
         else: 
             return functionData.T
        
-    def get_basis(self,functionData):
+    def get_pca_basis(self,functionData):
         #Get PCA Basis
         muF = np.mean(functionData,0)
         F_centered = functionData - muF
@@ -75,37 +75,37 @@ class FOT_optimizer:
                 print(key + " updated from " + str(getattr(self, key)) + " to " + str(value))
                 setattr(self, key, value)
             else:
-                print(key + " is not a class attribute.")
+                print(key + " is not a valid class attribute.")
     
     # methods for optimization
     def optimize_step(self):
         # Calculate Cost as a function of Lambda
-        self.update_cost_matrix()
+        self.C = self.update_cost_matrix(self.V, self.Lambda, self.U, self.X, self.Y)
         # Estimate Pi with Lambda fixed, with sinkhorn
-        self.update_pi_sinkhorn()
+        self.Pi = self.update_pi_sinkhorn(self.C, self.gamma_h)
         # Updata Lambda with Pi fixed
-        self.update_lambda()  
+        self.Lambda = self.update_lambda(self.V, self.Lambda, self.U, self.X, self.Y)  
     
     def initialize_lambda(self):
         temp = self.V.T @ self.U
         self.Lambda = temp[0:self.k_y,0:self.k_x]  
     
-    def update_cost_matrix(self):
-        T = self.V @ self.Lambda @ self.U.T
-        TX = T@self.X
-        C = np.zeros((TX.shape[0],self.Y.shape[0]))
+    def update_cost_matrix(self, V, Lambda, U, X, Y):
+        T = V @ Lambda @ U.T
+        TX = T@X
+        C = np.zeros((TX.shape[0],Y.shape[0]))
         for a in range(TX.shape[0]):
-            C[a] = np.mean(np.power(self.Y - TX[a],2),1)
-        self.C = C
+            C[a] = np.mean(np.power(Y - TX[a],2),1)
+        return C
     
-    def update_pi_sinkhorn(self):
-        n_x,n_y = np.shape(self.C)
-        Pi = np.exp(-self.C/self.gamma_h)
-        for i in range(100):
+    def update_pi_sinkhorn(self, C, gamma_h):
+        n_x,n_y = np.shape(C)
+        Pi = np.exp(-C/gamma_h)
+        for i in range(100):##Update stop condition
             Pi = Pi / (Pi @ np.ones(n_y, 1))
             Pi = Pi / (np.ones(1, n_x) @ Pi)
             
-    def update_lambda(self):
+    def update_lambda(self, V, Lambda, U, X, Y):
         pass
     
     def optimize(self):
