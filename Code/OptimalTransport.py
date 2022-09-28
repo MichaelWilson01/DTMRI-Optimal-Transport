@@ -84,11 +84,16 @@ class FOT_optimizer:
         # Estimate Pi with Lambda fixed, with sinkhorn
         self.Pi = self.update_pi_sinkhorn(self.C, self.gamma_h)
         # Updata Lambda with Pi fixed
-        self.Lambda = self.update_lambda(self.V, self.Lambda, self.U, self.X, self.Y)  
+        self.Lambda = self.update_lambda( self.X, self.Y, self.U, self.V,
+                                         self.Lambda, self.Pi, self.lr, self.eta) 
+        
     
     def initialize_lambda(self):
         temp = self.V.T @ self.U
         self.Lambda = temp[0:self.k_y,0:self.k_x]  
+        
+    def reduce_basis(self):##Todo: Reduce U and V, then set Lambda
+        pass
     
     def update_cost_matrix(self, V, Lambda, U, X, Y):
         T = V @ Lambda @ U.T
@@ -105,15 +110,32 @@ class FOT_optimizer:
             Pi = Pi / (Pi @ np.ones(n_y, 1))
             Pi = Pi / (np.ones(1, n_x) @ Pi)
             
-    def update_lambda(self, V, Lambda, U, X, Y):
-        pass
+    def update_lambda(self, X, Y, U, V, Lambda, Pi, lr, eta):
+        x_n = X.shape[0]
+        y_n = Y.shape[0]
+        k_x = U.shape[1]
+        k_y = V.shape[1]
+        deltaLambda = np.zeros(k_y, k_x)
+        #Todo: parallelize
+        for i in range(y_n):            
+            y_temp = V.T*Y            
+            for j in range(x_n):                
+                A = U.T*X[:,j]                
+                deltaLambda = deltaLambda + Pi[i,j]*(Lambda*A - y_temp)*(A.T)       
+        deltaLambda = deltaLambda + 2*eta*Lambda        
+        return Lambda - lr*deltaLambda 
+               
     
     def optimize(self):
-        if FOT.Lambda==None: self.initialize_lambda()       
+        if FOT.Lambda==None: self.initialize_lambda()     
+        #self.reduce_basis()
         for i in range(self.max_iter):
             self.optimize_step()
     
     
+
+
+
 #testing stuff
 import numpy as np
 
