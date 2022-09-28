@@ -98,9 +98,8 @@ class FOT_optimizer:
         T = V @ Lambda @ U.T
         TX = T@X
         C = np.zeros((TX.shape[1],Y.shape[1]))
-        print(C.shape)
-        for a in range(TX.shape[1]):
-            C[a] = np.mean(np.power(Y.T - TX[:,a],2),1)
+        for i in range(TX.shape[1]):
+            C[i] = np.mean(np.power(Y.T - TX[:,i],2),1)
         return C
     
     def update_pi_sinkhorn(self, C, gamma_h):
@@ -147,19 +146,18 @@ numFunc = 200
 numDim = 3
 timeSteps = 50
 
-X=np.zeros((numFunc,numDim,timeSteps))
-Y=np.zeros((numFunc,numDim,timeSteps))
+X=np.random.rand(numFunc,numDim,timeSteps)
+Y=np.random.rand(numFunc,numDim,timeSteps)
 
-for i in range(numFunc):
-    for j in range(numDim):
-        for k in range(timeSteps):
-            X[i,j,k]=a
-            Y[i,j,k]=a
-            a=a+1
+# for i in range(numFunc):
+#     for j in range(numDim):
+#         for k in range(timeSteps):
+#             X[i,j,k]=a
+#             Y[i,j,k]=a
+#             a=a+1
 
-FOT = FOT_optimizer(X,Y,max_iter=50)
+FOT = FOT_optimizer(X,Y,max_iter=10,gamma_h=100.0)
 FOT.optimize()
 
 TX = FOT.V @ FOT.Lambda @ FOT.U.T @ FOT.X
 Y = FOT.Y
-np.mean(np.power(Y.T - TX[a],2),1).shape
