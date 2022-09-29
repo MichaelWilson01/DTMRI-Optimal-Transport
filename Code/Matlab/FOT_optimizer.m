@@ -93,7 +93,7 @@ classdef FOT_optimizer < dynamicprops
           deltaLambda=zeros(k_y,k_x);    
           [~, yN] = size(Y);
           for k=1:yN
-          deltaLambda = deltaLambda + ((B - Y_A(:,k)).*repmat(Pi(:,k),1,k_x)')*A';
+          deltaLambda = deltaLambda + ((B - Y_A(:,k)).*repmat(Pi(k,:)',1,k_x)')*A';
           end
           deltaLambda = deltaLambda + 2*eta*Lambda;
           Lambda = Lambda -lr*deltaLambda;
