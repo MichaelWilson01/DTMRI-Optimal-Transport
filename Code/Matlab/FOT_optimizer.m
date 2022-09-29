@@ -36,11 +36,7 @@ classdef FOT_optimizer < dynamicprops
                [obj.Y, obj.k_y] = data_shaper(obj,Y);
                
                obj.U = get_pca_basis(obj,obj.X);
-               obj.V = get_pca_basis(obj,obj.Y);
-               
-               
-               
-               
+               obj.V = get_pca_basis(obj,obj.Y);              
                
            end
        end
