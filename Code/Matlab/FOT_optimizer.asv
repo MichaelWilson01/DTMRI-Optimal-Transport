@@ -27,13 +27,13 @@ classdef FOT_optimizer
        function obj = FOT_optimizer(X,Y)   
            %For finding transport plan from X to Y
            %
-           %X,Y should have shape: (timeSteps,numFunc)
-           %or (numDim, timeSteps, numFunc) if numDim>1
+           %X,Y should have shape: (timeSteps)
+           %or (numFunc, numDim, timeSteps) if numDim>1
             
            if nargin == 2
                
-               obj.X = dataShaper(obj,X);
-               obj.Y = dataShaper(obj,Y);
+               obj.X = X;
+               obj.Y = Y;
                
                obj.U = getBasis(obj,X);
                obj.V = getBasis(obj,Y);
@@ -43,7 +43,7 @@ classdef FOT_optimizer
        end
       function dataMat = dataShaper(obj,functionData)
           if length(size(functionData))==2
-          dataMat = functionData;
+          dataMat = functionData
           elseif length(size(functionData))==3
           [curveDim,timeSamples,numFib] = size(functionData);
           dataMat=reshape(permute(functionData,[3 2 1]), numFib,curveDim*timeSamples)';
