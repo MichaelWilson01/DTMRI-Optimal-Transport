@@ -86,6 +86,7 @@ class FOT_optimizer:
         # Updata Lambda with Pi fixed
         self.Lambda = self.update_lambda(self.X, self.Y, self.U, self.V,
                                          self.Lambda, self.Pi, self.lr, self.eta) 
+        self.T = self.V @ self.Lambda @ self.U.T
     
     def initialize_lambda(self):
         temp = self.V.T @ self.U
@@ -132,7 +133,7 @@ class FOT_optimizer:
         for i in range(self.max_iter):
             print(i)
             self.optimize_step()
-            self.T = self.V @ self.Lambda @ self.U.T
+            
             
     
     
