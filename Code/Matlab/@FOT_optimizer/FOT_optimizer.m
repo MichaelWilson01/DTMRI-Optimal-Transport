@@ -32,26 +32,20 @@ classdef FOT_optimizer
             
            if nargin == 2
                
-               obj.X = dataShaper(obj,X);
-               obj.Y = dataShaper(obj,Y);
+               obj.X, obj.k_x = data_shaper(obj,X);
+               obj.Y, obj.k_y = data_shaper(obj,Y);
                
-               obj.U = getBasis(obj,X);
-               obj.V = getBasis(obj,Y);
+               obj.U = get_pca_basis(obj,X);
+               obj.V = get_pca_basis(obj,Y);
+               
+               
+               
                
                
            end
        end
-      function dataMat = dataShaper(obj,functionData)
-          if length(size(functionData))==2
-          dataMat = functionData;
-          elseif length(size(functionData))==3
-          [curveDim,timeSamples,numFib] = size(functionData);
-          dataMat=reshape(permute(functionData,[3 2 1]), numFib,curveDim*timeSamples)';
-          else
-              
-          end
-      end
-      function U = getBasis(obj,functionData)
+      
+      function U = get_pca_basis(obj,functionData)
           mu_f=mean(functionData,2);
           f_star = functionData - mu_f;
           C1=cov(f_star');
