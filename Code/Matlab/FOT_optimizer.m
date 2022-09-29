@@ -32,8 +32,8 @@ classdef FOT_optimizer
             
            if nargin == 2
                
-               obj.X, obj.k_x = data_shaper(obj,X);
-               obj.Y, obj.k_y = data_shaper(obj,Y);
+               [obj.X, obj.k_x] = data_shaper(obj,X);
+               [obj.Y, obj.k_y] = data_shaper(obj,Y);
                
                obj.U = get_pca_basis(obj,X);
                obj.V = get_pca_basis(obj,Y);
