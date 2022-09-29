@@ -86,13 +86,14 @@ classdef FOT_optimizer < dynamicprops
           end
       end
       
-      function Lambda = obj.update_lambda(X,Y,U,V,k_x,k_y,Lambda,Pi,lr,eta)
-          A=U(:,1:K1)'*X;
+      function Lambda = update_lambda(obj,X,Y,U,V,k_x,k_y,Lambda,Pi,lr,eta)
+          A=U(:,1:k_x)'*X;
           B = Lambda*A;
-          Y_A=V(:,1:K2)'*Y;
-          deltaLambda2=zeros(k_y,k_x);          
+          Y_A=V(:,1:k_y)'*Y;
+          deltaLambda=zeros(k_y,k_x);    
+          [~, yN] = size(Y);
           for k=1:yN
-          deltaLambda2 = deltaLambda2 + ((B - Y_A(:,k)).*repmat(Pi(:,k),1,75)')*A';
+          deltaLambda = deltaLambda + ((B - Y_A(:,k)).*repmat(Pi(:,k),1,k_x)')*A';
           end
           deltaLambda = deltaLambda + 2*eta*Lambda;
           Lambda = Lambda -lr*deltaLambda;
@@ -120,6 +121,7 @@ classdef FOT_optimizer < dynamicprops
           end
           %obj.reduce_basis()
           for i = 1:obj.max_iter
+              sprintf(strcat("ayy lmfao: ", string(i)))
               obj.optimize_step()      
           end
       end
