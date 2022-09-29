@@ -44,6 +44,7 @@ classdef FOT_optimizer
                
            end
        end
+       
       function dataMat, k = data_shaper(obj,functionData)
           if length(size(functionData))==2
           dataMat = functionData;
@@ -52,10 +53,11 @@ classdef FOT_optimizer
           [curveDim,timeSamples,numFib] = size(functionData);
           dataMat=reshape(permute(functionData,[3 2 1]), numFib,curveDim*timeSamples)';
           [k,~] = size(dataMat);
-          else
-              "Data Error: Data should have shape: (timeSteps,numFunc) or (numDim, timeSteps, numFunc) if numDim>1"
+%           else
+%               "Data Error: Data should have shape: (timeSteps,numFunc) or (numDim, timeSteps, numFunc) if numDim>1"
           end
       end
+      
       function U = get_pca_basis(obj,functionData)
           mu_f=mean(functionData,2);
           f_star = functionData - mu_f;
