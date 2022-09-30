@@ -1,4 +1,4 @@
-classdef FOT_optimizer < dynamicprops
+classdef FOT_optimizer2 < dynamicprops
    
    properties
       X
@@ -24,7 +24,7 @@ classdef FOT_optimizer < dynamicprops
    
    
    methods
-       function obj = FOT_optimizer(X,Y)   
+       function obj = FOT_optimizer2(X,Y)   
            %For finding transport plan from X to Y
            %
            %X,Y should have shape: (timeSteps,numFunc)
@@ -65,7 +65,7 @@ classdef FOT_optimizer < dynamicprops
           TX = V(:,1:k_y)*Lambda*U(:,1:k_x)'*X;
           [~, xN] = size(TX);
           [~, yN] = size(Y);
-          C=zeros(yN,xN);
+          C=zeros(yN,xN,'gpuArray');
           for k =1:xN
               C(:,k) = mean((Y - TX(:,k)).^2);
           end
