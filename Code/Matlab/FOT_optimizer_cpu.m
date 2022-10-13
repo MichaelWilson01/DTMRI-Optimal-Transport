@@ -1,4 +1,4 @@
-classdef FOT_optimizer3 < dynamicprops
+classdef FOT_optimizer < dynamicprops
    
    properties
       X
@@ -15,8 +15,6 @@ classdef FOT_optimizer3 < dynamicprops
       C
       Pi
       
-      alignedY
-      
       max_iter
       lr
       eta
@@ -26,7 +24,7 @@ classdef FOT_optimizer3 < dynamicprops
    
    
    methods
-       function obj = FOT_optimizer3(X,Y)   
+       function obj = FOT_optimizer(X,Y)   
            %For finding transport plan from X to Y
            %
            %X,Y should have shape: (timeSteps,numFunc)
@@ -61,29 +59,17 @@ classdef FOT_optimizer3 < dynamicprops
           f_star = functionData - mu_f;
           C1=cov(f_star');
           [U, ~,~] = svd(C1);
-          U=eye(size(U))
       end
       
-      function [C, alignedY] = update_cost_matrix(obj,V,Lambda,U,k_x,k_y,X,Y)
+      function C = update_cost_matrix(obj,V,Lambda,U,k_x,k_y,X,Y)
           TX = V(:,1:k_y)*Lambda*U(:,1:k_x)'*X;
           [~, xN] = size(TX);
           [~, yN] = size(Y);
-%           if strcat(class(X),'gpuArray')
-%               C=zeros(yN,xN,'gpuArray');
-%           else
-              C=zeros(yN,xN);
-%           end
-          A = mat_to_curve(Y');
-          B = mat_to_curve(TX');
-          alignedY=[];
+          C=zeros(yN,xN);
           for k =1:xN
-              alignedY_temp = Align3d(B(:,:,k),A) ;
-              C(:,k) = mean((curve_to_mat(alignedY_temp) - TX(:,k)).^2);
-          
-            alignedY = cat(3,alignedY,curve_to_mat(alignedY_temp));
+              C(:,k) = mean((Y - TX(:,k)).^2);
           end
 %           obj.C = C;
-
       end
       
       function Pi = sinkhorn(obj,C,g)
@@ -99,28 +85,12 @@ classdef FOT_optimizer3 < dynamicprops
       function Lambda = update_lambda(obj,X,Y,U,V,k_x,k_y,Lambda,Pi,lr,eta)
           A=U(:,1:k_x)'*X;
           B = Lambda*A;
-%           Y_A=V(:,1:k_y)'*Y;
+          Y_A=V(:,1:k_y)'*Y;
           deltaLambda=zeros(k_y,k_x);    
-          [~, yN, ~] = size(Y);
-          [~, xN] = size(X);
-%           for k=1:yN
-%           Y_A=V(:,1:k_y)'*Y(:,:,k);
-%           deltaLambda = deltaLambda + ((B - Y_A(:,k)).*repmat(Pi(k,:)',1,k_x)')*A';
-%           end
-          
+          [~, yN] = size(Y);
           for k=1:yN
-    
-%                 Y_star = Y(:,:,k);
-            %     Y_star= alignedY(:,:,k).*(D2<prctile(D2,25));
-
-                for l = 1:xN
-
-                    deltaLambda = deltaLambda + Pi(k,l)*(Lambda'*X(:,l) - (Y(:,k,l)))*(X(:,l)') ;       
-
-                end
-
+          deltaLambda = deltaLambda + ((B - Y_A(:,k)).*repmat(Pi(k,:)',1,k_x)')*A';
           end
-          
           deltaLambda = deltaLambda + 2*eta*Lambda;
           Lambda = Lambda -lr*deltaLambda;
       end
@@ -128,11 +98,11 @@ classdef FOT_optimizer3 < dynamicprops
       
       function optimize_step(obj)
           %Calculate Cost as a function of Lambda
-          [obj.C, obj.alignedY] = obj.update_cost_matrix(obj.V, obj.Lambda, obj.U, obj.k_x, obj.k_y, obj.X, obj.Y);
+          obj.C = obj.update_cost_matrix(obj.V, obj.Lambda, obj.U, obj.k_x, obj.k_y, obj.X, obj.Y);
           %Estimate Pi with Lambda fixed, with sinkhorn
           obj.Pi = obj.sinkhorn(obj.C, obj.gamma_h);
           %Updata Lambda with Pi fixed
-          obj.Lambda = obj.update_lambda(obj.X, obj.alignedY, obj.U, obj.V, obj.k_x, obj.k_y, obj.Lambda, obj.Pi, obj.lr, obj.eta); 
+          obj.Lambda = obj.update_lambda(obj.X, obj.Y, obj.U, obj.V, obj.k_x, obj.k_y, obj.Lambda, obj.Pi, obj.lr, obj.eta); 
           obj.T = obj.V * obj.Lambda *obj.U';  
       end
       
@@ -147,7 +117,7 @@ classdef FOT_optimizer3 < dynamicprops
           end
           %obj.reduce_basis()
           for i = 1:obj.max_iter
-%               sprintf(strcat("ayy lmfao: ", string(i)))
+              sprintf(strcat("ayy lmfao: ", string(i)))
               obj.optimize_step();      
           end
       end

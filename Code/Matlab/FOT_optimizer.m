@@ -65,7 +65,11 @@ classdef FOT_optimizer < dynamicprops
           TX = V(:,1:k_y)*Lambda*U(:,1:k_x)'*X;
           [~, xN] = size(TX);
           [~, yN] = size(Y);
-          C=zeros(yN,xN);
+          if strcat(class(X),'gpuArray')
+              C=zeros(yN,xN,'gpuArray');
+          else
+              C=zeros(yN,xN);
+          end
           for k =1:xN
               C(:,k) = mean((Y - TX(:,k)).^2);
           end
@@ -117,7 +121,7 @@ classdef FOT_optimizer < dynamicprops
           end
           %obj.reduce_basis()
           for i = 1:obj.max_iter
-              sprintf(strcat("ayy lmfao: ", string(i)))
+%               sprintf(strcat("ayy lmfao: ", string(i)))
               obj.optimize_step();      
           end
       end
