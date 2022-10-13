@@ -1,10 +1,10 @@
 clear all
 load("test_data2.mat")
 
-%Initialize optimizer with data on CPU
+%Initialize optimizer with data on cpu
 % FOT=FOT_optimizer(X,Y)
 
-%Initialize optimizer with data on GPU
+%Initialize optimizer with data on 
 FOT=FOT_optimizer(gpuArray(X),gpuArray(Y))
 
 %Set Parameters
@@ -27,7 +27,7 @@ plot_curve(Y,1,'black')
 
 
 for i = 1:50
-FOT.optimize_step()
+FOT.optimize()
 TX = mat_to_curve(gather(FOT.T * FOT.X)');
 
 figure(1)
