@@ -1,5 +1,5 @@
 clear all
-load("test_data2.mat")
+load("test_data.mat")
 
 %Initialize optimizer with data on CPU
 % FOT=FOT_optimizer(X,Y)
