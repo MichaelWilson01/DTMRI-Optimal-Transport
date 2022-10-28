@@ -15,7 +15,7 @@ parfor i = 1:N
     FOT=FOT_optimizer(X,Y);
 
     %Set Parameters
-    FOT.max_iter=40;
+    FOT.max_iter=20;
     FOT.lr=2e-9;
     FOT.gamma_h=1;
     FOT.eta=10;

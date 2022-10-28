@@ -18,7 +18,9 @@ labels(ind1)=[];
 
 tic
 [alignedFibers, alignedPi] = median_OT3(Fibers,9);
-[alignedFibers2, alignedPi2] = median_OT3(Fibers,26);
+toc
+tic
+[alignedFibers3, alignedPi3] = median_OT3(Fibers,30);
 toc
 
-save("newData.mat")
+save("Data/newData2.mat")

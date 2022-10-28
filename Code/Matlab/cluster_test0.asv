@@ -24,8 +24,8 @@ idx2 = kmeans(curve_to_mat(X2)',K);
 
 for i =1:K
     
-    muX1(:,:,i) = mean(X1(:,:,idx1==i),3);
-    muX2(:,:,i) = mean(X2(:,:,idx2==i),3);
+    muX1(:,:,i) = mean(X1(:,:,idx==i));
+    muX2(:,:,i) = mean(X2(:,:,idx==i));
 
 end
 
@@ -41,8 +41,8 @@ for i = 1:length(Fibers)
 %     idx1_2{i} = mode(idx1(knnsearch(curve_to_mat(X1)',curve_to_mat(alignedFibers{i})','K',J))');
 %     idx2_2{i} = mode(idx2(knnsearch(curve_to_mat(X2)',curve_to_mat(alignedFibers3{i})','K',J))');
 
-    idx1_2{i} = knnsearch(curve_to_mat(muX1)',curve_to_mat(alignedFibers{i})');
-    idx2_2{i} = knnsearch(curve_to_mat(muX2)',curve_to_mat(alignedFibers3{i})');
+    idx1_2{i} = mode(idx1(knnsearch(curve_to_mat(muX1)',curve_to_mat(alignedFibers{i})','K',J))');
+    idx2_2{i} = mode(idx2(knnsearch(curve_to_mat(muX2)',curve_to_mat(alignedFibers3{i})','K',J))');
 
 
 end
@@ -69,9 +69,9 @@ for i = 1:length(labels)
 end
 
 % mdl1 = fitctree(features,labels,'MaxNumSplits',round(sqrt(2*(K+1))),'PruneCriterion','error');%;round(sqrt(K)));
-% mdl1 = fitctree(features,labels,'MaxNumSplits',round(sqrt(2*(K+1))));
+mdl1 = fitctree(features,labels,'MaxNumSplits',round(sqrt(2*(K+1))));
 
-mdl1 = fitcsvm(features,labels);
+% mdl1 = fitcsvm(features,labels);
 
 
 trainAcc(a,b) = mean(mdl1.predict(features)==labels');
