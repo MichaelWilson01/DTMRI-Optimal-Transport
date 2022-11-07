@@ -1,5 +1,5 @@
 clear all
-load("newData2.mat")
+load("Data/newData2.mat")
 
 X1 = Fibers{9};
 X2 = Fibers{30};
@@ -57,17 +57,20 @@ trainAcc(a,b) = mean(mdl1.predict(features)==labels');
 
 end
 
+CVmdl_1 = crossval(mdl1,'leaveout','on');
+acc1 = 1 - kfoldLoss(CVmdl_1)
 
-acc1=[]
-for i = 1:300
 
-CVmdl_1 = crossval(mdl1);
-acc1(i) = 1 - kfoldLoss(CVmdl_1)
-
-plot(cumsum(acc1)./(1:length(acc1)))
-pause(.1)
-
-end
+% acc1=[]
+% for i = 1:300
+% 
+% CVmdl_1 = crossval(mdl1,'leaveout','on');
+% acc1(i) = 1 - kfoldLoss(CVmdl_1)
+% 
+% plot(cumsum(acc1)./(1:length(acc1)))
+% pause(.1)
+% 
+% end
 
 % plot(cumsum(acc1)./(1:length(acc1)))
 
