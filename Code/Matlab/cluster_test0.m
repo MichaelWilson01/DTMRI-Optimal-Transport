@@ -41,8 +41,8 @@ for i = 1:length(Fibers)
 %     idx1_2{i} = mode(idx1(knnsearch(curve_to_mat(X1)',curve_to_mat(alignedFibers{i})','K',J))');
 %     idx2_2{i} = mode(idx2(knnsearch(curve_to_mat(X2)',curve_to_mat(alignedFibers3{i})','K',J))');
 
-    idx1_2{i} = knnsearch(curve_to_mat(muX1)',curve_to_mat(alignedFibers{i})');
-    idx2_2{i} = knnsearch(curve_to_mat(muX2)',curve_to_mat(alignedFibers3{i})');
+    idx1_2{i} = knnsearch(curve_to_mat(muX1)',curve_to_mat(alignedFibers1{i})');
+    idx2_2{i} = knnsearch(curve_to_mat(muX2)',curve_to_mat(alignedFibers2{i})');
 
 
 end
@@ -64,7 +64,7 @@ for i = 1:length(labels)
 
     end
     
-    features(i,2*K+2)=W3(i);
+    features(i,2*K+2)=W2(i);
 
 end
 
