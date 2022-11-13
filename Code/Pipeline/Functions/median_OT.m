@@ -1,4 +1,4 @@
-function [alignedFibers, W] = median_OT3(Fibers,target)
+function [alignedFibers, W] = median_OT(Fibers,target)
 
 Y= gpuArray(Fibers{target});
 

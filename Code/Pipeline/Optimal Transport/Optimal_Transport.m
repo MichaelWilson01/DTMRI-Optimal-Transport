@@ -20,10 +20,10 @@ med1=9;
 med2=30;
 
 tic
-[alignedFibers1, W1] = median_OT3(Fibers,med1);
+[alignedFibers1, W1] = median_OT(Fibers,med1);
 toc
 tic
-[alignedFibers2, W2] = median_OT3(Fibers,med2);
+[alignedFibers2, W2] = median_OT(Fibers,med2);
 toc
 
-save(strcat("Data/",tractName,"_9_30.mat"))
+save(strcat("Other/Data/",tractName,"_9_30.mat"))

@@ -6,6 +6,8 @@ a=1;
 
 for i = 1:length(labels)
     
+    i
+    
     if i ~= med
                 
         %split data
@@ -18,14 +20,16 @@ for i = 1:length(labels)
         test_features = get_test_features(testFibers,testW,Mdl{a});
 
         %get training accuracy for test subject i
-        treeMdl_test(a)=treeMdl{a}.predict([test_features, testW'])==testLabels'
+        treeMdl_test(a)=treeMdl{a}.predict([test_features, testW'])==testLabels';
         knnMdl_test(a)=knnMdl{a}.predict([test_features, testW'])==testLabels';
         
         predictedLabels_tree(a)=treeMdl{a}.predict([test_features, testW']);
         predictedLabels_knn(a)=knnMdl{a}.predict([test_features, testW']);
-        
-        
+             
         a=a+1;
+        
+        treeMdl_testAcc=mean(treeMdl_test)
+        knnMdl_testAcc=mean(knnMdl_test)
         
     end
     
