@@ -4,7 +4,7 @@ load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Cingulum
 
 [~,N] = size(alignedFibers);
 
-J=5;
+J=15;
 
 maxMNS=10;
 maxK=15;
@@ -50,7 +50,7 @@ for i = 1:N
     
 end
 
-save('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features1','features', 'labels')
+save(strcat('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Cingulum_J_',string(J)),'features', 'labels')
 
 Features= [Features,W']
 
@@ -58,7 +58,7 @@ Features= [Features,W']
 Acc_LOO=[];
 Acc_10fold=[];
 
-for m = 4:9%1:15
+for m = 1:15
 
 % t = templateTree('MaxNumSplits',m);
 % % t = templateDiscriminant();
