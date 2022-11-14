@@ -3,7 +3,7 @@ function [treeMdl, FeatureSpace, optEps] = feature_space_tree(med, trainFibers, 
 minNeighbors = 10;
 maxNeighbors=50;
 
-J=5;%k for knn classifiers, in feature_space_project
+J=15;%k for knn classifiers, in feature_space_project
 
 for m = 1:length(med)
     
@@ -22,10 +22,11 @@ for m = 1:length(med)
 
         %project into feature_space
         features{k} = feature_space_proj(X,alignedFibers,F{k},J); %returns NxK matrix of features
+%         features{k} = [feature_space_proj(X,alignedFibers,F{k},J), trainW']; %returns NxK matrix of features
 
         for maxNumSplits = 1:3
 
-            for i = (minNeighbors+1):maxNeighbors;%length(W)
+            for i = (minNeighbors):5:maxNeighbors;%
 
                 mdl_temp{k, maxNumSplits, i} = fitctree(features{k}(sortIdx(1:i),:),labels(sortIdx(1:i)),'MaxNumSplits',maxNumSplits);
 
@@ -38,6 +39,7 @@ for m = 1:length(med)
 
     end
 
+    max(max(max(acc)))
     I=find(acc == max(max(max(acc))));
     [kInd, mnsInd, wInd] = ind2sub(size(acc),I);
 
