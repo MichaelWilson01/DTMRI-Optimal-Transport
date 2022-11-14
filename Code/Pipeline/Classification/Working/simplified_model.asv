@@ -50,6 +50,8 @@ for i = 1:N
     
 end
 
+save('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features1','features', 'labels')
+
 Features= [Features,W']
 
 
@@ -57,16 +59,19 @@ Acc_LOO=[];
 Acc_10fold=[];
 
 for m = 4:9%1:15
-% Mdl = fitctree(Features,labels,'MaxNumSplits',m)
-t = templateTree('MaxNumSplits',m);
-% t = templateDiscriminant();
-% t = templateKNN('NumNeighbors',m);
-Mdl = fitcensemble(Features,labels,'Learners',t)
+
+% t = templateTree('MaxNumSplits',m);
+% % t = templateDiscriminant();
+% % t = templateKNN('NumNeighbors',m);
+% Mdl = fitcensemble(Features,labels,'Learners',t)
+
+Mdl = fitctree(Features,labels,'MaxNumSplits',m)
 Acc_LOO(m) = 1-kfoldLoss(crossval(Mdl,'leaveout','on'))
 Acc_10fold(m) = 1-kfoldLoss(crossval(Mdl))
+
 end
 plot(Acc)
 
-
-
+mean(Mdl.predict(Features)==labels')
+1-kfoldLoss(crossval(Mdl,'leaveout','on'))
 

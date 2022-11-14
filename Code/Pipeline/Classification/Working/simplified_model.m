@@ -72,6 +72,7 @@ Acc_10fold(m) = 1-kfoldLoss(crossval(Mdl))
 end
 plot(Acc)
 
-
-
+trainAcc = mean(Mdl.predict(Features)==labels')
+looAcc = 1-kfoldLoss(crossval(Mdl,'leaveout','on'))
+kfoldAcc = 1-kfoldLoss(crossval(Mdl))
 
