@@ -25,12 +25,12 @@ clear all
 % end
  
 % % save(strcat('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_heir_Cingulum_J_',string(J)),'features', 'labels', 'W', 'N', 'maxK')
-load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Cingulum_J_5.mat')
+% load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Cingulum_J_5.mat')
 
-% load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Fornix_J_5.mat')
-% load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Fornix_L_1_35.mat','W')
-% N=35;
-% maxK=5;
+load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Fornix_J_5.mat')
+load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Fornix_L_1_35.mat','W')
+N=35;
+maxK=5;
 
 
 % load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features1.mat')
@@ -49,7 +49,7 @@ for i = 1:N
     
     parfor K = 2:maxK
          
-        mdl = fitctree(features{i,K}, labels, 'MaxNumSplits',sqrt(K));
+        mdl = fitctree(features{i,K}, labels, 'MaxNumSplits',1);
         
         acc(i,K) = 1-kfoldLoss(crossval(mdl,'leaveout','on'));
         
@@ -82,18 +82,18 @@ Acc_LOO=[];
 Acc_10fold=[];
 
 for m = 1:15
-
+for j = 1:80
 t = templateTree('MaxNumSplits',m);
-% % % % t = templateDiscriminant();
-% % % % t = templateKNN('NumNeighbors',m);
-Mdl = fitcensemble(Features,labels,'Learners',t, 'NumLearningCycles',75)
-% Mdl = fitcensemble(Features,labels,'Learners',t, 'OptimizeHyperparameters',{'NumLearningCycles'})
+% % % % % t = templateDiscriminant();
+% % % % % t = templateKNN('NumNeighbors',m);
+Mdl = fitcensemble(Features,labels,'Learners',t, 'NumLearningCycles',j)
+% % Mdl = fitcensemble(Features,labels,'Learners',t, 'OptimizeHyperparameters',{'NumLearningCycles'})
 
 
 % Mdl = fitctree(Features,labels,'MaxNumSplits',m)
-Acc_LOO(m) = 1-kfoldLoss(crossval(Mdl,'leaveout','on'))
+Acc_LOO(m,j) = 1-kfoldLoss(crossval(Mdl,'leaveout','on'))
 % Acc_10fold(m) = 1-kfoldLoss(crossval(Mdl))
-
+end
 end
 
 Acc_LOO
