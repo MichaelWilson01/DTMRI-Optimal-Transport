@@ -1,0 +1,21 @@
+function PDF = estimate_density(pcaCoords,K)
+
+for i = 1:N
+    
+[~,D] = knnsearch(pcaCoords,pcaCoords,'K',K)
+
+x = pcaCoords{i}(:,1);
+y = pcaCoords{i}(:,2);
+z = 1./D{i};
+
+xv = linspace(-60, 60, 120);
+yv = linspace(-40, 40, 80);
+[X,Y] = meshgrid(xv, yv);
+Z = griddata(x,y,z,X,Y);
+Z(isnan(Z))=0;
+
+PDF = Z;%/mean(mean(Z));
+
+end
+
+end

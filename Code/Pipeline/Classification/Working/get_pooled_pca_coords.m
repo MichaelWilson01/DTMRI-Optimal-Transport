@@ -14,8 +14,8 @@ end
 
 % clear fullPcaData;
 
-pctInd = min(find(cumsum(diag(S_full))./sum(diag(S_full))>minPct))
-pctObs=sum(diag(S_full(1:pctInd,1:pctInd)))/sum(diag(S_full))
+pctInd = min(find(cumsum(diag(S_full))./sum(diag(S_full))>minPct));
+pctObs=sum(diag(S_full(1:pctInd,1:pctInd)))/sum(diag(S_full));
 
 
 for i = 1:length(Fibers)

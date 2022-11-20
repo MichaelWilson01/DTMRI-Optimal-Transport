@@ -1,0 +1,16 @@
+function T = get_map_step(X,Y,T,Pi,lr,eta)
+    [N,k_x] = size(X);
+    [M,~] = size(Y);
+    
+    deltaLambda=zeros(M,N);    
+
+    for i = 1:N
+        for j=1:M
+        deltaLambda = deltaLambda + ((T*X(i,:)' - Y(j,:))*X(i,:)';
+        end
+    end
+
+      deltaLambda = deltaLambda + 2*eta*Lambda;
+      Lambda = Lambda -lr*deltaLambda;
+
+end

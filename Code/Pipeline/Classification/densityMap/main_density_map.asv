@@ -1,0 +1,34 @@
+clear all
+
+%Parameters
+timeSteps=50;
+tractName="Cingulum_Parahippocampal_L";
+
+%Load Fiber Data
+dataFolder='C:\Users\micha\Desktop\DTMRI Project\matFiles\';
+Fibers = get_data(dataFolder,tractName,timeSteps);
+
+
+[~,N]=size(Fibers);
+g=1;
+
+%2) calculate covariance matrices for each cluster
+pcaCoords = get_pooled_pca_coords(Fibers,.99);
+
+Y = pcaCoords{1};
+X= pcaCoords{2};
+
+
+nu = estimate_density(Y,15);
+mu = estimate_density(X,15);
+
+nu_tilde = exp_inv(sqrt(nu));
+mu_tilde{1} = exp_inv(sqrt(mu));
+
+for i = 1
+    
+    Tmu_tilde{i} = optimize_step(X,Y,mu_tilde{i},nu_tilde,T,lr,eta,g)
+    mu_tilde{i+1} = estimate_density(Tmu{i});
+    
+end
+
