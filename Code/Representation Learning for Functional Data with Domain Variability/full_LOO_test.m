@@ -3,6 +3,8 @@ load('Data.mat')
 
 [N,M] = size(X);
 
+features_mult = aligned_feature_space_proj(X);
+
 for testInd = 1:N
     
 trainInd=1:N;
@@ -32,6 +34,9 @@ parfor i = 1:n
     testFeatures = [testFeatures, feature_space_project_1d(target,testSource)'];
     
 end
+
+% trainFeatures = [trainFeatures, features_mult(trainInd,[9,12])];
+% testFeatures = [testFeatures, features_mult(testInd,[9,12])];
     
     
 for m = 1:10
@@ -45,7 +50,7 @@ m=find(Acc==max(Acc));
 Mdl = fitctree(trainFeatures,trainLabels,'MaxNumSplits',m(1));
 
 mdlPrediction(testInd) = Mdl.predict(testFeatures);
-
-mean(mdlPrediction==labels(1:testInd))
+Z=double(mdlPrediction==labels(1:testInd));
+strcat(string(sum(Z)),"/",string(testInd),"=",string(mean(Z)))
 
 end

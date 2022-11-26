@@ -46,13 +46,11 @@ f1 = plot(T,fn(:,labels==1),'blue')
 hold on
 f2 = plot(T,fn(:,labels==0),'red')
 f3 = plot(T,muF,'black','LineWidth',2)
-f4 = plot(T(targetFeatures),muF(targetFeatures),'black*','LineWidth',15)
+f4 = plot(T(targetFeatures),muF(targetFeatures),'black*','LineWidth',4)
 title("Aligned Functions",'FontSize',36)
-legend([f1(1) f2(1) f3(1) f4(1)],{'Female','Male', 'Mean','Features'},'FontSize',18)
+legend([f1,f3
 
 
-mdlSVM = fitcsvm(features,labels,'KernelFunction','gaussian')
-1 - kfoldLoss(crossval(mdlSVM))
 
 
 
@@ -75,8 +73,8 @@ plot(pred(p==1,1),pred(p==1,2),'.','Color',[0,0,0,.1])
 plot(features(labels==0,9),features(labels==0,12),'red*','LineWidth',4)
 plot(features(labels==1,9),features(labels==1,12),'blue*','LineWidth',4)
 legend("Classifier predicts female","Male","Female",'FontSize',24)
-xlabel("Peak 9", 'FontSize',24)
-ylabel("Peak 12",'FontSize',24)
+xlabel("Peak 9", 'FontSize',18)
+ylabel("Peak 12",'FontSize',18)
 title("Feature Space Representation, with SVM Classifier", 'FontSize',36)
 % xline(8.74259)
 % yline(0.70465)
