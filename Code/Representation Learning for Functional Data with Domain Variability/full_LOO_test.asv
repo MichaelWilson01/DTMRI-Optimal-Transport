@@ -33,20 +33,20 @@ parfor i = 1:n
     trainFeatures = [trainFeatures, Z];
     testFeatures = [testFeatures, feature_space_project_1d(target,testSource)'];
     
-%     mdl = fitctree(Z, trainLabels,'MaxNumSplits',1);    
-%     acc(i) = 1 -kfoldLoss(crossval(mdl,'leaveout','on'));
-    
-end
-
-[~,n] = size(trainFeatures);
-
-parfor i = 1:n
-    
-    mdl = fitctree(trainFeatures(:,i), trainLabels,'MaxNumSplits',1);
-    
+    mdl = fitctree(Z, trainLabels,'MaxNumSplits',1);    
     acc(i) = 1 -kfoldLoss(crossval(mdl,'leaveout','on'));
     
 end
+
+% [~,n] = size(trainFeatures);
+% 
+% parfor i = 1:n
+%     
+%     mdl = fitctree(trainFeatures(:,i), trainLabels,'MaxNumSplits',1);
+%     
+%     acc(i) = 1 -kfoldLoss(crossval(mdl,'leaveout','on'));
+%     
+% end
 
 
     [~,sortIdx] = sort(acc,'descend');
@@ -54,7 +54,7 @@ end
 for m = 1:(N-1)
 
 
-Mdl = fitcsvm(trainFeatures(:,sortIdx(1:m)), trainLabels, 'KernelFunction','gaussian');
+Mdl = fitcsvm(trainFeatures(:,sortIdx(1:m)), trainLabels);
     
     parfor i = 1:30
         
@@ -69,7 +69,7 @@ end
 m=find(Acc==max(Acc));
 
 % Mdl = fitctree(trainFeatures,trainLabels,'MaxNumSplits',m(1));
-Mdl = fitcsvm(trainFeatures(:,sortIdx(1:m(1))), trainLabels, 'KernelFunction','gaussian');
+Mdl = fitcsvm(trainFeatures(:,sortIdx(1:m(1))), trainLabels);
 
 mdlPrediction(testInd) = Mdl.predict(testFeatures(:,sortIdx(1:m(1))));
 Z=double(mdlPrediction==labels(1:testInd));
