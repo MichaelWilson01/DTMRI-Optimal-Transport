@@ -27,9 +27,9 @@ We present a general machine learning framework for simultaneous alignment, feat
 
 \section{Introduction}
 
-Feature learning after alignment gives simple, interpretable models with high test set accuracy for uni-modal shape distributions, but doesn't work well for multi-modal shape distributions. Shape distances are useful for separating multi-modal shape distributions into uni-modal clusters, but don't provide good classification accuracy, and the features aren't as interpretable. 
+Feature learning after alignment gives simple, interpretable models with high test set accuracy for uni-modal shape distributions, but doesn't work well for multi-modal shape distributions. Shape distances are useful for separating multi-modal shape distributions into uni-modal clusters, but don't provide as good classification accuracy, and the features aren't as interpretable. 
 
-By using shape distances to separate data into uni-modal clusters, and then feature learning on those clusters, we are able to get simple, interpretable models with good classification accuracy on data drawn from multi-modal shape distributions. 
+By using shape distances to separate data into uni-modal clusters, and then applying alignment and feature learning to each cluster individually, we are able to get simple, interpretable models with good classification accuracy on data drawn from multi-modal shape distributions. 
 
 \section{Uni-modal Shape Distributions}
 
@@ -38,10 +38,10 @@ By using shape distances to separate data into uni-modal clusters, and then feat
 For our first example, we consider classifying the Berkeley Growth Study dataset into male and female. This is not intended to be the optimal machine learning pipeline for this data set; on the contrary, it is intended to be a simple illustration of a much more general pipeline that can be applied to any data set with domain variability. With that in mind, our pipeline for this data set will be as follows;\\
 
 \noindent
-1) Multiple Alignment\\
-2) Select extrema of mean function as features\\
-3) Use 1-cut decision trees to determine maximally informative features\\
-4) SVM with Gaussian Kernel for Classification\\
+1) Domain Adaption: Multiple Alignment\\
+2) Feature Extraction: Select extrema of mean function as features\\
+3) Feature Selection: Forward selection, based on 1-cut Decision Tree test set accuracy\\
+4) Classification: SVM with Gaussian Kernel for Classification\\
 
 
 \begin{center}
@@ -60,18 +60,16 @@ For our first example, we consider classifying the Berkeley Growth Study dataset
 		\text{LOO Accuracy:}& 0.52 & 0.58 & 0.58 & 0.52 & 0.48 & 0.55 & 0.57 & 0.58 & 0.78 & 0.70 & 0.62 & 0.72\\ 
 		\hline
 	\end{tabular}
-	\caption{Even though our feature extraction picks out 12 features, only features 9, 10, and 12 achieve higher than 0.7 percent test set accuracy. Note that 57\% of the labels are female, so 57\% accuracy is no better than chance.}
+	\caption{Even though our feature extraction picks out 12 features, only features 9, 10, and 12 achieve higher than 0.7 percent test set accuracy. These scores are used to order our features for forward selection. Note that 57\% of the labels are female, so 57\% accuracy is no better than chance.}
 	\label{feature_LOO}
 \end{table}
 
 
 Our first step is to perform multiple alignment on our functions, and calculate a (centered) shape mean for the data. Given our shape mean, there are many ways to perform feature extraction. For simplicity, we will just treat the values of our aligned functions at time points corresponding to the local extrema of our shape mean as our features. The results of these steps are presented in Figure $\ref{aligned function}$. 
 
-After alignment, our feature extraction method finds 12 features, denoted with black dots in Figure $\ref{aligned function}$. Now we wish to determine which of our features are informative for classification. There are many ways to measure the informativeness of a feature, with the simple 1-cut decision tree being among the simplest. Thus, our next step is to select a subset of maximally informative features, defined in terms of the Leave-One-Out classification accuracy of 1-cut decision trees built on each individual feature. The results of these models are presented in Table \ref{feature_LOO}.
+After alignment, our feature extraction method finds 12 features, denoted with black dots in Figure $\ref{aligned function}$. Now we wish to determine which of our features are informative for classification. There are many ways to measure the informativeness of a feature, with classification accuracy of a 1-cut decision tree being among the simplest. The results of these models are presented in Table \ref{feature_LOO}. Thus, our next step is to use forward selection (forward w.r.t. Leave-One-Out classification accuracy of 1-cut decision trees) to select a subset of maximally informative features, defined in terms of 10-fold cross validation performance.
 
-Given our measure of feature informativeness, we will now select some number of features to build our classifier on. We could combine this step with the previous step, and simply treat the number of features as a hyper parameter, however, the intention of the current approach is to provide simple models built on highly interpretable features. While for this data set it isn't entirely necessary, the simplicity and interpretability are very useful in our analysis of DTMRI data in section $\ref{DTMRI}$.  
-
-Figure \ref{EX1: classifier plot} shows the results of running a Gaussian Kernel SVM using only features 9 and 12. The model achieves 89.25\% for both training set and Leave-one-out test set accuracy, and between 87.1-89.25\% for 10-fold cross validation. Furthermore, the features are very interpretable; feature 9 might be called an 'early puberty high', while feature 12 might be called a 'late puberty low'. Males tend to have higher growth rates at both of these time points, and a classifier built on these two features gets high classification accuracy. 
+Figure \ref{EX1: classifier plot} shows the results of running a Gaussian Kernel SVM using only features 9 and 12, the two most common features selected in our validation models (in fact, selected by our learner in every validation model). Our learner achieves just over 86\% Leave-One-Out test set accuracy. Furthermore, the features are very interpretable; feature 9 might be called an 'early puberty high', while feature 12 might be called a 'late puberty low'. Males tend to have higher growth rates at both of these time points, and a classifier built on these two features gets high classification accuracy.
 
 A pipeline using the same model selection criterion, using elastic pairwise distances as features yields a Leave-One-Out classification accuracy of 74.19\%. While this classifier still does better than chance, it has significantly lower classification accuracy, and the features aren't as interpretable. We can show which growth curves are used in the classifier, but are left to speculate what features of a particular growth curve are informative. Note, these results are for a linear SVM; a Gaussian Kernel SVM on our shape distances performs much worse. 
 
@@ -91,7 +89,8 @@ There is much more to say about this analysis, but our purpose here is simply to
 
 \section{Multi-modal Shape Distributions}
 
-The basic pipeline is as follows;\\
+\subsection{Berkeley Growth Study}
+
 
 %\noindent
 %1) Within-subject Representation Learning\\
@@ -100,5 +99,14 @@ The basic pipeline is as follows;\\
 %4) Classification\\
 
 \subsection{DTMRI Data}\label{DTMRI}
+
+The basic pipeline is as follows;\\
+
+\noindent
+1) Domain Adaption: Pairwise Functional Optimal Transport\\
+2) Feature Extraction: $k$-means\\
+3) Feature Selection: Select optimal $k$ based on 1-cut Decision Tree test set accuracy\\
+4) Classification: Decision Tree, $maxNumCuts = 4$\\
+
 
 \end{document}
