@@ -1,0 +1,27 @@
+clear all
+clf
+
+N=100;
+T=0:(1/99):1;
+
+for M = 1:10;
+
+    [X, labels] = simulate_feature_curves(N,M,T);
+
+    figure(1)
+    hold on
+    plot(X(labels==0,:)','red')
+    plot(X(labels==1,:)','blue')
+
+    pause(.1)
+    
+    [mdl{M}, mdlInd{M}] = elastic_feature_learning(X,labels);
+    
+    %test model
+    [X_test, labels_test] = simulate_feature_curves(N,M,T);
+    Z = get_aligned_features(X_test);
+    mdlAcc(M) = mean(mdl{M}.predict(Z)==labels_test')
+
+end
+
+

@@ -11,7 +11,7 @@ for i = 1:numSource
     gam(i,:) = DynamicProgrammingQ_Adam(SRVF(target')',SRVF(source(i,:)')',0,0);
 %     alignedSource(i,:) = interp1(T,source(i,:),gam(i,:));
     alignedSource(i,:) = interp1(gam(i,:),source(i,:),T);
-    elasticDist(i,:) = norm(SRVF(alignedSource(i,:)')-SRVF(target'));
+%     elasticDist(i,:) = norm(SRVF(alignedSource(i,:)')-SRVF(target'));
 
 end
 
