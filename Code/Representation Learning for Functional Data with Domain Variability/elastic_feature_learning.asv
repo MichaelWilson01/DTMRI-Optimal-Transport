@@ -1,13 +1,14 @@
-function Mdl = elastic_feature_learning(X,labels)
+function [Mdl, featureInd] = elastic_feature_learning(X,labels)
 
-features = get_aligned_features(X);
+% features = get_aligned_features(X);
+features = X';
 
 [n,m] = size(features);
 
 acc=[];
 
 %getting individual feature informativeness
-for i = 1:m
+parfor i = 1:m
     
     mdl = fitctree(features(:,i),labels,'maxNumSplits',1);
     
@@ -19,11 +20,11 @@ end
 
 
 %Forward Selction Testing
-for i = 1:m
+for i = 1:10
     
     mdl = fitctree(features(:,sortIdx(1:i)), labels, 'MaxNumSplits',i);
  
-    parfor j = 1:36
+    parfor j = 1:24
         acc_temp(j) = 1-kfoldLoss(crossval(mdl));
     end
     
@@ -35,5 +36,7 @@ end
 mdlInd = find(acc==max(acc));
 
 Mdl = fitctree(features(:,sortIdx(1:mdlInd(1))), labels, 'MaxNumSplits', mdlInd(1));
+
+featureInd=sortIdx(1:mdlInd(1));
 
 end

@@ -1,27 +1,37 @@
 clear all
 clf
 
-N=100;
+N=200;
 T=0:(1/99):1;
 
-for M = 1:10;
+for M = 1:4;
 
     [X, labels] = simulate_feature_curves(N,M,T);
+    [X2, labels2] = simulate_feature_curves(N,M,T);
+    X = [X;X2];
+    labels0 = [labels;labels2];
+    [X, Z, labelstemp, labels_test] = get_elastic_dist(X,labels0);
+    labels_test=labels2;
 
     figure(1)
-    hold on
-    plot(X(labels==0,:)','red')
-    plot(X(labels==1,:)','blue')
+    clf
+    imagesc(X)
+%     hold on
+%     plot(X(labels==0,:)','red')
+%     plot(X(labels==1,:)','blue')
 
     pause(.1)
     
     [mdl{M}, mdlInd{M}] = elastic_feature_learning(X,labels);
     
     %test model
-    [X_test, labels_test] = simulate_feature_curves(N,M,T);
-    Z = get_aligned_features(X_test);
-    mdlAcc(M) = mean(mdl{M}.predict(Z)==labels_test')
+%     [X_test, labels_test] = simulate_feature_curves(N,M,T);
+%     Z = get_aligned_features(X_test);
+    mdlAcc(M) = mean(mdl{2}.predict(Z(mdlInd{2},:)')==labels_test')
 
 end
 
+% feature model 
+%     0.7160    0.7280    0.7220    0.7120    0.6760    0.6980
 
+%     0.7100    0.6500    0.7000    0.6750    
