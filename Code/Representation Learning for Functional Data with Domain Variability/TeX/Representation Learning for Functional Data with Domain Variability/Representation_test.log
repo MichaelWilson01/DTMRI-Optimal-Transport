@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  30 NOV 2022 08:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  1 DEC 2022 09:43
 entering extended mode
 **./Representation_test.tex
 (Representation_test.tex
@@ -307,78 +307,79 @@ Underfull \hbox (badness 10000) in paragraph at lines 70--75
  []
 
 [2 <./Aligned Functions.png (PNG copy)>]
-<./simulated data.png, id=16, 891.33pt x 393.72093pt>
-File: ./simulated data.png Graphic file (type png)
-<use ./simulated data.png>
-Package pdftex.def Info: ./simulated data.png  used on input line 90.
-(pdftex.def)             Requested size: 469.75502pt x 207.4996pt.
+<./simulated data2.png, id=16, 860.46469pt x 376.40625pt>
+File: ./simulated data2.png Graphic file (type png)
+<use ./simulated data2.png>
+Package pdftex.def Info: ./simulated data2.png  used on input line 90.
+(pdftex.def)             Requested size: 469.75502pt x 205.49629pt.
  [3 <./Feature Space.png (PNG copy)>]
-<./simulated data features vs distances.png, id=20, 875.52094pt x 345.54094pt>
-File: ./simulated data features vs distances.png Graphic file (type png)
-<use ./simulated data features vs distances.png>
-Package pdftex.def Info: ./simulated data features vs distances.png  used on in
-put line 104.
-(pdftex.def)             Requested size: 469.75502pt x 185.39774pt.
+[4 <./simulated data2.png (PNG copy)>]
+<./simulated_model_compare.png, id=27, 886.81313pt x 386.19281pt>
+File: ./simulated_model_compare.png Graphic file (type png)
+<use ./simulated_model_compare.png>
+Package pdftex.def Info: ./simulated_model_compare.png  used on input line 119.
 
-[4 <./simulated data.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 120--121
+(pdftex.def)             Requested size: 469.75502pt x 204.57513pt.
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 122--129
+Underfull \hbox (badness 10000) in paragraph at lines 132--133
 
  []
 
-[5 <./simulated data features vs distances.png (PNG copy)>]
-<./Aligned_2_cluster.png, id=33, 1005.7575pt x 432.11438pt>
+[5 <./simulated_model_compare.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 134--141
+
+ []
+
+<./Aligned_2_cluster.png, id=31, 1005.7575pt x 432.11438pt>
 File: ./Aligned_2_cluster.png Graphic file (type png)
 <use ./Aligned_2_cluster.png>
-Package pdftex.def Info: ./Aligned_2_cluster.png  used on input line 131.
-(pdftex.def)             Requested size: 469.75502pt x 201.82123pt.
-<./Distance Matrix.png, id=34, 663.22781pt x 612.03656pt>
+Package pdftex.def Info: ./Aligned_2_cluster.png  used on input line 143.
+(pdftex.def)             Requested size: 328.82707pt x 141.27287pt.
+<./Distance Matrix.png, id=32, 663.22781pt x 612.03656pt>
 File: ./Distance Matrix.png Graphic file (type png)
 <use ./Distance Matrix.png>
-Package pdftex.def Info: ./Distance Matrix.png  used on input line 138.
-(pdftex.def)             Requested size: 234.8775pt x 216.74684pt.
+Package pdftex.def Info: ./Distance Matrix.png  used on input line 144.
+(pdftex.def)             Requested size: 140.92793pt x 130.04437pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 148--149
+Overfull \hbox (2.2222pt too wide) in paragraph at lines 143--145
+[][] [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 163--164
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 150--156
+Underfull \hbox (badness 10000) in paragraph at lines 165--171
 
  []
 
-[6 <./Aligned_2_cluster.png (PNG copy)>] [7 <./Distance Matrix.png (PNG copy)>]
-(Representation_test.aux) ) 
+[6 <./Aligned_2_cluster.png (PNG copy)> <./Distance Matrix.png (PNG copy)>]
+[7] (Representation_test.aux) ) 
 Here is how much of TeX's memory you used:
- 3203 strings out of 492484
- 44877 string characters out of 3121602
- 113847 words of memory out of 3000000
- 7500 multiletter control sequences out of 15000+200000
+ 3202 strings out of 492484
+ 44786 string characters out of 3121602
+ 113839 words of memory out of 3000000
+ 7499 multiletter control sequences out of 15000+200000
  11802 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 51i,8n,34p,1252b,275s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/micha/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/micha/AppData/Loc
-al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/mich
-a/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C
-:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmmi7.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmr10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmr12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/micha/AppData/Local/Pro
-grams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/micha/AppDat
-a/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/m
-icha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
-/symbols/msbm10.pfb>
-Output written on Representation_test.pdf (7 pages, 649021 bytes).
+ 51i,12n,34p,1255b,222s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/micha/AppData/Local/Programs/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/micha/AppData/Local/Progr
+ams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/micha/AppData
+/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/
+micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmmi7.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/micha/AppData/Local/Programs/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/micha/AppData/Loca
+l/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/micha/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on Representation_test.pdf (7 pages, 628092 bytes).
 PDF statistics:
- 80 PDF objects out of 1000 (max. 8388607)
+ 72 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -87,37 +87,49 @@ This example shows that Elastic Feature Learning can significantly outperform cl
 \subsection{Simulated Uni-modal Shape Distributions}
 
 \begin{figure}
-	\includegraphics[width = \linewidth]{./simulated data.png}
+	\includegraphics[width = \linewidth]{./simulated data2.png}
 	\caption{Even though there is a strong signal in the first peak, it gets drowned out by the second and third peaks when using shape distances as features. Feature Learning attempts to correct for this. }
 	\label{simulated data}
 \end{figure}
 
 For this example, we will simulate uni-modal functional data, and show that, as the number of uninformative elastic features increases, the classification accuracy of models built on Elastic distances decreases, while Elastic Feature Learning maintains high classification accuracy.  
 
-We will simulate our data as (unnormalized) sums of $N$ truncated Gaussian pdfs over $[0,1]$ with $M, j = 1,...,M$ mixture components, means $\mu_j = \frac{j}{M+1}$, weights $w_j$, $\sigma^2 = 0.1/M$. For simplicity, mixture component 1 will be the only feature that contains information about our labels $\ell_i$, $i = 1,...,N$, such that for some $\delta \in \mathbb{R}$ and $\epsilon \sim N(0,0.33)$, $w_1(\ell_i) = \frac{1 + \delta\ell_i + \epsilon_i}{M + 1}$, and for $j>1$, $w_j(\ell_i) = \frac{1 + \epsilon_i}{M+1}$. Figure \ref{simulated data} shows an example of data simulated in this way, with M = 3.
+For simplicity, we will simulate our data as piecewise linear functions, with each time point either a local max or local min. We simulate our data such that only the first peak is informative about class, with the experiment being to see how Elastic Feature Learning compares to classification based on Elastic pairwise distances as we add more uninformative peaks (and thus decrease the signal to noise ratio). Figure \ref{simulated data} shows an example of our simulated data, for M = 3. Specifically, for a function $f_i(t)$, $i = 1,...,n$,  defined over $T=[1,((2*M)+1)]$, labels $\ell_i$, and $\epsilon_i(t) \sim N(0,0.33)$, we simulate;
 
-The intuition is this: the Elastic Distance involves an integral over the entire domain. If there is information about class contained at every point in the domain, the Elastic Distance will be very useful for quantifying that. If, however, only a subset of the domain contains information about the class, as is the case with our simulated data and the feature centered at $\mu_1$, then the proportion of the Elastic distance that can be attributed to that informative element will be proportional the length of the portion of the domain the informative feature(s) are defined over. Thus, if informative features only cover 1\% of the domain, we would expect that the maximum signal the elastic distance could find would be 1\%. Using Elastic Feature Learning, we can learn which portions of the domain to focus on, and thus increase the signal to noise ratio of our features. Figure \ref{simulated data compare} shows the Elastic Pairwise distance matrix, versus a histogram of the first Elastic Feature for the functions in Figure \ref{simulated data}.      
+ \[f_i(t) = \begin{cases} 
+	0 & if \text{ t odd} \\
+	1 + (0.4)*\ell_i(t) + \epsilon_i(t) & if \text{ t =2}\\
+	1 + \epsilon_i(t) & if \text{ t$>2$, t even}
+\end{cases}
+\]
 
 
-\begin{center}
+%We will simulate our data as (unnormalized) sums of $N$ truncated Gaussian pdfs over $[0,1]$ with $M, j = 1,...,M$ mixture components, means $\mu_j = \frac{j}{M+1}$, weights $w_j$, $\sigma^2 = 0.1/M$. For simplicity, mixture component 1 will be the only feature that contains information about our labels $\ell_i$, $i = 1,...,N$, such that for some $\delta \in \mathbb{R}$ and $\epsilon \sim N(0,0.33)$, $w_1(\ell_i) = \frac{1 + \delta\ell_i + \epsilon_i}{M + 1}$, and for $j>1$, $w_j(\ell_i) = \frac{1 + \epsilon_i}{M+1}$. Figure \ref{simulated data} shows an example of data simulated in this way, with M = 3.
+
+The Elastic Distance involves an integral over the entire domain. If there is information about class contained at every point in the domain, the Elastic Distance will be very useful for quantifying that. If, however, only a subset of the domain contains information about the class, as is the case with our simulated data and the single informative peak, then the proportion of the Elastic distance that can be attributed to that informative element will be equal to the proportion of the domain that informative feature(s) are defined over. 
+%Specifically, for a function f defined over domain $\mathcal{D}$, with informative features defined only over $\mathcal{I} \subset \mathcal{D}$, we can define a signal-to-noise ratio as;\\
+%\begin{equation}
+%	S = \frac{\int_\mathcal{I} 1 dt}{\int_\mathcal{D} 1 dt}
+%\end{equation}
+
+  Using Elastic Feature Learning, we can learn which portions of the domain to focus on, and thus increase the signal to noise ratio of our features. Figure \ref{simulated data compare} shows the 10-fold CV accuracy of models built using only pairwise Elastic Distances as features, vs Elastic Feature Learning. This analysis is a bit contrived; we restricted our models to 1-cut decision trees, and designed the data so that a 1 cut decision tree based on our approach would converge to the Bayes Optimal predictor as sample size increased. But the feature learning approach consistently selects the informative peak, and thus loses no classification performance as the proportion of uninformative features increases. Classifying based on elastic distances consistently degrades in performance as more uninformative features are added to the data.
+
+
 	\begin{figure}
-		\includegraphics[width = \linewidth]{./simulated data features vs distances.png}
+		\includegraphics[width = \linewidth]{./simulated_model_compare.png}
 		\caption{This is the caption}
 		\label{simulated data compare}
 	\end{figure}
-\end{center}
+
 
 
 \section{Multi-modal Shape Distributions}
 
 \subsection{Berkeley Growth Study, with second cluster}
 
-
-
-
 For our second example, we add a second cluster to the Berkeley Growth data, with a distinct shape mean. For simplicity, we take the negative of the original set of growth curves, and then switch the labels, such that if f(t) is a function in the original data set with label 'male', then -f(t) will be added to the dataset, with label 'female'. Figure \ref{aligned function2} shows these curves after alignment. 
 
-Clearly, the shape mean of this data set is less representative of the data than our previous shape mean. Thus, we should expect that features learned from this alignment will be less informative about class than the features learned in our previous alignment. Using the same model as we did in our previous example yields a LOO test set accuracy of just 67.74\%. While this is surprisingly good, it is significantly worse than the 86\% we got in our previous example. Furthermore, because our second cluster is just the negative of our first cluster, we should expect that the classification on each cluster individually would be about 86\%. Thus, if we add a step to our algorithm to first determine clusters based on shape, and then apply our alignment and feature learning to each cluster, we should be able to significantly improve our classification performance. Figure \ref{distance matrix} shows the Elastic pairwise distance matrix, with the first 93 rows corresponding to cluster 1, and the second 93 columns corresponding to cluster 2. Given the method by which we produced the second cluster, it shouldn't be surprising that clustering based on shape distances exactly recovers the clusters. \\
+Clearly, the shape mean of this data set is less representative of the data than our previous shape mean. Thus, we should expect that features learned from this alignment will be less informative about class than the features learned in our previous alignment. Using the same model as we did in our previous example yields a LOO test set accuracy of just 67.74\%. While this is surprisingly good, it is significantly worse than the 86\% we got in our previous example. Furthermore, because our second cluster is just the negative of our first cluster, we should expect that the classification on each cluster individually would also be 86\%. Thus, if we add a step to our algorithm to first determine clusters based on shape, and then apply our alignment and feature learning to each cluster, we should be able to significantly improve our classification performance. Figure \ref{aligned function2} shows the Elastic pairwise distance matrix, with the first 93 rows corresponding to cluster 1, and the second 93 columns corresponding to cluster 2. Given the method by which we produced the second cluster, it shouldn't be surprising that clustering based on shape distances exactly recovers the clusters. \\
 
 \noindent
 1) Shape Mode Learning: Pairwise shape distance clustering\\
@@ -128,22 +140,25 @@ Then, within each cluster;\\
 5) Classification: SVM with Gaussian Kernel for Classification\\
 
 \begin{figure}
-	\includegraphics[width = \linewidth]{./Aligned_2_cluster.png}
+	\includegraphics[width = .7\linewidth]{./Aligned_2_cluster.png}
+	\includegraphics[width = .3\linewidth]{./Distance Matrix.png}
 	\caption{This is the caption}
 	\label{aligned function2}
 \end{figure}
 
-\begin{figure}
-	\begin{center}	
-	\includegraphics[width = .5\linewidth]{./Distance Matrix.png}
-	\caption{This is the caption}
-	\label{distance matrix}		
-	\end{center}
-\end{figure}
+%\begin{figure}[h!]
+%	\begin{center}	
+	
+%	\caption{This is the caption}
+%	\label{distance matrix}		
+%	\end{center}
+%\end{figure}
 
 \subsection{DTMRI Data}\label{DTMRI}
 
-This analysis differs from our previous analysis in that we take a more general learning approach for both alignment and feature extraction. Because we don't have a multiple alignment approach for our DTMRI data, we instead treat each subject as a possible cluster 'median', align other subjects individually, and then learn which medians produce informative feature spaces. Secondly, in our previous examples, our feature extraction was non-parametric. In this case, rather than learning optimally informative features, we learn optimally informative feature representations, which for this example corresponds to within region clustering, parameterized by our k for k-means).
+This analysis differs from our previous analysis in that we take a more general learning approach for both alignment and feature extraction. Because we don't have a multiple alignment approach for our DTMRI data, we instead treat each subject as a possible cluster 'median', align other subjects individually, and then learn which medians produce informative feature spaces. Secondly, in our previous examples, our feature extraction was non-parametric. In this case, rather than learning optimally informative features, we learn optimally informative feature representations, which for this example corresponds to within region clustering, (parameterized by k for k-means).
+
+
 
 The basic pipeline is as follows;\\
 
