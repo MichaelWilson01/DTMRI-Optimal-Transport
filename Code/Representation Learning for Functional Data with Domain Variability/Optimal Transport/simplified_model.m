@@ -5,7 +5,7 @@ load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Cingulum
 % load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Fornix_L_1_35.mat')
  
 [~,N] = size(alignedFibers);
-J=5;
+J=15;
 maxK=15;
 
 for i = 1:N
@@ -24,25 +24,10 @@ for i = 1:N
     
 end
 
+save('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_NEW_Cingulum')
 
- 
-% % % save(strcat('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_heir_Cingulum_J_',string(J)),'features', 'labels', 'W', 'N', 'maxK')
-% load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Cingulum_J_5.mat')
-% 
-% load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Fornix_J_5.mat')
-% load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Fornix_L_1_35.mat','W')
-% N=35;
-% maxK=5;
-% 
-% 
-% % load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features1.mat')
-% % N=46;
-% % J=5;
-% % maxMNS=10;
-% % maxK=15;
-% % 
-% % load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_Cingulum_J_5.mat','W')
-
+% clear all
+% load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\features_NEW_Cingulum')
 
 Features=[];
 acc=[];
@@ -65,10 +50,10 @@ for i = 1:N
    
     acc
     
-%     if max(acc(i,:))>0.55
-%     A=find(acc(i,:)==max(acc(i,:)));
-%     Features = [Features, features{i,A(1)}];
-%     K_list(i)=A(1);
+%     if max(acc(i,:))>0.6
+    A=find(acc(i,:)==max(acc(i,:)));
+    Features = [Features, features{i,A(1)}];
+    K_list(i)=A(1);
 %     end
     
 end
@@ -90,21 +75,12 @@ end
 Features= [Features,W']
 Acc_LOO=[];
 Acc_10fold=[];
-j=1
 
 for m = 1:15
-% % for j = 80
-% t = templateTree('MaxNumSplits',m);
-% % % % % % % t = templateDiscriminant();
-% % % % % % % t = templateKNN('NumNeighbors',m);
-% Mdl = fitcensemble(Features,labels,'Learners',t, 'NumLearningCycles',10)
-% % % Mdl = fitcensemble(Features,labels,'Learners',t, 'OptimizeHyperparameters',{'NumLearningCycles'})
-
 
 Mdl = fitctree(Features,labels,'MaxNumSplits',m)
-Acc_LOO(m,j) = 1-kfoldLoss(crossval(Mdl,'leaveout','on'))
-% Acc_10fold(m) = 1-kfoldLoss(crossval(Mdl))
-% end
+Acc_LOO(m) = 1-kfoldLoss(crossval(Mdl,'leaveout','on'))
+
 end
 
 % parfor m = 1:120

@@ -17,6 +17,7 @@ K = max(F);
         for j = 1:K
 
             features(i,j) = sum(idx_proj{i}==j);
+%             features(i,j) = sum(idx_proj{i}==j)/len(idx_proj{i});
 %             features(i,j) = sum(idx_proj==j);
 
         end
