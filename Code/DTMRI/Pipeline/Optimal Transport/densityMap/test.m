@@ -6,21 +6,21 @@ load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Cingulum
 % Project data into PC's
 [pcaCoords,U,muX] = get_pooled_pca_coords(Fibers,.99);
 
-% 
-[modeIdx, modeDen] = get_modes(pcaCoords{1});
-Xm = pcaCoords{1}(modeIdx{1}(:,20)==1,:);
-mu = modeDen{1}(modeIdx{1}(:,20)==1,20)/sum( modeDen{1}(modeIdx{1}(:,20)==1,20))
-mu = mu/sum(mu);
+Y=pcaCoords{2};
+X=pcaCoords{3};
+X0=X;
 
-[modeIdx, modeDen] = get_modes(pcaCoords{2});
-Ym = pcaCoords{2}(modeIdx{1}(:,20)==1,:);
-nu = modeDen{1}(modeIdx{1}(:,20)==1,20)/sum( modeDen{1}(modeIdx{1}(:,20)==1,20))
-nu=nu/sum(nu);
+% mode Selection
+K=50;
+
+[modesX, densX] = get_modes(X);
+[Xm, mu] = get_modes_and_measure(X,modesX,densX,K);
+
+[modesY, densY] = get_modes(Y);
+[Ym, nu] = get_modes_and_measure(Y,modesY,densY,K);
 
 T = optimal_transport(Xm,Ym,mu,nu,U,muX)
 
-X=pcaCoords{1};
-Y=pcaCoords{2};
 
     figure(1)
     clf
@@ -49,7 +49,7 @@ for i = 1:200
     
     subplot(1,3,3)
     cla
-    plot(X(:,1),X(:,2),'.')
+    plot(X0(:,1),X0(:,2),'.')
     hold on
     plot(Z(:,1),Z(:,2),'.')
     
@@ -58,15 +58,24 @@ for i = 1:200
     clf
     plot_curve(mat_to_curve((U'*Y'+muX)'),1,'black')
     hold on
-    plot_curve(mat_to_curve((U'*X0'+muX)'),1,0)
+    plot_curve(mat_to_curve((U'*X'+muX)'),1,0)
     end
     
-    pause(2)
+    pause(.5)
 
 end
 
+figure(2)
+clf
+plot_curve(mat_to_curve((U'*Y'+muX)'),1,0)
 
+figure(3)
+clf
+plot_curve(mat_to_curve((U'*X'+muX)'),1,0)
 
+figure(4)
+clf
+plot_curve(mat_to_curve((U'*X0'+muX)'),1,0)
 
 
 

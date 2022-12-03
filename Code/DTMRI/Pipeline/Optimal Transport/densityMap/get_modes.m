@@ -2,8 +2,6 @@ function [modeIdx, modeDen] = get_modes(pcaCoords)
 
 % parfor subject = 1:length(pcaCoords)
     
-    subject=1;
-    
     X=pcaCoords;%{subject};
 
     [N,~] = size(X);
@@ -26,13 +24,13 @@ function [modeIdx, modeDen] = get_modes(pcaCoords)
 
     A = sum(modeIDXs);
 
-    for K = 2:20
+    for K = 2:N
 
         idTemp = find(A==K);
 
         if ~isempty(idTemp)
-            modeIdx{subject}(:,K)=modeIDXs(:,idTemp(1));
-            modeDen{subject}(:,K)=D_star(:,idTemp(1));
+            modeIdx(:,K)=modeIDXs(:,idTemp(1));
+            modeDen(:,K)=D_star(:,idTemp(1));
         end
 
     end
