@@ -11,11 +11,15 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Even though there is a strong signal in the first peak, it gets drowned out by the second and third peaks when using shape distances as features. Feature Learning attempts to correct for this. }}{4}\protected@file@percent }
 \newlabel{simulated data}{{3}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Simulated Uni-modal Shape Distributions}{4}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces This is the caption}}{5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Given only 1 informative peak, the signal to noise ratio for the Elastic Distance model decreases as the number of peaks increases.}}{5}\protected@file@percent }
 \newlabel{simulated data compare}{{4}{5}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Multi-modal Shape Distributions}{5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Berkeley Growth Study, with second cluster}{5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces This is the caption}}{6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces On the left, we have the aligned modified growth curves. Due to how we generated the data, we end up with peaks of positive curves being aligned to valleys of negative curves, thus producing sub-optimal features. On the right, we have the Elastic distance matrix, which clearly finds shows two clusters. }}{6}\protected@file@percent }
 \newlabel{aligned function2}{{5}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}DTMRI Data}{6}\protected@file@percent }
 \newlabel{DTMRI}{{3.2}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Features are extracted on the target using k-means, transferred to the other subjects using a k-nn classifier, and then features that are useful for classification of disease status are selected.}}{7}\protected@file@percent }
+\newlabel{aligned function}{{6}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces A 4 split decision tree, based on features of subjects aligned to subject 29 with 7 clusters, achieves 76.94 Leave-one-out test set accuracy. By learning which features to use for which clusters of subjects, we might be able to strengthen this result.}}{7}\protected@file@percent }
+\newlabel{aligned function}{{7}{7}}

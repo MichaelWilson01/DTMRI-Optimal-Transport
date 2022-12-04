@@ -31,7 +31,7 @@ Feature learning, or representation learning, is a set of techniques that allow 
 
 Key to this work is the fact that in the Elastic Shape Analysis framework, a shape is uniquely defined by the values of its local extrema. As our examples will illustrate, Elastic feature learning after alignment can give simple, interpretable models with high test set accuracy for data whose shapes are drawn from uni-modal shape distributions, but don't work well for multi-modal shape distributions, where different shape distributions may have different features that need to be learned. Conversely, shape distances are useful for separating multi-modal shape distributions into uni-modal clusters, but don't provide as good classification accuracy if only some features of the shape are informative. By using shape distances to separate data into uni-modal clusters, and then applying alignment and feature learning to each cluster individually, we are able to get simple, interpretable models with good classification accuracy on data whose shapes are drawn from multi-modal shape distributions. 
 
-We use 4 examples to illustrate our approach. We start by applying Elastic Feature learning to two uni-modal distributions. The first is the Berkeley Growth Study data, learning Elastic Features in order to classify male and female. The second is a simulated data set, designed to show exactly why Elastic Feature Learning outperforms Elastic distance for classification. We then use two examples of multi-modal distributions; a modified version of the Berkeley Growth study data, intended to show the benefit of clustering shapes, and then an application to classifying PTSD based on DTMRI data.
+We use 4 examples to illustrate our approach. We start by applying Elastic Feature learning to two uni-modal distributions. The first is the Berkeley Growth Study data, learning Elastic Features in order to classify male and female. The second is a simulated data set, designed to show exactly why Elastic Feature Learning outperforms Elastic distance for classification. We then use an example of two multi-modal distributions; a modified version of the Berkeley Growth study data, intended to show the benefit of clustering shapes before feature learning, and then an application to classifying PTSD based on DTMRI data.
 
 
 
@@ -117,7 +117,7 @@ The Elastic Distance involves an integral over the entire domain. If there is in
 
 	\begin{figure}
 		\includegraphics[width = \linewidth]{./simulated_model_compare.png}
-		\caption{This is the caption}
+		\caption{Given only 1 informative peak, the signal to noise ratio for the Elastic Distance model decreases as the number of peaks increases.}
 		\label{simulated data compare}
 	\end{figure}
 
@@ -127,7 +127,7 @@ The Elastic Distance involves an integral over the entire domain. If there is in
 
 \subsection{Berkeley Growth Study, with second cluster}
 
-For our second example, we add a second cluster to the Berkeley Growth data, with a distinct shape mean. For simplicity, we take the negative of the original set of growth curves, and then switch the labels, such that if f(t) is a function in the original data set with label 'male', then -f(t) will be added to the dataset, with label 'female'. Figure \ref{aligned function2} shows these curves after alignment. 
+For our third example, we add a second cluster to the Berkeley Growth data, with a distinct shape mean. For simplicity, we take the negative of the original set of growth curves, and then switch the labels, such that if f(t) is a function in the original data set with label 'male', then -f(t) will be added to the dataset, with label 'female'. Figure \ref{aligned function2} shows these curves after alignment. 
 
 Clearly, the shape mean of this data set is less representative of the data than our previous shape mean. Thus, we should expect that features learned from this alignment will be less informative about class than the features learned in our previous alignment. Using the same model as we did in our previous example yields a LOO test set accuracy of just 67.74\%. While this is surprisingly good, it is significantly worse than the 86\% we got in our previous example. Furthermore, because our second cluster is just the negative of our first cluster, we should expect that the classification on each cluster individually would also be 86\%. Thus, if we add a step to our algorithm to first determine clusters based on shape, and then apply our alignment and feature learning to each cluster, we should be able to significantly improve our classification performance. Figure \ref{aligned function2} shows the Elastic pairwise distance matrix, with the first 93 rows corresponding to cluster 1, and the second 93 columns corresponding to cluster 2. Given the method by which we produced the second cluster, it shouldn't be surprising that clustering based on shape distances exactly recovers the clusters. \\
 
@@ -142,7 +142,7 @@ Then, within each cluster;\\
 \begin{figure}
 	\includegraphics[width = .7\linewidth]{./Aligned_2_cluster.png}
 	\includegraphics[width = .3\linewidth]{./Distance Matrix.png}
-	\caption{This is the caption}
+	\caption{On the left, we have the aligned modified growth curves. Due to how we generated the data, we end up with peaks of positive curves being aligned to valleys of negative curves, thus producing sub-optimal features. On the right, we have the Elastic distance matrix, which clearly finds shows two clusters. }
 	\label{aligned function2}
 \end{figure}
 
@@ -156,6 +156,14 @@ Then, within each cluster;\\
 
 \subsection{DTMRI Data}\label{DTMRI}
 
+\begin{figure}
+	\includegraphics[width = \linewidth]{./DTMRI_features_6}
+	\caption{Features are extracted on the target using k-means, transferred to the other subjects using a k-nn classifier, and then features that are useful for classification of disease status are selected.}
+	\label{aligned function}
+\end{figure}
+
+
+
 This analysis differs from our previous analysis in that we take a more general learning approach for both alignment and feature extraction. Because we don't have a multiple alignment approach for our DTMRI data, we instead treat each subject as a possible cluster 'median', align other subjects individually, and then learn which medians produce informative feature spaces. Secondly, in our previous examples, our feature extraction was non-parametric. In this case, rather than learning optimally informative features, we learn optimally informative feature representations, which for this example corresponds to within region clustering, (parameterized by k for k-means).
 
 
@@ -164,11 +172,16 @@ The basic pipeline is as follows;\\
 
 \noindent
 For each subject;\\
-1) Domain Adaption: Pairwise Functional Optimal Transport with all other subjects\\
-2) Feature Extraction: $k$-means\\
-3) Feature Selection: Select optimal $k$ based on 1-cut Decision Tree test set accuracy\\
-4) Classification: Decision Tree, $maxNumCuts = 4$\\
+1) Domain Adaption: Pairwise Functional Optimal Transport\\
+2) Feature Extraction: $k$-means on target, $k$-nn classifier on aligned subjects\\
+3) Feature Selection: Select optimal features based on 1-cut Decision Tree test set accuracy\\
+4) Classification: Decision Tree\\
 
+\begin{figure}[h!]
+	\includegraphics[width = \linewidth]{./subject29}
+	\caption{A 4 split decision tree, based on features of subjects aligned to subject 29 with 7 clusters, achieves 76.94 Leave-one-out test set accuracy. By learning which features to use for which clusters of subjects, we might be able to strengthen this result.} 
+	\label{aligned function}
+\end{figure}
 
 \end{document}
 

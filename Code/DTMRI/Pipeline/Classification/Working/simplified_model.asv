@@ -8,7 +8,7 @@ load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Cingulum
 J=5;
 maxK=15;
 
-for i = 31;%1:N
+for i = 29;%1:N
     
     X{i} = alignedFibers{i}{i};
 %     X{i} = Fibers{i};
@@ -94,7 +94,7 @@ Acc_10fold=[];
 
 for i = 1:46
 
-Features=features{31,7}
+Features=features{i,7}
 
 for m = 1:15
 % % for j = 80
