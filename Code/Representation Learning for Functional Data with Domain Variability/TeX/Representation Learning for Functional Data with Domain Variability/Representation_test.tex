@@ -41,8 +41,8 @@ We use 4 examples to illustrate our approach. We start by applying Elastic Featu
 
 \begin{figure}
 	\includegraphics[width = \linewidth]{./Aligned Functions.png}
-	\caption{This is the caption}
-	\label{aligned function}
+	%\caption{This is the caption}
+	\label{EX1: aligned features}
 \end{figure}
 
 \begin{table}
@@ -60,7 +60,7 @@ We use 4 examples to illustrate our approach. We start by applying Elastic Featu
 
 \begin{figure}
 	\includegraphics[width = \linewidth]{./Feature Space.png}
-	\caption{This is the caption}
+	%\caption{This is the caption}
 	\label{EX1: classifier plot}
 \end{figure}
 
@@ -73,9 +73,9 @@ For our first example, we consider classifying the Berkeley Growth Study dataset
 3) Feature Selection: Forward selection, based on 1-cut Decision Tree test set accuracy\\
 4) Classification: SVM with Gaussian Kernel for Classification\\
 
-Our first step is to perform multiple alignment on our functions, and calculate a shape mean for the data. Given our shape mean, there are many ways to perform feature extraction. For simplicity, we will just treat the values of our aligned functions at time points corresponding to the local extrema of our shape mean as our features. The results of these steps are presented in Figure $\ref{aligned function}$. 
+Our first step is to perform multiple alignment on our functions, and calculate a shape mean for the data. Given our shape mean, there are many ways to perform feature extraction. For simplicity, we will just treat the values of our aligned functions at time points corresponding to the local extrema of our shape mean as our features. The results of these steps are presented in Figure $\ref{EX1: aligned features}$. 
 
-After alignment, our feature extraction method finds 12 features, denoted with black dots in Figure $\ref{aligned function}$. Now we wish to determine which of our features are informative for classification. There are many ways to measure the informativeness of a feature, with classification accuracy of a 1-cut decision tree being among the simplest. The results of these models are presented in Table \ref{feature_LOO}. Thus, our next step is to use forward selection (forward w.r.t. Leave-One-Out classification accuracy of 1-cut decision trees) to select a subset of maximally informative features, defined in terms of 10-fold cross validation performance.
+After alignment, our feature extraction method finds 12 features, denoted with black dots in Figure $\ref{EX1: aligned features}$. Now we wish to determine which of our features are informative for classification. There are many ways to measure the informativeness of a feature, with classification accuracy of a 1-cut decision tree being among the simplest. The results of these models are presented in Table \ref{feature_LOO}. Thus, our next step is to use forward selection (forward w.r.t. Leave-One-Out classification accuracy of 1-cut decision trees) to select a subset of maximally informative features, defined in terms of 10-fold cross validation performance.
 
 Figure \ref{EX1: classifier plot} shows the results of running a Gaussian Kernel SVM using only features 9 and 12, the two most common features selected in our validation models (in fact, selected by our learner in every validation model). Our learner achieves just over 86\% Leave-One-Out test set accuracy. Furthermore, the features are very interpretable; feature 9 might be called an 'early puberty high', while feature 12 might be called a 'late puberty low'. Males tend to have higher growth rates at both of these time points, and a classifier built on these two features gets high classification accuracy.
 
