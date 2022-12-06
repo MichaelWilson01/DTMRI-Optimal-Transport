@@ -9,13 +9,13 @@ load('Data.mat')
 % for i = 40:93
 %     X2(i,:) = sin((6+randn)*pi*T)+(2+randn)*cos(8*pi*T+2*rand) + 8 +2*randn;
 % end
-
-X2 = -X;
-
-X=[X;X2];
-labels = [labels,(labels==0)];
-
-plot(X')
+% 
+% X2 = -X;
+% 
+% X=[X;X2];
+% labels = [labels,(labels==0)];
+% 
+% plot(X')
 
 [N,M] = size(X);
 
