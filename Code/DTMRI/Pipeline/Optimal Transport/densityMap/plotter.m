@@ -11,6 +11,7 @@ for i = 1:K
 plot_curve(mat_to_curve((U'*Ym(idx==i,:)'+muX)'),1,C(i,:))
 end
 title("Target Subject, with features",'FontSize',28)
+
 subplot(1,3,2)
 for i = 1:K
 A=(U'*X{end}(idx3==i,:)'+muX)';
@@ -22,6 +23,7 @@ end
 ylim([30,75])
 xlim([35,60])
 title("Source Subject, after Alignment",'FontSize',28)
+
 subplot(1,3,1)
 for i = 1:K
 A=(U'*X{1}(idx2==i,:)'+muX)';
