@@ -1,22 +1,9 @@
-function [m0,m1,sigma0,sigma1] = generate_GMM_sphere(dim,mixNum0,mixNum1);
+function [m,sigma,b] = generate_GMM_sphere(dim);
 
-m0=randn(dim,mixNum0);
-m0=m0./vecnorm(m0);
+B = gram_schmidt(randn(dim));
 
-m1=randn(dim,mixNum1);
-m1=m1./vecnorm(m1);
+m=B(:,1);
+b=B(:,2:end);
 
-sigma0=zeros(dim,dim,mixNum0);
-sigma1=zeros(dim,dim,mixNum1);
+sigma = diag(sort((pi/32)*(1+rand(1,dim-1)),'descend'));
 
-for i = 1:mixNum0
-
-sigma0(:,:,i) = diag(sort(randn(1,dim).^2,'descend'));
-
-end
-
-for i = 1:mixNum1
-
-sigma1(:,:,i) = diag(sort(randn(1,dim).^2,'descend'));
-
-end
