@@ -22,7 +22,7 @@
 %
 %\end{abstract}
 
-Suppose we have 2 sets of points $X,Y \in \mathbb{R}^{n \times d}$ with rows $X_i, Y_i \in S^{d-1}$, centered (in terms of spherical coordinates) at $m_x, m_y \in S^{d-1}$. Define $\tilde{X}_i = Exp_{m_x}^{-1}(X_i)-m_x$ and $\tilde{Y}_i = Exp_{m_y}^{-1}(Y_i)-m_y$. Let $b_x \in \mathbb{R}^{d \times d-1}$ (resp. $b_y$) be (the first d-1 basis vectors of) the PCA basis for $\tilde{X}$ (resp. $\tilde{Y}$). 
+Suppose we have 2 sets of points $X,Y \in \mathbb{R}^{n \times d}$ with rows $X_i, Y_i \in S^{d-1}$, centered (in terms of spherical coordinates) at $m_x, m_y \in S^{d-1}$. Let $b_x \in \mathbb{R}^{d \times d-1}$ (resp. $b_y$) be (the first d-1 basis vectors of) the PCA basis for $Exp_{m_x}^{-1}(X_i)-m_x$ (resp. $(Exp_{m_y}^{-1}(Y_i)-m_y$). Define $\tilde{X}_i = (Exp_{m_x}^{-1}(X_i)-m_x)*b_x$ and $\tilde{Y}_i = (Exp_{m_y}^{-1}(Y_i)-m_y)*b_y$.
 
 Let $\alpha(t)$ denote the geodesic path along $S^{d-1}$ from $m_x$ to $m_y$. Let $b_{x}^{||} + m_y$ denote the resulting vectors after parallel transport of $b_{x} + m_x$ along $\alpha$. Then we can calculate the sample covariance of the vectors in X, after parallel transport along $\alpha$, in terms of $b_y$, as ;  
 
