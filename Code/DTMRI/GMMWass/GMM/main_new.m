@@ -1,8 +1,8 @@
 clear all
 
 dim=3;
-mixNumComp0=3;
-mixNumComp1=4;
+mixNumComp0=2;
+mixNumComp1=2;
 N=100;
 g=.1;% entropic regularization parameter 
 
@@ -10,18 +10,20 @@ g=.1;% entropic regularization parameter
 for i = 1:mixNumComp0
     
     [m0(:,i),sigma0(:,:,i),b0(:,:,i)] = generate_GMM_sphere(dim);
+%     [m0(:,i),sigma0(:,:,i),b0(:,:,i)] = generate_GMM_sphere_manual([-1,-1,-1],dim);
     
 end
 
 for i = 1:mixNumComp1
     
     [m1(:,i),sigma1(:,:,i),b1(:,:,i)] = generate_GMM_sphere(dim);
+%     [m1(:,i),sigma1(:,:,i),b1(:,:,i)] = generate_GMM_sphere_manual([1,1,1],dim);
     
 end
 
 %Generate Random data
-[X, idx] = generate_data(m0,sigma0,b0,[100,100,130]);
-[Y, idy] = generate_data(m1,sigma1,b1,[100,100,100,100]);
+[X, idx] = generate_data(m0,sigma0,b0,N*ones(1,mixNumComp0));
+[Y, idy] = generate_data(m1,sigma1,b1,N*ones(1,mixNumComp1));
 
 figure(1)
 clf
@@ -70,12 +72,12 @@ for i = 1:mixNumComp1
     
 end
 
-
 %Get Cost Matrix
 
 C = get_cost_matrix_sphere(m0_hat,m1_hat,sigma0_hat,sigma1_hat,b0_hat,b1_hat);
+
 Pi = sinkhorn(C,1);
 SGMW = sum(sum(Pi.*C))
 
-
-
+title(string(SGMW),'FontSize',28)
+view(90,2)
