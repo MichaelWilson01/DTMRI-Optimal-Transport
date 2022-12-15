@@ -6,7 +6,7 @@ load('C:\Users\micha\Documents\GitHub\Optimal-Transport\Code\Other\Data\Cingulum
 % Project data into PC's
 [pcaCoords,U,muX] = get_pooled_pca_coords(Fibers,.99);
 
-Y=pcaCoords{2};
+Y=pcaCoords{5};
 X=pcaCoords{3};
 X0=X;
 
@@ -20,6 +20,9 @@ K=500;
 [Ym, nu] = get_modes_and_measure(Y,modesY,densY,K);
 
 [T, X] = optimal_transport(Xm,Ym,{mu},nu,U,muX)
+
+
+plotter
 
 % mu = densX(:,2)/sum(densX(:,2));
 % nu = densY(:,2)/sum(densY(:,2));
@@ -69,21 +72,21 @@ K=500;
 % %     pause(.5)
 % 
 % end
-
-C = lines(10)
-figure(2)
-clf
-% for i = 1:10
-plot_curve(mat_to_curve((U'*Ym'+muX)'),1,0)
-% end
-
-figure(3)
-clf
-plot_curve(mat_to_curve((U'*X{end}'+muX)'),1,0)
-
-figure(4)
-clf
-plot_curve(mat_to_curve((U'*X{1}'+muX)'),1,0)
+% 
+% C = lines(10)
+% figure(2)
+% clf
+% % for i = 1:10
+% plot_curve(mat_to_curve((U'*Ym'+muX)'),1,0)
+% % end
+% 
+% figure(3)
+% clf
+% plot_curve(mat_to_curve((U'*X{end}'+muX)'),1,0)
+% 
+% figure(4)
+% clf
+% plot_curve(mat_to_curve((U'*X{1}'+muX)'),1,0)
 % 
 % 
 % 

@@ -4,8 +4,8 @@ C = get_cost_matrix(X,Y);
 % C = get_cost_matrix((T*X')',Y);
 % C = get_cost_matrix4(X,Y,U,muX);
 
-% Pi = sinkhorn(C,g);
-Pi = sinkhorn2(C,g,mu,nu);
+Pi = sinkhorn(C,g);
+% Pi = sinkhorn2(C,g,mu,nu);
 
 % T = get_map_step(X,Y,T,Pi,lr,eta);
 [T, X_new] = get_map_step_local(X,Y,T,Pi,lr,eta);

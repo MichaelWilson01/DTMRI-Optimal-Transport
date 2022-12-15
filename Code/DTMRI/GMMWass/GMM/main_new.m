@@ -1,7 +1,7 @@
 clear all
 
 dim=3;
-mixNumComp0=2;
+mixNumComp0=3;
 mixNumComp1=2;
 N=100;
 g=.1;% entropic regularization parameter 
@@ -76,7 +76,7 @@ end
 
 C = get_cost_matrix_sphere(m0_hat,m1_hat,sigma0_hat,sigma1_hat,b0_hat,b1_hat);
 
-Pi = sinkhorn(C,1);
+Pi = sinkhorn(C,1)
 SGMW = sum(sum(Pi.*C))
 
 title(string(SGMW),'FontSize',28)

@@ -18,7 +18,7 @@ eta=5;
 %2) calculate covariance matrices for each cluster
 [pcaCoords,U,muX] = get_pooled_pca_coords(Fibers,.99);
 
-Y = pcaCoords{1};
+Y = pcaCoords{5};
 X{1}= pcaCoords{2};
 
 [~,N] = size(Y);

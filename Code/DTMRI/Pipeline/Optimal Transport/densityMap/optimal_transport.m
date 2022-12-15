@@ -4,7 +4,7 @@ function [T, X] = optimal_transport(X,Y,mu,nu,U,muX)
 [~,N] = size(Y);
 
 g=.1;
-lr=1e-7;
+lr=1e-4;
 eta=2;%5;
 
 T{1} =eye(N);
@@ -25,11 +25,11 @@ T{1} =eye(N);
 for i = 1:30%200
     i
     [X{i+1},T{i+1}] = optimize_step(X{i},Y,mu{1},nu,T{1},lr,eta,g,U,muX);
-%     F = @(x)T{i+1}*x;
-%     for j = 1:M
-%     sqrtJ(j) = sqrt(norm(jacobianest(F,X{i}(j,:)')));
-%     end
-%     mu{i+1} = mu{i}.*sqrtJ';
+    F = @(x)T{i+1}*x;
+    for j = 1:M
+    sqrtJ(j) = sqrt(norm(jacobianest(F,X{i}(j,:)')));
+    end
+    mu{i+1} = mu{i}.*sqrtJ';
     
     figure(1)
 %     
