@@ -1,8 +1,8 @@
 clear all
 
 dim=3;
-mixNumComp0=2;
-mixNumComp1=3;
+mixNumComp0=3;
+mixNumComp1=5;
 N=100;
 g=.1;% entropic regularization parameter 
 
@@ -10,7 +10,7 @@ g=.1;% entropic regularization parameter
 for i = 1:mixNumComp0
     
     [m0(:,i),sigma0(:,:,i),b0(:,:,i)] = generate_GMM_sphere(dim);
-%     [m0(:,i),sigma0(:,:,i),b0(:,:,i)] = generate_GMM_sphere_manual([1,1,1],dim);
+%     [m0(:,i),sigma0(:,:,i),b0(:,:,i)] = generate_GMM_sphere_manual([-1,-1,-1],dim);
     
 end
 
