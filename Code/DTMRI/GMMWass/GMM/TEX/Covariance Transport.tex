@@ -12,21 +12,60 @@
 
 \usepackage{graphicx}
 
+
 %opening
-\title{Shape Analysis using a Wasserstein-type distance for Gaussian Mixtures on the Hyper-sphere}
+\title{A Wasserstein-type distance in the space of Wrapped Gaussian Mixtures}
 \author{Michael Wilson}
+\date{}
 
 \begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+	We present a closed form expression for the Wasserstein Distance between two Wrapped Normal Distributions on the sphere. We then show how to use this distance to extend some results for mixtures of Gaussians in $\mathbb{R}^d$ to mixtures of Wrapped Normal distributions on the sphere.  
+	\end{abstract}
 
-\maketitle
+%\section{Introduction}
 
-%\begin{abstract}
-%
-%\end{abstract}
+\section{Theoretical Details}
 
-\section{Introduction}
+Let $\mu = \mathcal{WN}(m,\Sigma)$ be a wrapped normal distribution defined on the $d-1$ dimensional sphere $S^{d-1}$. We can define the density of $\mu$ in terms of the tangent space $T_m(S_{d-1})$, with orthonormal basis B as; 
+
+\begin{equation*}
+	\rho_\mu(x) = det(2 \pi \Sigma) exp(-\frac{1}{2} \langle B Exp_m^{-1}(x), \Sigma^{-1} B Exp_m^{-1}(x) \rangle) 
+\end{equation*}
+
+Here $exp$ corresponds to the exponential function, while $Exp$ corresponds to the Exponential Map for $S^{d-1}$.
+
+\subsection{Wrapped Normal Wasserstein Distance}
+
+Given $\mu_i = WN(m_i,\Sigma_i)$, $i = \{0,1\}$, where $m_i \in S_{d-1}$, and $\Sigma_i^{d-1 \times d-1}$, (and with densities $\rho_i$), the Wasserstein Distance between $\mu_0$ and $\mu_1$ can be calculated as;
+
+\begin{equation}\label{eq: wrapped normal wasserstein}
+	WNW_2(\mu_0, \mu_1) = cos^{-1}(\langle m_0, m_1 \rangle) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
+\end{equation} 
+
+\textbf{Proof:}\\
+
+In order to prove this, we must find a continuous map $T:S^{d-1}\times S^{d-1}$ such that;
+
+1) $T$ pushes forward $\mu_0$ to $\mu_1$ ($\iff \rho_0(x) = \rho_1(Tx)|det T'|$)
+
+2) T is optimal 
+
+3) The transport cost of T is WNW\\
 
 
+
+\section{Implementation Details}
+
+ \cite{https://doi.org/10.48550/arxiv.1907.05254}
+\cite{https://doi.org/10.48550/arxiv.0801.2250}
+
+
+\bibliographystyle{plain}
+\bibliography{refs} % Entries are in the refs.bib file
 
 
 \end{document}
