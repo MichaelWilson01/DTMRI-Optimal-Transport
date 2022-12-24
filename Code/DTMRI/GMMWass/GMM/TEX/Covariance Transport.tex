@@ -40,32 +40,124 @@ Here $exp$ corresponds to the exponential function, while $Exp$ corresponds to t
 
 \subsection{Wrapped Normal Wasserstein Distance}
 
-Given $\mu_i = WN(m_i,\Sigma_i)$, $i = \{0,1\}$, where $m_i \in S_{d-1}$, and $\Sigma_i^{d-1 \times d-1}$, (and with densities $\rho_i$), the Wasserstein Distance between $\mu_0$ and $\mu_1$ can be calculated as;
+Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be normal distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i \sim Exp(m_i)_\#\mu_i$, and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
 
-\begin{equation}\label{eq: wrapped normal wasserstein}
-	WNW_2(\mu_0, \mu_1) = cos^{-1}(\langle m_0, m_1 \rangle) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
+\begin{equation}
+	W_2(\tilde{\mu}_0, \tilde{\mu}_1) =  cos^{-1}(\langle m_0,m_1\rangle) + (\Sigma_0 + \Sigma_1 - 2 (\Sigma_0^{\frac{1}{2}} \Sigma_1 \Sigma_0^{\frac{1}{2}})^{\frac{1}{2}}) 
 \end{equation} 
 
-\textbf{Proof:}\\
+%where
+%
+%\begin{equation}
+%	\Sigma^{||} = 
+%\end{equation}
 
-In order to prove this, we must find a continuous map $T:S^{d-1}\times S^{d-1}$ such that;
 
-1) $T$ pushes forward $\mu_0$ to $\mu_1$ ($\iff \rho_0(x) = \rho_1(Tx)|det T'|$)
+\textbf{Proof:}
 
-2) T is optimal 
+\begin{equation}
+	W_2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\pi \in \Pi(\mu_0, \mu_1)} E||\tilde{X}_1-\tilde{X}_2||  
+\end{equation}  
 
-3) The transport cost of T is WNW\\
+%\begin{equation}
+%	W_2(\mu_0, \mu_1) =  \inf_{\pi \in \Pi(\mu_0, \mu_1)} ||EX - EY|| + E||(X-EX)-(Y-EY)||  
+%\end{equation}  
+%
+%\begin{equation}
+%	= cos^{-1}(\langle m_0,m_1\rangle) + \inf_{\pi \in \Pi(\mu_0, \mu_1)} \int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(y)), x)\rangle) \ d\pi(x,y)
+%\end{equation}
+%
+%\newpage
+
+%\begin{equation}
+%	= \inf_{\pi \in \Pi(\mu_0, \mu_1)} \int_{\mathcal{X} \times \mathcal{Y}} ||x-y|| \ d\pi(x,y) 
+%\end{equation} 
+
+\begin{equation}
+	= \inf_{\pi \in \Pi(\mu_0, \mu_1)} \int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle x,y\rangle) \ d\pi(x,y) 
+\end{equation} 
+
+Now, since $cos^{-1}(\langle x,y \rangle) = ||Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(x)||$ and $R_\alpha(Exp_{m_1}^{-1}(y)) = Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(m_1)$, we have that
+
+\begin{equation}
+	cos^{-1}(\langle x,y \rangle) = ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x) + Exp_{m_0}^{-1}(m_1)||
+\end{equation}
+
+Thus,
+
+\begin{equation}
+	\int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle x,y \rangle) d\pi(x,y) = \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x) + Exp_{m_0}^{-1}(m_1)|| d\pi(x,y)
+\end{equation}
+
+\begin{equation}
+	= \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)\big)||  + \big\langle R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)), (Exp_{m_0}^{-1}(m_1)\big\rangle +  ||Exp_{m_0}^{-1}(m_1)|| d\pi(x,y)
+\end{equation}
+
+\begin{multline}
+	= ||Exp_{m_0}^{-1}(m_1)||+ \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)|| d\pi(x,y) \\
+	+ \int_{S^{d-1} \times S^{d-1}} \big\langle R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)), (Exp_{m_0}^{-1}(m_1)\big\rangle d\pi(x,y)
+\end{multline}
+
+\begin{equation}
+ = cos^{-1}(\langle m_0,m_1\rangle) + \int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(y)), x)\rangle) \ d\pi(x,y)
+\end{equation}
+
+
+
+\newpage
+
+%
+%\begin{equation}
+%	= cos^{-1}(\langle m_0, m_1\rangle) + \inf_{\pi \in \Pi(\mu_0, \mu_1)} \int_{S^{d-1} \times S^{d-1}} cos^{-1}(\big\langle x, f(y)\big \rangle) d\pi(x,y) 
+%\end{equation} 
+%
+%where $f(y) = Exp_{m_0} (R_\alpha( Exp_{m_1}^{-1}(y)))$, since
+%
+%\begin{equation}
+%	R_\alpha(Exp_{m_1}^{-1}(y)) = Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(m_1)
+%\end{equation}
+%
+%\begin{equation}
+%	\implies ||Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(x) || = ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x) + Exp_{m_0}^{-1}(m_1)||
+%\end{equation}
+%
+%\begin{equation}
+%	=  \Sigma_{i=1}^{d-1} (Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(x))^2 - 2(Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(x))(Exp_{m_0}^{-1}(m_1)) + (Exp_{m_0}^{-1}(m_1))^2 dy
+%\end{equation}
+%
+%\begin{equation}
+%	= cos^{-1}(\langle m_0,m_1\rangle) + cos^{-1}(\langle Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(y)), Exp_{m_0}^{-1}(x))\rangle)
+%\end{equation}
+
+
+
+%Given $\mu_i = WN(m_i,\Sigma_i)$, $i = \{0,1\}$, where $m_i \in S_{d-1}$, and $\Sigma_i^{d-1 \times d-1}$, (and with densities $\rho_i$), the Wasserstein Distance between $\mu_0$ and $\mu_1$ can be calculated as;
+%
+%\begin{equation}\label{eq: wrapped normal wasserstein}
+%	WNW_2(\mu_0, \mu_1) = cos^{-1}(\langle m_0, m_1 \rangle) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
+%\end{equation} 
+%
+%\textbf{Proof:}\\
+%
+%In order to prove this, we must find a continuous map $T:S^{d-1}\to S^{d-1}$ such that;
+%
+%1) $T$ pushes forward $\mu_0$ to $\mu_1$ ($\iff \rho_0(x) = \rho_1(Tx)|det T'|$)
+%
+%2) T is optimal 
+%
+%3) The transport cost of T is WNW\\
 
 
 
 \section{Implementation Details}
 
- \cite{https://doi.org/10.48550/arxiv.1907.05254}
-\cite{https://doi.org/10.48550/arxiv.0801.2250}
-
-
 \bibliographystyle{plain}
 \bibliography{refs} % Entries are in the refs.bib file
+
+\cite{https://doi.org/10.48550/arxiv.1907.05254}
+\cite{https://doi.org/10.48550/arxiv.0801.2250}
+\cite{10.1307/mmj/1029003026}
+\cite{COTFNT}
 
 
 \end{document}

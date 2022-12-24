@@ -1,9 +1,19 @@
 \begin{thebibliography}{1}
 
+\bibitem{COTFNT}
+Computational optimal transport.
+\newblock {\em Foundations and Trends in Machine Learning}, 11(5-6):355--607,
+  2019.
+
 \bibitem{https://doi.org/10.48550/arxiv.1907.05254}
 Julie Delon and Agnes Desolneux.
 \newblock A wasserstein-type distance in the space of gaussian mixture models,
   2019.
+
+\bibitem{10.1307/mmj/1029003026}
+Clark~R. Givens and Rae~Michael Shortt.
+\newblock {A class of Wasserstein metrics for probability distributions.}
+\newblock {\em Michigan Mathematical Journal}, 31(2):231 -- 240, 1984.
 
 \bibitem{https://doi.org/10.48550/arxiv.0801.2250}
 Asuka Takatsu.

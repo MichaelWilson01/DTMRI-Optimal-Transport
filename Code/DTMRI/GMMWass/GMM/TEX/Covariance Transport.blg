@@ -1,3 +1,11 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: Covariance Transport.aux
 The style file: plain.bst
 Database file #1: refs.bib
+I was expecting a `,' or a `}'---line 62 of file refs.bib
+ :  
+ :  author = {Gabriel Peyr\’e and Marco Cuturi}
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in COTFNT
+Warning--empty author in COTFNT
+(There was 1 error message)
