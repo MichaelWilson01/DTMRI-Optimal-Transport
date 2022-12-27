@@ -23,24 +23,26 @@
 	\maketitle
 	
 	\begin{abstract}
-	We present a closed form expression for the Wasserstein Distance between two Wrapped Normal Distributions on the sphere. We then show how to use this distance to extend some results for mixtures of Gaussians in $\mathbb{R}^d$ to mixtures of Wrapped Normal distributions on the sphere.  
+	We present a closed form expression for the Wasserstein Distance between two Wrapped Gaussian Distributions on the sphere. We then show how to use this distance to extend some results for mixtures of Gaussians in $\mathbb{R}^d$ to mixtures of Wrapped Gaussians on the sphere.  
 	\end{abstract}
 
 %\section{Introduction}
 
 \section{Theoretical Details}
 
-Let $\mu = \mathcal{WN}(m,\Sigma)$ be a wrapped normal distribution defined on the $d-1$ dimensional sphere $S^{d-1}$. We can define the density of $\mu$ in terms of the tangent space $T_m(S_{d-1})$, with orthonormal basis B as; 
+%Let $\mu = \mathcal{WN}(m,\Sigma)$ be a wrapped normal distribution defined on the $d-1$ dimensional sphere $S^{d-1}$. We can define the density of $\mu$ in terms of the tangent space $T_m(S_{d-1})$, with orthonormal basis B as; 
+%
+%\begin{equation*}
+%	\rho_\mu(x) = det(2 \pi \Sigma) exp(-\frac{1}{2} \langle B Exp_m^{-1}(x), \Sigma^{-1} B Exp_m^{-1}(x) \rangle) 
+%\end{equation*}
+%
+%Here $exp$ corresponds to the exponential function, while $Exp$ corresponds to the Exponential Map for $S^{d-1}$.
 
-\begin{equation*}
-	\rho_\mu(x) = det(2 \pi \Sigma) exp(-\frac{1}{2} \langle B Exp_m^{-1}(x), \Sigma^{-1} B Exp_m^{-1}(x) \rangle) 
-\end{equation*}
 
-Here $exp$ corresponds to the exponential function, while $Exp$ corresponds to the Exponential Map for $S^{d-1}$.
 
-\subsection{Wrapped Normal Wasserstein Distance}
+\subsection{Wrapped Gaussian Wasserstein Distance}
 
-Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be normal distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i \sim Exp(m_i)_\#\mu_i$, and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
+Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i \sim Exp(m_i)_\#\mu_i$, and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
 
 \begin{equation}
 	W_2(\tilde{\mu}_0, \tilde{\mu}_1) =  cos^{-1}(\langle m_0,m_1\rangle) + (\Sigma_0 + \Sigma_1 - 2 (\Sigma_0^{\frac{1}{2}} \Sigma_1 \Sigma_0^{\frac{1}{2}})^{\frac{1}{2}}) 
@@ -55,9 +57,87 @@ Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be normal distributions defined on $\
 
 \textbf{Proof:}
 
+Let $\tilde{X} = \tilde{X}_0$ and $\tilde{Y} = Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(\tilde{X}_1)))$. Then,
+
+\begin{equation*}
+	W_2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\pi \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} E||\tilde{X}_1-\tilde{X}_2||  
+\end{equation*}  
+
 \begin{equation}
-	W_2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\pi \in \Pi(\mu_0, \mu_1)} E||\tilde{X}_1-\tilde{X}_2||  
+	 =  ||E\tilde{X}_1 - E\tilde{X}_2|| + \inf_{\pi \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} E||\tilde{X} - \tilde{Y}||  
+\end{equation}
+
+\begin{equation}
+	= cos^{-1}( \langle m_0, m_1 \rangle ) +\inf_{\pi \in \Pi({\mu}_0, {\mu}_1)} E||X-Y||
+\end{equation} 
+
+\begin{equation*}
+	= cos^{-1}( \langle m_0, m_1 \rangle ) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
+\end{equation*} 
+
+\newpage
+Where the equality in line 2 holds since;
+
+\begin{equation*}
+	???
+\end{equation*}
+
+(I think for someone who understands geometry, a proof following that of \cite{https://doi.org/10.48550/arxiv.0801.2250} would be trivial. The issue with my approach is that parallel transport on the sphere does not correspond to a simple translation in the tangent space at a given point: A wrapped normal centered at $m_1 \neq m_0$ does not get pulled back to a normal distribution in $T_{m_0}(S^{d-1})$ by $Exp^{-1}(m_1)^{\#}$.)\\
+
+and the equality in line 3 holds since $\forall \pi \in \Pi(\mu_0, \mu_1)$, if $\tilde{\pi} = {Exp(m_0,m_1)}_\# \pi$ we have that 
+
+\begin{equation*}
+	E||\tilde{X}-\tilde{Y}||  
+\end{equation*}  
+
+\begin{equation*}
+	= \int_{S^{d-1}\times S^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\pi}(\tilde{x},\tilde{y})
+\end{equation*}
+
+\begin{equation*}
+	= \int_{S^{d-1}\times S^{d-1}} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}_0) - R_\alpha(Exp_{m_1}^{-1}(\tilde{x}_1), Exp_{m_0}^{-1}(\tilde{x_0}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{x_1})) \rangle} \ d\tilde{\pi}(\tilde{x_0},\tilde{x_1})
+\end{equation*}
+
+%\begin{equation*}
+%	= \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{\langle Exp_{m}^{-1}(Exp_{m}(x)) - Exp_{m}^{-1}(Exp_{m}(y)), Exp_{m}^{-1}(\tilde{x}) - Exp_{m}^{-1}(\tilde{y}) \rangle} \ d\pi({x},{y})
+%\end{equation*}
+
+\begin{equation*}
+	= \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\pi(x,y)
+\end{equation*}
+
+\begin{equation*}
+	= E||{X}-{Y}||  
+\end{equation*}  
+
+\begin{equation}
+	\implies \inf_{\tilde{\pi} \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} E||\tilde{X}-\tilde{Y}||  = \inf_{\pi \in \Pi({\mu}_0, {\mu}_1)} E||X-Y||
 \end{equation}  
+
+\subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
+
+Our proof is identical to the one presented in section 4.2 of \cite{https://doi.org/10.48550/arxiv.1907.05254}, except replacing their $W_2^2$ with our $W_2$, and their $GMM(*)$ with our $WGMM(*)$. 
+
+
+
+
+\newpage
+\section{Implementation Details}
+
+Let $X \in \mathbb{R}^{d \times n}$, $Y \in \mathbb{R}^{d \times m}$, with $X_i$ (resp. $Y_i$) denoting the the ith column of $X$ (resp. $Y$). 
+
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{refs} % Entries are in the refs.bib file
+
+\cite{https://doi.org/10.48550/arxiv.1907.05254}
+\cite{https://doi.org/10.48550/arxiv.0801.2250}
+\cite{10.1307/mmj/1029003026}
+\cite{COTFNT}
+
+
+\end{document}
 
 %\begin{equation}
 %	W_2(\mu_0, \mu_1) =  \inf_{\pi \in \Pi(\mu_0, \mu_1)} ||EX - EY|| + E||(X-EX)-(Y-EY)||  
@@ -73,38 +153,35 @@ Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be normal distributions defined on $\
 %	= \inf_{\pi \in \Pi(\mu_0, \mu_1)} \int_{\mathcal{X} \times \mathcal{Y}} ||x-y|| \ d\pi(x,y) 
 %\end{equation} 
 
-\begin{equation}
-	= \inf_{\pi \in \Pi(\mu_0, \mu_1)} \int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle x,y\rangle) \ d\pi(x,y) 
-\end{equation} 
 
-Now, since $cos^{-1}(\langle x,y \rangle) = ||Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(x)||$ and $R_\alpha(Exp_{m_1}^{-1}(y)) = Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(m_1)$, we have that
-
-\begin{equation}
-	cos^{-1}(\langle x,y \rangle) = ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x) + Exp_{m_0}^{-1}(m_1)||
-\end{equation}
-
-Thus,
-
-\begin{equation}
-	\int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle x,y \rangle) d\pi(x,y) = \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x) + Exp_{m_0}^{-1}(m_1)|| d\pi(x,y)
-\end{equation}
-
-\begin{equation}
-	= \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)\big)||  + \big\langle R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)), (Exp_{m_0}^{-1}(m_1)\big\rangle +  ||Exp_{m_0}^{-1}(m_1)|| d\pi(x,y)
-\end{equation}
-
-\begin{multline}
-	= ||Exp_{m_0}^{-1}(m_1)||+ \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)|| d\pi(x,y) \\
-	+ \int_{S^{d-1} \times S^{d-1}} \big\langle R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)), (Exp_{m_0}^{-1}(m_1)\big\rangle d\pi(x,y)
-\end{multline}
-
-\begin{equation}
- = cos^{-1}(\langle m_0,m_1\rangle) + \int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(y)), x)\rangle) \ d\pi(x,y)
-\end{equation}
-
-
-
-\newpage
+%Now, since $cos^{-1}(\langle x,y \rangle) = ||Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(x)||$ and $R_\alpha(Exp_{m_1}^{-1}(y)) = Exp_{m_0}^{-1}(y) - Exp_{m_0}^{-1}(m_1)$, we have that
+%
+%\begin{equation}
+%	cos^{-1}(\langle x,y \rangle) = ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x) + Exp_{m_0}^{-1}(m_1)||
+%\end{equation}
+%
+%Thus,
+%
+%\begin{equation}
+%	\int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle x,y \rangle) d\pi(x,y) = \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x) + Exp_{m_0}^{-1}(m_1)|| d\pi(x,y)
+%\end{equation}
+%
+%\begin{equation}
+%	= \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)\big)||  + \big\langle R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)), (Exp_{m_0}^{-1}(m_1)\big\rangle +  ||Exp_{m_0}^{-1}(m_1)|| d\pi(x,y)
+%\end{equation}
+%
+%\begin{multline}
+%	= ||Exp_{m_0}^{-1}(m_1)||+ \int_{S^{d-1} \times S^{d-1}} ||R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)|| d\pi(x,y) \\
+%	+ \int_{S^{d-1} \times S^{d-1}} \big\langle R_\alpha(Exp_{m_1}^{-1}(y)) - Exp_{m_0}^{-1}(x)), (Exp_{m_0}^{-1}(m_1)\big\rangle d\pi(x,y)
+%\end{multline}
+%
+%\begin{equation}
+% = cos^{-1}(\langle m_0,m_1\rangle) + \int_{S^{d-1} \times S^{d-1}} cos^{-1}(\langle Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(y)), x)\rangle) \ d\pi(x,y)
+%\end{equation}
+%
+%
+%
+%\newpage
 
 %
 %\begin{equation}
@@ -147,17 +224,3 @@ Thus,
 %
 %3) The transport cost of T is WNW\\
 
-
-
-\section{Implementation Details}
-
-\bibliographystyle{plain}
-\bibliography{refs} % Entries are in the refs.bib file
-
-\cite{https://doi.org/10.48550/arxiv.1907.05254}
-\cite{https://doi.org/10.48550/arxiv.0801.2250}
-\cite{10.1307/mmj/1029003026}
-\cite{COTFNT}
-
-
-\end{document}
