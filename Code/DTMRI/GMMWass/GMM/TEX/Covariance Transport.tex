@@ -28,7 +28,50 @@
 
 %\section{Introduction}
 
-\section{Theoretical Details}
+\section{Implementation Details}
+
+Proofs are left to Section \ref{Section: theory}.
+
+\subsection{Wrapped Gaussian Wasserstein Distance}
+
+Let $\mu_i = WN(m_i,\Sigma_i)$. Let $U_0 S_0 U_0^t$ denote the SVD of $\Sigma_0$, with $u_j$ denoting the jth row of $U_0$. Define $\Sigma_0^* = U_0^* S_0 U_0^{*t}$, where the jth row of $U_0^*$ is the parallel transport of $u_j$ from $T_{m_0}(S^d)$ to $T_{m_1}(S^d)$;
+
+%Define $\tilde{X}_i = Exp_{m_0}^{-1}(X_i)$, $\tilde{Y}_i = Exp_{m_1}^{-1}(Y_i)$, where;
+%
+%\begin{equation}
+%	Exp_{p}^{-1}(q) = \frac{\theta}{\sin(\theta)}(q - cos(\theta)p), \text{ where } \theta = cos^{-1}(\langle p,q \rangle)  
+%\end{equation} 
+
+\begin{equation*}
+	u_j^{*} = R_\alpha(u_j) = u_j - (2(u_j*m_1^t)(|m_0 +m_1|^2))(m_0 + m_1)
+\end{equation*} 
+
+Then 
+
+\begin{equation*}
+	W_2(\mu_0,\mu_1) = cos^{-1}(\langle m_0,m_1 \rangle) + (\Sigma_0^* + \Sigma_1 - 2 (\Sigma_0^{*\frac{1}{2}} \Sigma_1 \Sigma_0^{*\frac{1}{2}})^{\frac{1}{2}}) 
+\end{equation*}
+
+\subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
+
+Let $\mu_i = \Sigma_k^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{ik})$ be two wrapped Gaussian mixtures. Let $\Pi(w_0, w_1) = \{ W \in \mathbb{R}^{K_0 \times K_1}, \Sigma_i W_{ij} = w_{1i},\Sigma_j W_{ij} = w_{0j}\}$. Then,
+
+%Let $w^*$ be a solution of the discrete linear program
+%
+%\begin{equation}
+%	\underset{w \in \Pi(w_0,w_1)}{\inf} \underset{{\ell, k}}{\Sigma} w_{\ell k} W_2(\mu_0^\ell,\mu_1^k)
+%\end{equation} 
+%
+%Then,
+
+\begin{equation*}
+	WMW_2(\mu_0,\mu_1) = \underset{W \in \Pi(w_0,w_1)}{\min}  \underset{{\ell, k}}{\Sigma} W_{\ell k} W_2(\mu_0^\ell,\mu_1^k)
+\end{equation*} 
+
+
+\newpage
+
+\section{Theoretical Details}\label{Section: theory}
 
 %Let $\mu = \mathcal{WN}(m,\Sigma)$ be a wrapped normal distribution defined on the $d-1$ dimensional sphere $S^{d-1}$. We can define the density of $\mu$ in terms of the tangent space $T_m(S_{d-1})$, with orthonormal basis B as; 
 %
@@ -42,11 +85,11 @@
 
 \subsection{Wrapped Gaussian Wasserstein Distance}
 
-Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i \sim Exp(m_i)_\#\mu_i$, and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
+Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i = Exp(m_i)_\#\mu_i$, (and thus $\tilde{\mu}_i = WN(m_i, \Sigma_i)$)   and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
 
-\begin{equation}
+\begin{equation*}
 	W_2(\tilde{\mu}_0, \tilde{\mu}_1) =  cos^{-1}(\langle m_0,m_1\rangle) + (\Sigma_0 + \Sigma_1 - 2 (\Sigma_0^{\frac{1}{2}} \Sigma_1 \Sigma_0^{\frac{1}{2}})^{\frac{1}{2}}) 
-\end{equation} 
+\end{equation*} 
 
 %where
 %
@@ -75,16 +118,15 @@ Let $\tilde{X} = \tilde{X}_0$ and $\tilde{Y} = Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}
 	= cos^{-1}( \langle m_0, m_1 \rangle ) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
 \end{equation*} 
 
-\newpage
-Where the equality in line 2 holds since;
+Where the equality in equation 1 holds since;
 
 \begin{equation*}
 	???
 \end{equation*}
 
-(I think for someone who understands geometry, a proof following that of \cite{https://doi.org/10.48550/arxiv.0801.2250} would be trivial. The issue with my approach is that parallel transport on the sphere does not correspond to a simple translation in the tangent space at a given point: A wrapped normal centered at $m_1 \neq m_0$ does not get pulled back to a normal distribution in $T_{m_0}(S^{d-1})$ by $Exp^{-1}(m_1)^{\#}$.)\\
+(I think for someone who understands geometry, a proof following that of \cite{https://doi.org/10.48550/arxiv.0801.2250} would be trivial. The issue with my approach is that parallel transport on the sphere does not correspond to a simple translation in the tangent space at a given point: A wrapped normal centered at $m_1 \neq m_0$ does not get pulled back to a normal distribution in $T_{m_0}(S^{d-1})$ by $Exp^{-1}(m_0)^{\#}$.)\\
 
-and the equality in line 3 holds since $\forall \pi \in \Pi(\mu_0, \mu_1)$, if $\tilde{\pi} = {Exp(m_0,m_1)}_\# \pi$ we have that 
+and the equality in equation 2 holds since $\forall \pi \in \Pi(\mu_0, \mu_1)$, if $\tilde{\pi} = {Exp(m_0,m_1)}_\# \pi$ we have that 
 
 \begin{equation*}
 	E||\tilde{X}-\tilde{Y}||  
@@ -122,12 +164,7 @@ Our proof is identical to the one presented in section 4.2 of \cite{https://doi.
 
 
 \newpage
-\section{Implementation Details}
 
-Let $X \in \mathbb{R}^{d \times n}$, $Y \in \mathbb{R}^{d \times m}$, with $X_i$ (resp. $Y_i$) denoting the the ith column of $X$ (resp. $Y$). 
-
-
-\newpage
 \bibliographystyle{plain}
 \bibliography{refs} % Entries are in the refs.bib file
 
@@ -135,6 +172,7 @@ Let $X \in \mathbb{R}^{d \times n}$, $Y \in \mathbb{R}^{d \times m}$, with $X_i$
 \cite{https://doi.org/10.48550/arxiv.0801.2250}
 \cite{10.1307/mmj/1029003026}
 \cite{COTFNT}
+\cite{Ambrosio2013}
 
 
 \end{document}

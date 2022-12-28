@@ -5,6 +5,11 @@ Computational optimal transport.
 \newblock {\em Foundations and Trends in Machine Learning}, 11(5-6):355--607,
   2019.
 
+\bibitem{Ambrosio2013}
+Luigi Ambrosio and Nicola Gigli.
+\newblock {\em A User's Guide to Optimal Transport}, pages 1--155.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 2013.
+
 \bibitem{https://doi.org/10.48550/arxiv.1907.05254}
 Julie Delon and Agnes Desolneux.
 \newblock A wasserstein-type distance in the space of gaussian mixture models,
