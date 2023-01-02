@@ -1,0 +1,50 @@
+\documentclass[]{article}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\usepackage{setspace}
+\linespread{1.5}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{graphicx}
+
+
+%%opening
+\title{Background for Optimal Transport}
+\author{Michael Wilson}
+\date{}
+
+\begin{document}
+	
+	\maketitle
+	
+	\begin{abstract}
+		This document is a brief introduction to the theoretical foundations of optimal transport and Wasserstein Distances.
+	\end{abstract}
+	
+	\section{Introduction}
+	
+	The Wasserstein distance is a distance between measures, or equivalently their distributions. Optimal Transport between measures involves finding a push-forward measure (associated with a continuous map) that minimizes the Wasserstein distance. For this work, we will restrict ourselves to considering the Wasserstein 2-Distance between probability measures $\mu_0$ and $\mu_1$;
+	
+	\begin{equation}
+		W_2(\mu_0, \mu_1) = \inf_{\pi \in \Pi(\mu_0, \mu_1)} E||X - Y|| = \inf_{\pi \in \Pi(\mu_0, \mu_1)} 
+	\end{equation}
+	
+	This equation involves measures ($\mu_0, \mu_1$), a joint measure $(\pi)$, and random variables ($X,Y$). A clear understanding of how these pieces relate in general statistical theory is necessary for a clear understanding of Wasserstein distances and Optimal Transport.   
+	
+	 This document is meant as a brief, accessible introduction to the theory and notation of Optimal Transport and Wasserstein distances. We begin by reviewing the relationships between probability measures, probability distributions, probability densities, and random variables.  
+	
+	\subsection{Measures, Distributions, Densities, and Random Variables}
+	
+	Let $\mathcal{X}$ be any set. Let $\mathcal{F}$ be a $\sigma$-algebra on X (a collection of subsets of $\mathcal{X}$ that 1) contains $\mathcal{X}$, 2) is closed under complement, and 3) is closed under coutable union). 
+ 	
+	
+
+
+
+	
+\end{document}
