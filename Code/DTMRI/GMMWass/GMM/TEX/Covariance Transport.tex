@@ -43,7 +43,7 @@ Let $\mu_i = WN(m_i,\Sigma_i)$, $i = \{0, 1\}$. Let $U_0 S_0 U_0^t$ denote the S
 %\end{equation} 
 
 \begin{equation*}
-	u_j^{*} = R_\alpha(u_j) = u_j - (2(u_j*m_1^t)(|m_0 +m_1|^2))(m_0 + m_1)
+	u_j^{*} = u_j - (2(u_j*m_1^t)(|m_0 +m_1|^2))(m_0 + m_1)
 \end{equation*} 
 
 Then 
@@ -54,7 +54,7 @@ Then
 
 \subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
 
-Let $\mu_i = \Sigma_{k+1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{ik})$, $i = \{0, 1\}$, be two wrapped Gaussian mixtures. Let $\Pi(w_0, w_1) = \{ W \in \mathbb{R}^{K_0 \times K_1}, \Sigma_i W_{ij} = w_{1i},\Sigma_j W_{ij} = w_{0j}\}$. Then,
+Let $\mu_i = \Sigma_{k=1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{ik})$, $i = \{0, 1\}$, be two wrapped Gaussian mixtures. Let $\Pi(w_0, w_1) = \{ W \in \mathbb{R}^{K_0 \times K_1}, \Sigma_i W_{ij} = w_{1i},\Sigma_j W_{ij} = w_{0j}\}$. Then,
 
 %Let $w^*$ be a solution of the discrete linear program
 %

@@ -28,19 +28,25 @@
 	
 	\section{Introduction}
 	
-	The Wasserstein distance is a distance between measures, or equivalently their distributions. Optimal Transport between measures involves finding a push-forward measure (associated with a continuous map) that minimizes the Wasserstein distance. For this work, we will restrict ourselves to considering the Wasserstein 2-Distance between probability measures $\mu_0$ and $\mu_1$;
+	The Wasserstein distance is a distance between probability measures. Optimal Transport between measures involves finding a push-forward measure (associated with a continuous map) that minimizes the Wasserstein distance. For this work, we will restrict ourselves to considering the squared Wasserstein 2-Distance between probability measures $\mu_0$ and $\mu_1$;
 	
 	\begin{equation}
-		W_2(\mu_0, \mu_1) = \inf_{\pi \in \Pi(\mu_0, \mu_1)} E||X - Y|| = \inf_{\pi \in \Pi(\mu_0, \mu_1)} 
+		W_2^2(\mu_0, \mu_1) = \inf_{\pi \in \Pi(\mu_0, \mu_1)} E||X - Y|| = \inf_{\gamma \in \Pi(\mu_0, \mu_1)} \int_{\mathcal{X}\times\mathcal{Y}} ||x - y|| d\gamma(x,y)
 	\end{equation}
 	
-	This equation involves measures ($\mu_0, \mu_1$), a joint measure $(\pi)$, and random variables ($X,Y$). A clear understanding of how these pieces relate in general statistical theory is necessary for a clear understanding of Wasserstein distances and Optimal Transport.   
+	If $\gamma$ is absolutely continuous with respect to the Lebesgue measure, then we say $\gamma$ has a density $f(x,y) = \frac{\delta \gamma}{\delta \lambda}$, and can write this expectation as a Riemann integral;
 	
-	 This document is meant as a brief, accessible introduction to the theory and notation of Optimal Transport and Wasserstein distances. We begin by reviewing the relationships between probability measures, probability distributions, probability densities, and random variables.  
+	\begin{equation}
+		= \inf_{\gamma \in \Pi(\mu_0, \mu_1)}\int_{\mathcal{X}}\int_{\mathcal{Y}} ||x - y||f(x,y) dx dy
+	\end{equation}
 	
-	\subsection{Measures, Distributions, Densities, and Random Variables}
-	
-	Let $\mathcal{X}$ be any set. Let $\mathcal{F}$ be a $\sigma$-algebra on X (a collection of subsets of $\mathcal{X}$ that 1) contains $\mathcal{X}$, 2) is closed under complement, and 3) is closed under coutable union). 
+%	This equation involves measures ($\mu_0, \mu_1$), a joint measure $(\pi)$, and random variables ($X,Y$). A clear understanding of how these pieces relate in general statistical theory is necessary for a clear understanding of Wasserstein distances and Optimal Transport.   
+%	
+%	 This document is meant as a brief, accessible introduction to the theory and notation of Optimal Transport and Wasserstein distances. We begin by reviewing the relationships between probability measures, probability distributions, probability densities, and random variables.  
+%	
+%	\subsection{Measures, Distributions, Densities, and Random Variables}
+%	
+%	Let $\mathcal{X}$ be any set. Let $\mathcal{F}$ be a $\sigma$-algebra on X (a collection of subsets of $\mathcal{X}$ that 1) contains $\mathcal{X}$, 2) is closed under complement, and 3) is closed under coutable union). 
  	
 	
 

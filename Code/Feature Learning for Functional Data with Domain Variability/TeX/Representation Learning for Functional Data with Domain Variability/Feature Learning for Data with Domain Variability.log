@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  3 JAN 2023 08:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  3 JAN 2023 09:13
 entering extended mode
-**./Representation_test.tex
-(Representation_test.tex
+**"./Feature Learning for Data with Domain Variability.tex"
+("Feature Learning for Data with Domain Variability.tex"
 LaTeX2e <2019-10-01> patch level 3
 ("C:\Users\micha\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.cls"
 Document Class: article 2019/10/25 v1.4k Standard LaTeX document class
@@ -155,12 +155,12 @@ File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen120
 \Gin@req@width=\dimen121
-) (Representation_test.aux
+) ("Feature Learning for Data with Domain Variability.aux"
 
 LaTeX Warning: Label `aligned function' multiply defined.
 
 )
-\openout1 = `Representation_test.aux'.
+\openout1 = `"Feature Learning for Data with Domain Variability.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
 LaTeX Font Info:    ... okay on input line 20.
@@ -369,19 +369,19 @@ File: ./subject29.png Graphic file (type png)
 Package pdftex.def Info: ./subject29.png  used on input line 181.
 (pdftex.def)             Requested size: 469.75502pt x 200.82094pt.
 [7 <./DTMRI_features_10_new.png (PNG copy)> <./subject29.png (PNG copy)>]
-(Representation_test.aux)
+("Feature Learning for Data with Domain Variability.aux")
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
  3219 strings out of 492484
- 45143 string characters out of 3121602
+ 45479 string characters out of 3121602
  113890 words of memory out of 3000000
  7514 multiletter control sequences out of 15000+200000
  11802 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 51i,12n,34p,1255b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 51i,12n,34p,1287b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmbx12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmbx9.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fo
@@ -394,7 +394,8 @@ cmr12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
 amsfonts/cm/cmr17.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/t
 ype1/public/amsfonts/cm/cmr9.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Representation_test.pdf (7 pages, 1328693 bytes).
+Output written on "Feature Learning for Data with Domain Variability.pdf" (7 pa
+ges, 1328693 bytes).
 PDF statistics:
  74 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

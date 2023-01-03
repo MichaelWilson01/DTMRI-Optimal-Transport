@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  3 JAN 2023 08:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  2 JAN 2023 13:30
 entering extended mode
-**./Representation_test.tex
-(Representation_test.tex
+**./document.tex
+(document.tex
 LaTeX2e <2019-10-01> patch level 3
 ("C:\Users\micha\AppData\Local\Programs\MiKTeX 2.9\tex/latex/base\article.cls"
 Document Class: article 2019/10/25 v1.4k Standard LaTeX document class
@@ -155,25 +155,21 @@ File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen120
 \Gin@req@width=\dimen121
-) (Representation_test.aux
+) (document.aux)
+\openout1 = `document.aux'.
 
-LaTeX Warning: Label `aligned function' multiply defined.
-
-)
-\openout1 = `Representation_test.aux'.
-
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -276,127 +272,47 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 460.
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 22.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 23.
 
 
 ("C:\Users\micha\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 22.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 23.
 
 ("C:\Users\micha\AppData\Local\Programs\MiKTeX 2.9\tex/latex/amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/Users/micha/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<./Aligned Functions.png, id=11, 985.43156pt x 472.76625pt>
-File: ./Aligned Functions.png Graphic file (type png)
-<use ./Aligned Functions.png>
-Package pdftex.def Info: ./Aligned Functions.png  used on input line 43.
-(pdftex.def)             Requested size: 469.75502pt x 225.36703pt.
-<./Feature Space.png, id=12, 988.44281pt x 420.82219pt>
-File: ./Feature Space.png Graphic file (type png)
-<use ./Feature Space.png>
-Package pdftex.def Info: ./Feature Space.png  used on input line 62.
-(pdftex.def)             Requested size: 469.75502pt x 199.98892pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 68--69
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 70--75
-
- []
-
-[2 <./Aligned Functions.png (PNG copy)>] [3 <./Feature Space.png (PNG copy)>]
-<./simulated data2.png, id=20, 860.46469pt x 376.40625pt>
-File: ./simulated data2.png Graphic file (type png)
-<use ./simulated data2.png>
-Package pdftex.def Info: ./simulated data2.png  used on input line 90.
-(pdftex.def)             Requested size: 469.75502pt x 205.49629pt.
-
-[4 <./simulated data2.png (PNG copy)>]
-<./simulated_model_compare.png, id=27, 886.81313pt x 386.19281pt>
-File: ./simulated_model_compare.png Graphic file (type png)
-<use ./simulated_model_compare.png>
-Package pdftex.def Info: ./simulated_model_compare.png  used on input line 119.
-
-(pdftex.def)             Requested size: 469.75502pt x 204.57513pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 132--133
-
- []
-
-[5 <./simulated_model_compare.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 134--141
-
- []
-
-<./Aligned_2_cluster.png, id=31, 1005.7575pt x 432.11438pt>
-File: ./Aligned_2_cluster.png Graphic file (type png)
-<use ./Aligned_2_cluster.png>
-Package pdftex.def Info: ./Aligned_2_cluster.png  used on input line 143.
-(pdftex.def)             Requested size: 328.82707pt x 141.27287pt.
-<./Distance Matrix.png, id=32, 663.22781pt x 612.03656pt>
-File: ./Distance Matrix.png Graphic file (type png)
-<use ./Distance Matrix.png>
-Package pdftex.def Info: ./Distance Matrix.png  used on input line 144.
-(pdftex.def)             Requested size: 140.92793pt x 130.04437pt.
-
-Overfull \hbox (2.2222pt too wide) in paragraph at lines 143--145
-[][] [] 
- []
-
-<./DTMRI_features_10_new.png, id=33, 1699.09781pt x 624.83438pt>
-File: ./DTMRI_features_10_new.png Graphic file (type png)
-<use ./DTMRI_features_10_new.png>
-Package pdftex.def Info: ./DTMRI_features_10_new.png  used on input line 160.
-(pdftex.def)             Requested size: 469.75502pt x 172.75003pt.
-[6 <./Aligned_2_cluster.png (PNG copy)> <./Distance Matrix.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 171--172
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 173--179
-
- []
-
-<./subject29.png, id=37, 1111.15125pt x 475.02469pt>
-File: ./subject29.png Graphic file (type png)
-<use ./subject29.png>
-Package pdftex.def Info: ./subject29.png  used on input line 181.
-(pdftex.def)             Requested size: 469.75502pt x 200.82094pt.
-[7 <./DTMRI_features_10_new.png (PNG copy)> <./subject29.png (PNG copy)>]
-(Representation_test.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+(document.aux) ) 
 Here is how much of TeX's memory you used:
- 3219 strings out of 492484
- 45143 string characters out of 3121602
- 113890 words of memory out of 3000000
- 7514 multiletter control sequences out of 15000+200000
- 11802 words of font info for 46 fonts, out of 3000000 for 9000
+ 3156 strings out of 492484
+ 43119 string characters out of 3121602
+ 111743 words of memory out of 3000000
+ 7461 multiletter control sequences out of 15000+200000
+ 11495 words of font info for 45 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 51i,12n,34p,1255b,226s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmbx12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmbx9.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/micha/AppData/Lo
-cal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/mich
-a/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
-:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/
-cmr12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmr17.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmr9.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Representation_test.pdf (7 pages, 1328693 bytes).
+ 51i,6n,34p,395b,199s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmbx12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/micha/AppData/Local/Programs
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/micha/AppData/L
+ocal/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/mi
+cha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
+<C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/c
+m/cmr10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
+c/amsfonts/cm/cmr12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/micha/AppData/Local/Programs/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/micha/AppData/Local/Pr
+ograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/micha/AppDa
+ta/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/
+micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
+s/cm/cmsy7.pfb>
+Output written on document.pdf (1 page, 132316 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
+ 58 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
