@@ -22,22 +22,29 @@ parfor i = 1:N
     i
 % IDX{i} = get_test_clust_assign(datasample(Fibers{i},1000,3,'replace',false),cluster_modes{i},Inf)
 m = min(size(Fibers{i},3),1000);
-IDX{i} = get_test_clust_assign(datasample(Fibers{i},m,3,'replace',false),cluster_modes{i},Inf)
+F{i}=datasample(Fibers{i},m,3,'replace',false);
+IDX{i} = get_test_clust_assign(F{i},cluster_modes{i},Inf)
 
 end
 
 %2) calculate covariance matrices for each cluster
+[M,W,Sigma] = get_mixture_components(cluster_modes, F, IDX);
 
-% pcaCoords = get_pooled_pca_coords(Fibers,.95);
-% 
-% cluster_cov = get_cluster_cov(pcaCoords,IDX);
+%3) calculate gaussian mixture wasserstein
+%Get Cost Matrix
+[SGMW] = get_cost_matrices(M,W,Sigma)
 
-%3) calculate probablistic coupling
-Pi = get_coupling(cluster_modes,1);
 
-%4) calculate gaussian mixture wasserstein
-% MW = gmm_wasserstein_distance_matrix(cluster_counts,cluster_cov,Pi)
-MW = gmm_wasserstein_distance_matrix2(clustermodes,Pi)
+
+% Pi = sinkhorn(C,.1)
+
+SGMW = sum(sum(Pi.*C))
+
+
+
+
+
+
 
 
 MWs = (MW+MW')/2;

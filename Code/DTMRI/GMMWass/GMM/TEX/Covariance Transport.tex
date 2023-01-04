@@ -49,7 +49,7 @@ Let $\mu_i = WN(m_i,\Sigma_i)$, $i = \{0, 1\}$. Let $U_0 S_0 U_0^t$ denote the S
 Then 
 
 \begin{equation*}
-	W_2^2(\mu_0,\mu_1) = cos^{-1}(\langle m_0,m_1 \rangle) + (\Sigma_0^* + \Sigma_1 - 2 (\Sigma_0^{*\frac{1}{2}} \Sigma_1 \Sigma_0^{*\frac{1}{2}})^{\frac{1}{2}}) 
+	W_2^2(\mu_0,\mu_1) = cos^{-1}(\langle m_0,m_1 \rangle) + tr(\Sigma_0^* + \Sigma_1 - 2 (\Sigma_0^{*\frac{1}{2}} \Sigma_1 \Sigma_0^{*\frac{1}{2}})^{\frac{1}{2}}) 
 \end{equation*}
 
 \subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
@@ -85,11 +85,15 @@ Let $\mu_i = \Sigma_{k=1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{
 
 \subsection{Wrapped Gaussian Wasserstein Distance}
 
-Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i = Exp(m_i)_\#\mu_i$, (and thus $\tilde{\mu}_i = WN(m_i, \Sigma_i)$)   and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
+Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i = Exp(m_i)_\#\mu_i$, (and thus $\tilde{\mu}_i = WN(m_i, \Sigma_i)$)   and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then, 
 
-\begin{equation*}
-	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  cos^{-1}(\langle m_0,m_1\rangle) + (\Sigma_0 + \Sigma_1 - 2 (\Sigma_0^{\frac{1}{2}} \Sigma_1 \Sigma_0^{\frac{1}{2}})^{\frac{1}{2}}) 
-\end{equation*} 
+
+%as shown in \cite{WGOT}, the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
+%
+%\begin{equation*}
+%	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  cos^{-1}(\langle m_0,m_1\rangle) + (\Sigma_0 + \Sigma_1 - 2 (\Sigma_0^{\frac{1}{2}} \Sigma_1 \Sigma_0^{\frac{1}{2}})^{\frac{1}{2}}) 
+%\end{equation*} 
+
 
 %where
 %
@@ -103,41 +107,33 @@ Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on 
 Let $\tilde{X} = \tilde{X}_0$ and $\tilde{Y} = Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(\tilde{X}_1)))$. Then,
 
 \begin{equation*}
-	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} E||\tilde{X}_1-\tilde{X}_2||  
+	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
 \end{equation*}  
 
 \begin{equation}
-	 =  ||E\tilde{X}_1 - E\tilde{X}_2|| + \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} E||\tilde{X} - \tilde{Y}||  
+	 =  d_{S^{d-1}}^2(E\tilde{X}_1, E\tilde{X}_2) + \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)}\int_{T_{m_0}(S^{d-1})} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y}), Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y})) \rangle} \ d\tilde{\gamma}(\tilde{x},\tilde{y})
 \end{equation}
 
 \begin{equation}
-	= cos^{-1}( \langle m_0, m_1 \rangle ) +\inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} E||X-Y||
+	= cos^{-1}( \langle m_0, m_1 \rangle ) +\inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
 \end{equation} 
 
 \begin{equation*}
 	= cos^{-1}( \langle m_0, m_1 \rangle ) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
 \end{equation*} 
 
-Where the equality in equation 1 holds since;
+Where the equality in equation 1 follows from Proposition 2 in \cite{WGOT}, using $m_0$ as $p_{ref}$, and the equality in equation 2 holds since $\forall \gamma \in \Pi(\mu_0, \mu_1)$, if $\tilde{\gamma} = {Exp(m_0,m_1)}_\# \gamma$ we have that 
+
+%\begin{equation*}
+%	E||\tilde{X}-\tilde{Y}||  
+%\end{equation*}  
 
 \begin{equation*}
-	???
-\end{equation*}
-
-(I think for someone who understands geometry, a proof following that of \cite{https://doi.org/10.48550/arxiv.0801.2250} would be trivial. The issue with my approach is that parallel transport on the sphere does not correspond to a simple translation in the tangent space at a given point: A wrapped normal centered at $m_1 \neq m_0$ does not get pulled back to a normal distribution in $T_{m_0}(S^{d-1})$ by $Exp^{-1}(m_0)^{\#}$.)\\
-
-and the equality in equation 2 holds since $\forall \gamma \in \Pi(\mu_0, \mu_1)$, if $\tilde{\gamma} = {Exp(m_0,m_1)}_\# \gamma$ we have that 
-
-\begin{equation*}
-	E||\tilde{X}-\tilde{Y}||  
-\end{equation*}  
-
-\begin{equation*}
-	= \int_{S^{d-1}\times S^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
+	= \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
 \end{equation*}
 
 \begin{equation*}
-	= \int_{S^{d-1}\times S^{d-1}} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}_0) - R_\alpha(Exp_{m_1}^{-1}(\tilde{x}_1), Exp_{m_0}^{-1}(\tilde{x_0}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{x_1})) \rangle} \ d\tilde{\gamma}(\tilde{x_0},\tilde{x_1})
+	= \int_{S^{d-1}\times S^{d-1}} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y}), Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y})) \rangle} \ d\tilde{\gamma}(\tilde{x},\tilde{y})
 \end{equation*}
 
 %\begin{equation*}
@@ -148,16 +144,16 @@ and the equality in equation 2 holds since $\forall \gamma \in \Pi(\mu_0, \mu_1)
 	= \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
 \end{equation*}
 
-\begin{equation*}
-	= E||{X}-{Y}||  
-\end{equation*}  
+%\begin{equation*}
+%	= E||{X}-{Y}||  
+%\end{equation*}  
 
 \begin{equation}
-	\implies \inf_{\tilde{\gamma} \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} E||\tilde{X}-\tilde{Y}||  = \inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} E||X-Y||
+	\implies \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y}) = \inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
 \end{equation}  
 
 
-Furthermore, The optimal coupling is also a wrapped Gaussian Distribution. 
+Furthermore, because we know that the optimal coupling in the Euclidian case is a Normal distribution, we see that the optimal coupling in the spherical case is therefore a wrapped Gaussian distribution. 
 
 \subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
 
@@ -176,6 +172,7 @@ Our proof is identical to the one presented in section 4.2 of \cite{https://doi.
 \cite{10.1307/mmj/1029003026}
 \cite{COTFNT}
 \cite{Ambrosio2013}
+\cite{WGOT}
 
 
 \end{document}

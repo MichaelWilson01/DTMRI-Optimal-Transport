@@ -77,7 +77,7 @@ end
 
 %Get Cost Matrix
 
-C = get_cost_matrix_sphere(m0_hat,m1_hat,sigma0_hat,sigma1_hat,b0_hat,b1_hat);
+
 
 lpp = TransportSetup(C,mu,nu)
 [xopt, fval] = linprog(lpp.f, lpp.A, lpp.b, [], [], lpp.lb);
