@@ -64,9 +64,9 @@ Let $\mu_i = \Sigma_{k=1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{
 %
 %Then,
 
-\begin{equation*}
+\begin{equation}\label{eq: mixture distance}
 	WMW_2^2(\mu_0,\mu_1) = \underset{W \in \Pi(w_0,w_1)}{\min}  \underset{{\ell, k}}{\Sigma} W_{\ell k} W_2^2(\mu_0^\ell,\mu_1^k)
-\end{equation*} 
+\end{equation} 
 
 
 \newpage
@@ -159,6 +159,35 @@ Furthermore, because we know that the optimal coupling in the Euclidian case is 
 
 Our proof is identical to the one presented in section 4.2 of \cite{https://doi.org/10.48550/arxiv.1907.05254}, except replacing their $W_2^2$ with our $W_2^2$, and their $GMM(*)$ with our $WGMM(*)$. 
 
+\newpage
+
+\section{Applications}
+
+\subsection{Simulated data}
+
+We present plots of simulated Wrapped Gaussian Mixtures on the sphere, and include the distance calculated. 
+
+\begin{figure}
+		\includegraphics[width=.3\linewidth]{example6.png}
+		\includegraphics[width=.3\linewidth]{example8.png}
+		\includegraphics[width=.3\linewidth]{example10.png}
+		\caption{Examples of Wrapped Gaussian Mixture Wasserstein-type distances on the sphere for simulated data}
+\end{figure}
+
+\subsection{DTMRI data}
+
+\begin{figure}
+	\begin{center}
+	\includegraphics[width=.7\linewidth]{distance_matrix.png}
+	\caption{Wrapped Gaussian Mixture Wasserstein-type Distance matrix. The first 42 columns/row correspond to non-PTSD subjects, columns/rows 43:93 correspond to PTSD subjects.  }
+\end{center}
+\end{figure}
+
+One possible application of this approach is the comparison of the distributions of shapes, such as set of DTMRI fiber tracts. The data for this example consists of Fiber tractography data for the right Cingulum Parahippocampal region of 93 subjects in the Grady Trauma Project. 41 are diagnosed with PTSD, 42 are not diagnosed with PTSD. The regions are sets of fiber tracts, represented as curves in $\mathbb{R}^3$. We estimate these distributions by identifying shape modes in the shape space (using k-mode kernel mixture clustering) representing the distributions as Gaussian mixtures in the pre-shape space (which is a sphere) and then calculating the Wrapped Gaussian Mixture Wasserstein-type distance between the distributions of subjects. We then use these distances to classify subjects with respect to their PTSD status.
+
+Specifically, let $X_i = \{ f_{ij}(t) \in L^2([0,1] \to \mathbb{R}^3), j = 1,...,M_j\}$, $i=1,...,93$ correspond to the set of fibers for subject $i$'s right Cingulum Parahippocampal region. For each $X_i$, we represent it as a wrapped Gaussian mixture $N(m_{ik}, \Sigma_{ik})$, where $m_k$ is the mode kth mode identified using the k-mode kernel mixture algorithm applied to the fibers for subject $i$, and $\Sigma_{ik}$ is the covariance of the fibers for subject $i$ assigned to cluster $k$, calculated in $T_{m_{ik}}(S^{d-1})$, the tangent space of the cluster mode in the pre-shape space. Using these as estimates for wrapped gaussian mixtures, we calculate Wasserstein-type distances using equation (\ref{eq: mixture distance}).       
+
+The best classifier we found gets $\sim 60\%$ test set accuracy, which likely isn't significant. This could be because only a subset of mixture components is significant, causing the signal to get drowned out in the calculation of the Wasserstein distance, which takes comparisons of all mixture components down into a single number. 
 
 
 
