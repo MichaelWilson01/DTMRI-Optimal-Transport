@@ -26,50 +26,12 @@
 	We present a closed form expression for the Wasserstein Distance between two Wrapped Gaussian Distributions on the sphere. We then show how to use this distance to extend some results for mixtures of Gaussians in $\mathbb{R}^d$ to mixtures of Wrapped Gaussians on the sphere.  
 	\end{abstract}
 
-%\section{Introduction}
+\section{Introduction}
 
-\section{Implementation Details}
+Statistical shape analysis is a field that allows the analysis of complex, high-dimensional data sets with a non-Euclidean form of variation known as domain warping, with applications in a, b, and medical imaging. The Elastic functional data analysis framework provides a Riemannian metric in the shape space, or the quotient space of functions modulo the time-warping group. Although the shape space is a metric space, it is not a complete, separable metric space, which makes it difficult to define distributions of shapes. Usually, because distances in the shape space correspond to distances in the pre-shape space after optimal alignment, and the pre-shape space is a complete metric space, distributions of shapes are often defined for aligned functions in the pre-shape space.   
 
-Proofs are left to Section \ref{Section: theory}.
+The pre-shape space is a sphere. 
 
-\subsection{Wrapped Gaussian Wasserstein Distance}
-
-Let $\mu_i = WN(m_i,\Sigma_i)$, $i = \{0, 1\}$. Let $U_0 S_0 U_0^t$ denote the SVD of $\Sigma_0$, with $u_j$ the jth row of $U_0$. Define $\Sigma_0^* = U_0^* S_0 U_0^{*t}$, where the jth row of $U_0^*$ is the parallel transport of $u_j$ from $T_{m_0}(S^d)$ to $T_{m_1}(S^d)$;
-
-%Define $\tilde{X}_i = Exp_{m_0}^{-1}(X_i)$, $\tilde{Y}_i = Exp_{m_1}^{-1}(Y_i)$, where;
-%
-%\begin{equation}
-%	Exp_{p}^{-1}(q) = \frac{\theta}{\sin(\theta)}(q - cos(\theta)p), \text{ where } \theta = cos^{-1}(\langle p,q \rangle)  
-%\end{equation} 
-
-\begin{equation*}
-	u_j^{*} = u_j - (2(u_j*m_1^t)(|m_0 +m_1|^2))(m_0 + m_1)
-\end{equation*} 
-
-Then 
-
-\begin{equation*}
-	W_2^2(\mu_0,\mu_1) = cos^{-1}(\langle m_0,m_1 \rangle) + tr(\Sigma_0^* + \Sigma_1 - 2 (\Sigma_0^{*\frac{1}{2}} \Sigma_1 \Sigma_0^{*\frac{1}{2}})^{\frac{1}{2}}) 
-\end{equation*}
-
-\subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
-
-Let $\mu_i = \Sigma_{k=1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{ik})$, $i = \{0, 1\}$, be two wrapped Gaussian mixtures. Let $\Pi(w_0, w_1) = \{ W \in \mathbb{R}^{K_0 \times K_1}, \Sigma_i W_{ij} = w_{1i},\Sigma_j W_{ij} = w_{0j}\}$. Then,
-
-%Let $w^*$ be a solution of the discrete linear program
-%
-%\begin{equation}
-%	\underset{w \in \Pi(w_0,w_1)}{\inf} \underset{{\ell, k}}{\Sigma} w_{\ell k} W_2^2(\mu_0^\ell,\mu_1^k)
-%\end{equation} 
-%
-%Then,
-
-\begin{equation}\label{eq: mixture distance}
-	WMW_2^2(\mu_0,\mu_1) = \underset{W \in \Pi(w_0,w_1)}{\min}  \underset{{\ell, k}}{\Sigma} W_{\ell k} W_2^2(\mu_0^\ell,\mu_1^k)
-\end{equation} 
-
-
-\newpage
 
 \section{Theoretical Details}\label{Section: theory}
 
@@ -88,6 +50,9 @@ Let $\mu_i = \Sigma_{k=1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{
 Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i = Exp(m_i)_\#\mu_i$, (and thus $\tilde{\mu}_i = WN(m_i, \Sigma_i)$)   and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then, 
 
 
+\begin{equation*}
+	W_2^2(\tilde{\mu_0},\tilde{\mu_1}) = cos^{-1}( \langle m_0, m_1 \rangle ) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
+\end{equation*} 
 %as shown in \cite{WGOT}, the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
 %
 %\begin{equation*}
@@ -95,16 +60,12 @@ Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on 
 %\end{equation*} 
 
 
-%where
-%
-%\begin{equation}
-%	\Sigma^{||} = 
-%\end{equation}
-
 
 \textbf{Proof:}
 
 Let $\tilde{X} = \tilde{X}_0$ and $\tilde{Y} = Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(\tilde{X}_1)))$. Then,
+
+
 
 \begin{equation*}
 	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
@@ -158,6 +119,49 @@ Furthermore, because we know that the optimal coupling in the Euclidian case is 
 \subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
 
 Our proof is identical to the one presented in section 4.2 of \cite{https://doi.org/10.48550/arxiv.1907.05254}, except replacing their $W_2^2$ with our $W_2^2$, and their $GMM(*)$ with our $WGMM(*)$. 
+
+\newpage
+
+\section{Implementation Details}
+
+Proofs are left to Section \ref{Section: theory}.
+
+\subsection{Wrapped Gaussian Wasserstein Distance}
+
+Let $\mu_i = WN(m_i,\Sigma_i)$, $i = \{0, 1\}$. Let $U_0 S_0 U_0^t$ denote the SVD of $\Sigma_0$, with $u_j$ the jth row of $U_0$. Define $\Sigma_0^* = U_0^* S_0 U_0^{*t}$, where the jth row of $U_0^*$ is the parallel transport of $u_j$ from $T_{m_0}(S^d)$ to $T_{m_1}(S^d)$;
+
+%Define $\tilde{X}_i = Exp_{m_0}^{-1}(X_i)$, $\tilde{Y}_i = Exp_{m_1}^{-1}(Y_i)$, where;
+%
+%\begin{equation}
+%	Exp_{p}^{-1}(q) = \frac{\theta}{\sin(\theta)}(q - cos(\theta)p), \text{ where } \theta = cos^{-1}(\langle p,q \rangle)  
+%\end{equation} 
+
+\begin{equation*}
+	u_j^{*} = u_j - (2(u_j*m_1^t)(|m_0 +m_1|^2))(m_0 + m_1)
+\end{equation*} 
+
+Then 
+
+\begin{equation*}
+	W_2^2(\mu_0,\mu_1) = cos^{-1}(\langle m_0,m_1 \rangle) + tr(\Sigma_0^* + \Sigma_1 - 2 (\Sigma_0^{*\frac{1}{2}} \Sigma_1 \Sigma_0^{*\frac{1}{2}})^{\frac{1}{2}}) 
+\end{equation*}
+
+\subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
+
+Let $\mu_i = \Sigma_{k=1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{ik})$, $i = \{0, 1\}$, be two wrapped Gaussian mixtures. Let $\Pi(w_0, w_1) = \{ W \in \mathbb{R}^{K_0 \times K_1}, \Sigma_i W_{ij} = w_{1i},\Sigma_j W_{ij} = w_{0j}\}$. Then,
+
+%Let $w^*$ be a solution of the discrete linear program
+%
+%\begin{equation}
+%	\underset{w \in \Pi(w_0,w_1)}{\inf} \underset{{\ell, k}}{\Sigma} w_{\ell k} W_2^2(\mu_0^\ell,\mu_1^k)
+%\end{equation} 
+%
+%Then,
+
+\begin{equation}\label{eq: mixture distance}
+	WMW_2^2(\mu_0,\mu_1) = \underset{W \in \Pi(w_0,w_1)}{\min}  \underset{{\ell, k}}{\Sigma} W_{\ell k} W_2^2(\mu_0^\ell,\mu_1^k)
+\end{equation} 
+
 
 \newpage
 
