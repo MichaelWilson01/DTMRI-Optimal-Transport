@@ -23,7 +23,7 @@
 	\maketitle
 	
 	\begin{abstract}
-	We present a closed form expression for the Wasserstein Distance between two Wrapped Gaussian Distributions on the sphere. We then show how to use this distance to extend some results for mixtures of Gaussians in $\mathbb{R}^d$ to mixtures of Wrapped Gaussians on the sphere.  
+	We present a closed form expression for the Wasserstein Distance between two Wrapped Gaussian Distributions on the sphere. We then show how to use this distance to extend some results for mixtures of Gaussians in $\mathbb{R}^d$ to mixtures of Wrapped Gaussians on the sphere. We include applications to real and simulated data. 
 	\end{abstract}
 
 \section{Introduction}
@@ -32,7 +32,7 @@ Statistical shape analysis is a field that allows the analysis of complex, high-
 
 Still, this does not solve the problem of how to compare these distributions on the sphere. The approach of this paper is to compare distributions of shapes by approximating the distributions as (possibly uni-modal) Wrapped Gaussian mixtures, and then calculating a Wasserstein-type distance between them. For Gaussian distributions, a closed form solution for the Wasserstein distance is available, with a similar result holding for Wrapped Gaussian distributions on non-linear manifolds, such as the sphere. By combining a Wasserstein-type distance based on this closed form solution with the theory necessary for extending it to the sphere yields a computationally simple method for calculating Wasserstein-type distances between Gaussian mixture distributions of shapes.    
 
-The paper proceeds as follows; in section \ref{section: theory}, we cover background information on the Elastic functional data analysis framework, Optimal Transport and the Wasserstein distance, and Wasserstein-type distances for Gaussians and Wrapped Gaussians. In section \ref{section: wrapped gaussian mixture wasserstein-type distance}, we present a closed form expression for a Wasserstein type-distance for Wrapped Gaussian Mixtures. In section \ref{section: implementation}, we present our computational implementation for calculating the Wasserstein-type distance for Wrapped Gaussian Mixtures on the sphere, and in section \ref{section: applications} we show applications for real and simulated data. Section \ref{section: conclusion} concludes.  
+The paper proceeds as follows; in section \ref{section: theory}, we cover background information on the Elastic functional data analysis framework, Optimal Transport and the Wasserstein distance, and Wasserstein-type distances for Gaussians. In section \ref{section: wrapped gaussian mixture wasserstein-type distance}, we present a closed form expression for a Wasserstein-type distance for Wrapped Gaussian Mixtures. In section \ref{section: implementation}, we present our computational implementation for calculating the Wasserstein-type distance for Wrapped Gaussian Mixtures on the sphere, and in section \ref{section: applications} we show applications for real and simulated data. Section \ref{section: conclusion} concludes.  
 
 \section{Background}\label{section: theory}
 
