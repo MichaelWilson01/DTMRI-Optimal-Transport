@@ -28,12 +28,13 @@
 
 \section{Introduction}
 
-Statistical shape analysis is a field that allows the analysis of complex, high-dimensional data sets with a non-Euclidean form of variation known as domain warping, with applications in a, b, and medical imaging. The Elastic functional data analysis framework provides a Riemannian metric in the shape space, or the quotient space of functions modulo the time-warping group. Although the shape space is a metric space, it is not a complete, separable metric space, which makes it difficult to define distributions of shapes. Usually, because distances in the shape space correspond to distances in the pre-shape space after optimal alignment, and the pre-shape space is a complete metric space, distributions of shapes are often defined for aligned functions in the pre-shape space.   
+Statistical shape analysis is a field that allows the analysis of complex, high-dimensional data sets with a non-Euclidean form of variation known as domain warping, with applications in a, b, and medical imaging. The Elastic functional data analysis framework provides a Riemannian metric in the shape space, or the quotient space of functions modulo the time-warping group. Although the shape space is a metric space, it is not a complete, separable metric space, which makes it difficult to define distributions of shapes. Usually, because distances in the shape space correspond to distances in the pre-shape space after optimal alignment, and the pre-shape space is a complete metric space, distributions of shapes are defined for aligned functions in the pre-shape space. Because the pre-shape space is a unit sphere, one can compare shape distributions in this way by comparing distributions of optimally aligned functions on the unit sphere. 
 
-The pre-shape space is a sphere. 
+Still, this does not solve the problem of how to compare these distributions on the sphere. The approach of this paper is to compare distributions of shapes by approximating the distributions as (possibly uni-modal) Wrapped Gaussian mixtures, and then calculating a Wasserstein-type distance between them. For Gaussian distributions, a closed form solution for the Wasserstein distance is available, with a similar result holding for Wrapped Gaussian distributions on non-linear manifolds, such as the sphere. By combining a Wasserstein-type distance based on this closed form solution with the theory necessary for extending it to the sphere yields a computationally simple method for calculating Wasserstein-type distances between Gaussian mixture distributions of shapes.    
 
+The paper proceeds as follows; in section \ref{section: theory}, we cover background information on the Elastic functional data analysis framework, Optimal Transport and the Wasserstein distance, and Wasserstein-type distances for Gaussians and Wrapped Gaussians. In section \ref{section: wrapped gaussian mixture wasserstein-type distance}, we present a closed form expression for a Wasserstein type-distance for Wrapped Gaussian Mixtures. In section \ref{section: implementation}, we present our computational implementation for calculating the Wasserstein-type distance for Wrapped Gaussian Mixtures on the sphere, and in section \ref{section: applications} we show applications for real and simulated data. Section \ref{section: conclusion} concludes.  
 
-\section{Theoretical Details}\label{Section: theory}
+\section{Background}\label{section: theory}
 
 %Let $\mu = \mathcal{WN}(m,\Sigma)$ be a wrapped normal distribution defined on the $d-1$ dimensional sphere $S^{d-1}$. We can define the density of $\mu$ in terms of the tangent space $T_m(S_{d-1})$, with orthonormal basis B as; 
 %
@@ -43,9 +44,44 @@ The pre-shape space is a sphere.
 %
 %Here $exp$ corresponds to the exponential function, while $Exp$ corresponds to the Exponential Map for $S^{d-1}$.
 
+\subsection{Function Registration with the Fisher-Rao Metric}
+
+We provide a brief introduction to Function Registration with the Fisher-Rao metric. For the complete details, see \cite{https://doi.org/10.48550/arxiv.1103.3817}.
+
+Let $\mathcal{F} = \{ f \in \mathbb{L}^2([0,1], \mathbb{R}): f \text{ abs. cont.}\}$. For each $f \in \mathcal{F}$, define its square-root velocity function (SRVF) representation to be $q(t) = \dot{f}/\sqrt{\dot{f}}$. %The absolute continuity of $f$ guarantees that its corresponding SRVF is square integrable. 
+One nice property of the SRVF transformation is that the (parameterization invariant) Fisher-Rao distance between two absolutely continuous functions is equal to the $\mathbb{L}^2$ distance between their corresponding SRVF's;
+
+\begin{equation*}
+	d_{FR}(f_1,f_2) = \sqrt{\int_0^1 (q_1(t) - q_2(t))^2 dt} = ||q_1 - q_2|| 
+\end{equation*}
+
+Now, consider the time-warping group $\Gamma = \{\gamma: [0,1] \to [0,1], \gamma(0) = 0, \gamma(1) = 1, \gamma \text{ diffeo}\}$. Most approaches to function registration seek to align functions by solving $\inf_{\gamma \in \Gamma} ||f_1 - f_2 \circ \gamma||$. However, this formulation is not symmetric (and thus does not define a proper distance), and leads to issues of 'pinching' and 'tearing.' By aligning functions with respect to the Fisher-Rao metric, that is by instead focusing on the problem $\inf_{\gamma \in \Gamma} d_{FR}(f_1,f_2 \circ \gamma)$, one finds a Riemannian metric that is invariant to re-parameterization. 
+
+To see this, we note that the SRVF of $f(\gamma(t))$ is $q(\gamma(t))\sqrt{\dot{\gamma}(t)}$, and thus defining the group action of $\Gamma$ on $\mathbb{L}^2$ to be $q * \gamma = q(\gamma(t))\sqrt{\dot{\gamma}(t)}$, we have that
+
+    \begin{equation*}
+    	\inf_{\gamma \in \Gamma} d_{FR}(f_1 \circ \gamma, f_2) = \inf_{\gamma \in \Gamma} ||q_1 * \gamma - q_2||
+    \end{equation*}
+
+Because $\Gamma$ is a group, we can define the orbit of an SRVF $q \in \mathbb{L}^2$ to be $[q] = closure\{q * \gamma : \gamma \in \Gamma \}$, referred to as a 'shape orbit', and define the shape space $\mathcal{S}$ to be the set of all such shape orbits. Thus, defining
+
+\begin{equation}
+	d_\mathcal{S}([q_1],[q_2]) = \inf_{\gamma \in \Gamma} ||q_1 - q_2 * \gamma||
+\end{equation}      
+
+it can be shown that $(\mathcal{S},d_\mathcal{S})$ is a metric space.
+
+\subsubsection{Pre-shape space}
+
+While $(\mathcal{S},d_\mathcal{S})$ is a metric space, because it is not a complete, seperable metric space, it is generally not possible to model distributions of shapes in the shape space with the distributions commonly used in statistics. Typically, to get around this, one simply defines distributions over the 'pre-shape' space between optimally aligned functions.   
 
 
-\subsection{Wrapped Gaussian Wasserstein Distance}
+\subsection{Optimal Transport/ Wasserstein distances}
+
+\subsection{Wasserstein and Wasserstein-type distances for Gaussians and Wrapped Gaussians}
+
+\section{A Wasserstein-type Distance for Wrapped Gaussian Mixtures}\label{section: wrapped gaussian mixture wasserstein-type distance}
+
 
 Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on $\mathbb{R}^{d-1}$, with random variables $X_i \sim \mu_i$. For some $m_i \in S^{d-1}$, let $\tilde{\mu}_i = Exp(m_i)_\#\mu_i$, (and thus $\tilde{\mu}_i = WN(m_i, \Sigma_i)$)   and let $\tilde{X}_i \sim \tilde{\mu}_i$. Then, 
 
@@ -53,78 +89,73 @@ Let $\mu_i = N(0,\Sigma_i$), $i = \{0,1\}$ be Gaussian distributions defined on 
 \begin{equation*}
 	W_2^2(\tilde{\mu_0},\tilde{\mu_1}) = cos^{-1}( \langle m_0, m_1 \rangle ) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
 \end{equation*} 
-%as shown in \cite{WGOT}, the Wasserstein distance between $\tilde{\mu_0}$ and $\tilde{\mu}_1$ can be calculated as;\\
+
+To establish our next result, it is important to note that the optimal coupling is also a wrapped Gaussian. Both of the above facts are proved in \cite{WGOT}.
+
+
+%\textbf{Proof:}
+%
+%Let $\tilde{X} = \tilde{X}_0$ and $\tilde{Y} = Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(\tilde{X}_1)))$. Then,
+%
+%
 %
 %\begin{equation*}
-%	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  cos^{-1}(\langle m_0,m_1\rangle) + (\Sigma_0 + \Sigma_1 - 2 (\Sigma_0^{\frac{1}{2}} \Sigma_1 \Sigma_0^{\frac{1}{2}})^{\frac{1}{2}}) 
+%	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
+%\end{equation*}  
+%
+%\begin{equation}
+%	=  d_{S^{d-1}}^2(E\tilde{X}_1, E\tilde{X}_2) + \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)}\int_{T_{m_0}(S^{d-1})} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y}), Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y})) \rangle} \ d\tilde{\gamma}(\tilde{x},\tilde{y})
+%\end{equation}
+%
+%\begin{equation}
+%	= cos^{-1}( \langle m_0, m_1 \rangle ) +\inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
+%\end{equation} 
+%
+%\begin{equation*}
+%	= cos^{-1}( \langle m_0, m_1 \rangle ) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
 %\end{equation*} 
-
-
-
-\textbf{Proof:}
-
-Let $\tilde{X} = \tilde{X}_0$ and $\tilde{Y} = Exp_{m_0}(R_\alpha(Exp_{m_1}^{-1}(\tilde{X}_1)))$. Then,
-
-
-
-\begin{equation*}
-	W_2^2(\tilde{\mu}_0, \tilde{\mu}_1) =  \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
-\end{equation*}  
-
-\begin{equation}
-	 =  d_{S^{d-1}}^2(E\tilde{X}_1, E\tilde{X}_2) + \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)}\int_{T_{m_0}(S^{d-1})} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y}), Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y})) \rangle} \ d\tilde{\gamma}(\tilde{x},\tilde{y})
-\end{equation}
-
-\begin{equation}
-	= cos^{-1}( \langle m_0, m_1 \rangle ) +\inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
-\end{equation} 
-
-\begin{equation*}
-	= cos^{-1}( \langle m_0, m_1 \rangle ) + tr(\Sigma_0 + \Sigma_1 - 2(\Sigma_0^{\frac{1}{2}}\Sigma_1\Sigma_0^{\frac{1}{2}})^{\frac{1}{2}})
-\end{equation*} 
-
-Where the equality in equation 1 follows from Proposition 2 in \cite{WGOT}, using $m_0$ as $p_{ref}$, and the equality in equation 2 holds since $\forall \gamma \in \Pi(\mu_0, \mu_1)$, if $\tilde{\gamma} = {Exp(m_0,m_1)}_\# \gamma$ we have that 
-
+%
+%Where the equality in equation 1 follows from Proposition 2 in \cite{WGOT}, using $m_0$ as $p_{ref}$, and the equality in equation 2 holds since $\forall \gamma \in \Pi(\mu_0, \mu_1)$, if $\tilde{\gamma} = {Exp(m_0,m_1)}_\# \gamma$ we have that 
+%
+%%\begin{equation*}
+%%	E||\tilde{X}-\tilde{Y}||  
+%%\end{equation*}  
+%
 %\begin{equation*}
-%	E||\tilde{X}-\tilde{Y}||  
-%\end{equation*}  
-
-\begin{equation*}
-	= \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
-\end{equation*}
-
-\begin{equation*}
-	= \int_{S^{d-1}\times S^{d-1}} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y}), Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y})) \rangle} \ d\tilde{\gamma}(\tilde{x},\tilde{y})
-\end{equation*}
-
-%\begin{equation*}
-%	= \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{\langle Exp_{m}^{-1}(Exp_{m}(x)) - Exp_{m}^{-1}(Exp_{m}(y)), Exp_{m}^{-1}(\tilde{x}) - Exp_{m}^{-1}(\tilde{y}) \rangle} \ d\gamma({x},{y})
+%	= \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y})
 %\end{equation*}
-
-\begin{equation*}
-	= \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
-\end{equation*}
-
+%
 %\begin{equation*}
-%	= E||{X}-{Y}||  
-%\end{equation*}  
+%	= \int_{S^{d-1}\times S^{d-1}} \sqrt{\langle Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y}), Exp_{m_0}^{-1}(\tilde{x}) - R_\alpha(Exp_{m_1}^{-1}(\tilde{y})) \rangle} \ d\tilde{\gamma}(\tilde{x},\tilde{y})
+%\end{equation*}
+%
+%%\begin{equation*}
+%%	= \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{\langle Exp_{m}^{-1}(Exp_{m}(x)) - Exp_{m}^{-1}(Exp_{m}(y)), Exp_{m}^{-1}(\tilde{x}) - Exp_{m}^{-1}(\tilde{y}) \rangle} \ d\gamma({x},{y})
+%%\end{equation*}
+%
+%\begin{equation*}
+%	= \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
+%\end{equation*}
+%
+%%\begin{equation*}
+%%	= E||{X}-{Y}||  
+%%\end{equation*}  
+%
+%\begin{equation}
+%	\implies \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y}) = \inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
+%\end{equation}  
+%
+%
+%Furthermore, because we know that the optimal coupling in the Euclidian case is a Normal distribution, we see that the optimal coupling in the spherical case is therefore a wrapped Gaussian distribution. 
 
-\begin{equation}
-	\implies \inf_{\gamma \in \Pi(\tilde{\mu}_0, \tilde{\mu}_1)} \int_{TS^{d-1}} cos^{-1}(\langle \tilde{x}, \tilde{y} \rangle) \ d\tilde{\gamma}(\tilde{x},\tilde{y}) = \inf_{\gamma \in \Pi({\mu}_0, {\mu}_1)} \int_{\mathbb{R}^{d-1} \times \mathbb{R}^{d-1}} \sqrt{ \langle x - y, x-y\rangle} \ d\gamma(x,y)
-\end{equation}  
-
-
-Furthermore, because we know that the optimal coupling in the Euclidian case is a Normal distribution, we see that the optimal coupling in the spherical case is therefore a wrapped Gaussian distribution. 
-
-\subsection{Wrapped Gaussian Mixture Wasserstein-like Distance}
+\subsection{Wrapped Gaussian Mixture Wasserstein-type Distance}
 
 Our proof is identical to the one presented in section 4.2 of \cite{https://doi.org/10.48550/arxiv.1907.05254}, except replacing their $W_2^2$ with our $W_2^2$, and their $GMM(*)$ with our $WGMM(*)$. 
 
+
 \newpage
 
-\section{Implementation Details}
-
-Proofs are left to Section \ref{Section: theory}.
+\section{Computational Details}\label{section: implementation}
 
 \subsection{Wrapped Gaussian Wasserstein Distance}
 
@@ -162,10 +193,9 @@ Let $\mu_i = \Sigma_{k=1}^{K_i} \frac{w_{ik}}{\Sigma_k w_{ik}}WN(m_{ik},\Sigma_{
 	WMW_2^2(\mu_0,\mu_1) = \underset{W \in \Pi(w_0,w_1)}{\min}  \underset{{\ell, k}}{\Sigma} W_{\ell k} W_2^2(\mu_0^\ell,\mu_1^k)
 \end{equation} 
 
+where the minimization is performed with linear programming. 
 
-\newpage
-
-\section{Applications}
+\section{Applications}\label{section: applications}
 
 \subsection{Simulated data}
 
@@ -193,7 +223,7 @@ Specifically, let $X_i = \{ f_{ij}(t) \in L^2([0,1] \to \mathbb{R}^3), j = 1,...
 
 The best classifier we found gets $\sim 60\%$ test set accuracy, which likely isn't significant. This could be because only a subset of mixture components is significant, causing the signal to get drowned out in the calculation of the Wasserstein distance, which takes comparisons of all mixture components down into a single number. 
 
-
+\section{Conclusion}\label{section: conclusion}
 
 \newpage
 
