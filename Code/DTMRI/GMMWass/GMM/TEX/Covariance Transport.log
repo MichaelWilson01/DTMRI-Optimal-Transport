@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  9 JAN 2023 15:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (MiKTeX 2.9.7250 64-bit) (preloaded format=pdflatex 2020.2.3)  10 JAN 2023 16:51
 entering extended mode
 **"./Covariance Transport.tex"
 ("Covariance Transport.tex"
@@ -285,63 +285,62 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/Users/micha/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-[3]
-<example6.png, id=27, 708.39656pt x 649.67719pt>
+<example6.png, id=23, 708.39656pt x 649.67719pt>
 File: example6.png Graphic file (type png)
 <use example6.png>
-Package pdftex.def Info: example6.png  used on input line 205.
+Package pdftex.def Info: example6.png  used on input line 220.
 (pdftex.def)             Requested size: 140.92793pt x 129.2392pt.
-<example8.png, id=28, 708.39656pt x 649.67719pt>
+<example8.png, id=24, 708.39656pt x 649.67719pt>
 File: example8.png Graphic file (type png)
 <use example8.png>
-Package pdftex.def Info: example8.png  used on input line 206.
+Package pdftex.def Info: example8.png  used on input line 221.
 (pdftex.def)             Requested size: 140.92793pt x 129.2392pt.
-<example10.png, id=29, 708.39656pt x 649.67719pt>
+<example10.png, id=25, 708.39656pt x 649.67719pt>
 File: example10.png Graphic file (type png)
 <use example10.png>
-Package pdftex.def Info: example10.png  used on input line 207.
+Package pdftex.def Info: example10.png  used on input line 222.
 (pdftex.def)             Requested size: 140.92793pt x 129.2392pt.
-<distance_matrix.png, id=30, 803.25093pt x 733.99219pt>
+<distance_matrix.png, id=26, 803.25093pt x 733.99219pt>
 File: distance_matrix.png Graphic file (type png)
 <use distance_matrix.png>
-Package pdftex.def Info: distance_matrix.png  used on input line 215.
+Package pdftex.def Info: distance_matrix.png  used on input line 230.
 (pdftex.def)             Requested size: 328.82707pt x 300.47955pt.
- [4 <./example6.png (PNG copy)> <./example8.png (PNG copy)> <./example10.png (P
-NG copy)>] [5 <./distance_matrix.png (PNG copy)>] [6]
-("Covariance Transport.bbl") [7] ("Covariance Transport.aux") ) 
+
+[3 <./example6.png (PNG copy)> <./example8.png (PNG copy)> <./example10.png (PN
+G copy)>] [4 <./distance_matrix.png (PNG copy)>] [5] ("Covariance Transport.bbl
+") [6] ("Covariance Transport.aux") ) 
 Here is how much of TeX's memory you used:
- 3212 strings out of 492484
- 44320 string characters out of 3121602
+ 3210 strings out of 492484
+ 44299 string characters out of 3121602
  114849 words of memory out of 3000000
- 7503 multiletter control sequences out of 15000+200000
- 13702 words of font info for 53 fonts, out of 3000000 for 9000
+ 7502 multiletter control sequences out of 15000+200000
+ 13394 words of font info for 52 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 51i,6n,34p,982b,263s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Users/micha/
-AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:
-/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-mbx12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmbx9.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmex10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/micha/AppData/Local/P
-rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/micha/App
-Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Use
-rs/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7
-.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmr10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/
-public/amsfonts/cm/cmr12.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/micha/AppData/Local/Programs
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/micha/AppData/Loc
-al/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/micha/
-AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/U
-sers/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cms
-y10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/am
-sfonts/cm/cmsy7.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/typ
-e1/public/amsfonts/cm/cmti10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 
-2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on "Covariance Transport.pdf" (7 pages, 487078 bytes).
+ 51i,6n,34p,1018b,263s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Users/micha/AppData/Local/Programs/MiK
+TeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/micha/AppData/Local
+/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/micha/A
+ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/
+Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+mi10.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmmi5.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmmi6.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/micha/AppData/Local/Prog
+rams/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/micha/AppDat
+a/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/
+micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pf
+b><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
+/cm/cmr5.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmr7.pfb><C:/Users/micha/AppData/Local/Programs/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/micha/AppData/Local/Programs/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/micha/AppData/Local/P
+rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/micha/App
+Data/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Us
+ers/micha/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols
+/msbm10.pfb>
+Output written on "Covariance Transport.pdf" (6 pages, 467859 bytes).
 PDF statistics:
- 102 PDF objects out of 1000 (max. 8388607)
+ 93 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

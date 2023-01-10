@@ -28,11 +28,11 @@
 
 \section{Introduction}
 
-Statistical shape analysis is a field that allows the analysis of complex, high-dimensional data sets with a non-Euclidean form of variation known as domain warping, with applications in a, b, and medical imaging. The Elastic functional data analysis framework provides a Riemannian metric in the shape space, or the quotient space of functions modulo the time-warping group. Although the shape space is a metric space, it is not a complete, separable metric space, which makes it difficult to define distributions of shapes. Usually, because distances in the shape space correspond to distances in the pre-shape space after optimal alignment, and the pre-shape space is a complete metric space, distributions of shapes are defined for aligned functions in the pre-shape space. Because the pre-shape space is a unit sphere, one can compare shape distributions in this way by comparing distributions of optimally aligned functions on the unit sphere. 
+%Statistical shape analysis is a field that allows the analysis of complex, high-dimensional data sets with a non-Euclidean form of variation known as domain warping, with applications in a, b, and medical imaging. The Elastic functional data analysis framework provides a Riemannian metric in the shape space, or the quotient space of functions modulo the time-warping group. Although the shape space is a metric space, it is not a complete, separable metric space, which makes it difficult to define distributions of shapes. Usually, because distances in the shape space correspond to distances in the pre-shape space after optimal alignment, and the pre-shape space is a complete metric space, distributions of shapes are defined for aligned functions in the pre-shape space. Because the pre-shape space is a unit sphere, one can compare shape distributions in this way by comparing distributions of optimally aligned functions on the unit sphere. 
+%
+%Still, this does not solve the problem of how to compare these distributions on the sphere. The approach of this paper is to compare distributions of shapes by approximating the distributions as (possibly uni-modal) Wrapped Gaussian mixtures, and then calculating a Wasserstein-type distance between them. For Gaussian distributions, a closed form solution for the Wasserstein distance is available, with a similar result holding for Wrapped Gaussian distributions on non-linear manifolds, such as the sphere. By combining a Wasserstein-type distance based on this closed form solution with the theory necessary for extending it to the sphere yields a computationally simple method for calculating Wasserstein-type distances between Gaussian mixture distributions of shapes.    
 
-Still, this does not solve the problem of how to compare these distributions on the sphere. The approach of this paper is to compare distributions of shapes by approximating the distributions as (possibly uni-modal) Wrapped Gaussian mixtures, and then calculating a Wasserstein-type distance between them. For Gaussian distributions, a closed form solution for the Wasserstein distance is available, with a similar result holding for Wrapped Gaussian distributions on non-linear manifolds, such as the sphere. By combining a Wasserstein-type distance based on this closed form solution with the theory necessary for extending it to the sphere yields a computationally simple method for calculating Wasserstein-type distances between Gaussian mixture distributions of shapes.    
-
-The paper proceeds as follows; in section \ref{section: theory}, we cover background information on the Elastic functional data analysis framework, Optimal Transport and the Wasserstein distance, and Wasserstein-type distances for Gaussians. In section \ref{section: wrapped gaussian mixture wasserstein-type distance}, we present a closed form expression for a Wasserstein-type distance for Wrapped Gaussian Mixtures. In section \ref{section: implementation}, we present our computational implementation for calculating the Wasserstein-type distance for Wrapped Gaussian Mixtures on the sphere, and in section \ref{section: applications} we show applications for real and simulated data. Section \ref{section: conclusion} concludes.  
+The paper proceeds as follows; in section \ref{section: theory}, we cover background information on Wrapped Normal Distributions and Wrapped Gaussian mixtures on the sphere, Optimal Transport and the Wasserstein distance, and Wasserstein-type distances for Gaussian mixtures. In section \ref{section: wrapped gaussian mixture wasserstein-type distance}, we present a closed form expression for a Wasserstein-type distance for wrapped Gaussian mixtures on the sphere. In section \ref{section: implementation}, we present our computational implementation for calculating the Wasserstein-type distance for wrapped Gaussian mixtures on the sphere, and in section \ref{section: applications} we show applications for real and simulated data. Section \ref{section: conclusion} concludes.  
 
 \section{Background}\label{section: theory}
 
@@ -44,39 +44,54 @@ The paper proceeds as follows; in section \ref{section: theory}, we cover backgr
 %
 %Here $exp$ corresponds to the exponential function, while $Exp$ corresponds to the Exponential Map for $S^{d-1}$.
 
-\subsection{Function Registration with the Fisher-Rao Metric}
+%\subsection{Function Registration with the Fisher-Rao Metric}
+%
+%We provide a brief introduction to Function Registration with the Fisher-Rao metric. For the complete details, see \cite{https://doi.org/10.48550/arxiv.1103.3817}.
+%
+%Let $\mathcal{F} = \{ f \in \mathbb{L}^2([0,1], \mathbb{R}): f \text{ abs. cont.}\}$. For each $f \in \mathcal{F}$, define its square-root velocity function (SRVF) representation to be $q(t) = \dot{f}(t)/\sqrt{\dot{f}(t)}$. %The absolute continuity of $f$ guarantees that its corresponding SRVF is square integrable. 
+%One nice property of the SRVF transformation is that the (parameterization invariant) Fisher-Rao distance between two absolutely continuous functions is equal to the $\mathbb{L}^2$ distance between their corresponding SRVF's;
+%
+%\begin{equation*}
+%	d_{FR}(f_1,f_2) = \sqrt{\int_0^1 (q_1(t) - q_2(t))^2 dt} = ||q_1 - q_2|| 
+%\end{equation*}
+%
+%We refer to the set of absolutely continuous functions as $\mathcal{F}$, and the set of SRVF's as $\mathbb{L}^2$. Now, consider the time-warping group $\Gamma = \{\gamma: [0,1] \to [0,1], \gamma(0) = 0, \gamma(1) = 1, \gamma \text{ diffeo}\}$. Most approaches to function registration seek to align functions by solving $\inf_{\gamma \in \Gamma} ||f_1 - f_2 \circ \gamma||$. However, this formulation is not symmetric (and thus does not define a proper distance), and leads to alignments that 'pinch' and 'tear' the functions being aligned. By aligning functions with respect to the Fisher-Rao metric, that is, by instead focusing on the problem $\inf_{\gamma \in \Gamma} d_{FR}(f_1,f_2 \circ \gamma)$, one finds a time-warping distance that is a Riemannian metric, due to the parameterization invariance of the Fisher-Rao metric. 
+%
+%To see this, we note that, by an application of the chain-rule, the SRVF of $f(\gamma(t))$ is $q(\gamma(t))\sqrt{\dot{\gamma}(t)}$, and thus defining the group action of $\Gamma$ on $\mathbb{L}^2$ to be $q * \gamma = q(\gamma(t))\sqrt{\dot{\gamma}(t)}$, we have that
+%
+%    \begin{equation*}
+%    	\inf_{\gamma \in \Gamma} d_{FR}(f_1 \circ \gamma, f_2) = \inf_{\gamma \in \Gamma} ||q_1 * \gamma - q_2||
+%    \end{equation*}
+%
+%Because $\Gamma$ is a group, we can define the orbit of an SRVF $q \in \mathbb{L}^2$ to be $[q] = closure(\{q * \gamma : \gamma \in \Gamma \})$, referred to as a 'shape orbit', and define the shape space $\mathcal{S}$ to be the set of all such shape orbits. Thus, defining
+%
+%\begin{equation}
+%	d_\mathcal{S}([q_1],[q_2]) = \inf_{\gamma \in \Gamma} ||q_1 - q_2 * \gamma||
+%\end{equation}      
+%
+%it can be shown that $(\mathcal{S},d_\mathcal{S})$ is a metric space.
+%
+%\subsubsection{Pre-shape space}
+%
+%While $(\mathcal{S},d_\mathcal{S})$ is a metric space, because it is not a complete, seperable metric space, it is generally not possible to model distributions of shapes in the shape space with the distributions commonly used in statistics. Typically, to get around this, one defines distributions over the 'pre-shape' space between optimally aligned functions.   
+%
+%For the SRVF representation of absolutely continuous functions, the pre-shape space corresponds to the set of norm 1 SRVF's, or in other words, the unit sphere in $\mathbb{L}^2$. By taking a set of SRVF's, and optimally aligning them to their Karcher mean, one can define distributions in the pre-shape space that preserve the shape distances of each aligned SRVF to their shape mean. Because the pre-shape space can be seen as a push-forward of $\mathbb{R}^d$, we can model shape distributions as 'wrapped' versions of any distribution that can be defined over $\mathbb{R}^d$. For a set of SRVF's $Q = \{q_i \in \mathbb{L}^2, i = 1,...,n\}$, we can map them to their pre-shape representation by dividing them by their norm; $P = \{p_i = \frac{q_i}{||q_i||} \in Q, i = 1,...,n\}$. Defining $\mu$ to be the Karcher mean of the $p_i$'s, we can define the optimally aligned pre-shapes as $\{p_i * \gamma_i, i = 1,...,n\}$, where $\gamma_i = \inf_{\gamma \in \Gamma} ||p_i*\gamma - \mu||$.
+%
+%Thus, to represent a distribution of shapes 
+%
+%%Furthermore, because optimally aligned SRVF's are closed under convex combination, these distributions in the pre-shape space are consistent with distributions over the shape at least over the convex hull of the optimally aligned functions. 
+%%
+%Thus, to compare the distributions of two sets of shapes, one can compare their corresponding distributions in the pre-shape space. 
 
-We provide a brief introduction to Function Registration with the Fisher-Rao metric. For the complete details, see \cite{https://doi.org/10.48550/arxiv.1103.3817}.
-
-Let $\mathcal{F} = \{ f \in \mathbb{L}^2([0,1], \mathbb{R}): f \text{ abs. cont.}\}$. For each $f \in \mathcal{F}$, define its square-root velocity function (SRVF) representation to be $q(t) = \dot{f}/\sqrt{\dot{f}}$. %The absolute continuity of $f$ guarantees that its corresponding SRVF is square integrable. 
-One nice property of the SRVF transformation is that the (parameterization invariant) Fisher-Rao distance between two absolutely continuous functions is equal to the $\mathbb{L}^2$ distance between their corresponding SRVF's;
-
-\begin{equation*}
-	d_{FR}(f_1,f_2) = \sqrt{\int_0^1 (q_1(t) - q_2(t))^2 dt} = ||q_1 - q_2|| 
-\end{equation*}
-
-Now, consider the time-warping group $\Gamma = \{\gamma: [0,1] \to [0,1], \gamma(0) = 0, \gamma(1) = 1, \gamma \text{ diffeo}\}$. Most approaches to function registration seek to align functions by solving $\inf_{\gamma \in \Gamma} ||f_1 - f_2 \circ \gamma||$. However, this formulation is not symmetric (and thus does not define a proper distance), and leads to issues of 'pinching' and 'tearing.' By aligning functions with respect to the Fisher-Rao metric, that is by instead focusing on the problem $\inf_{\gamma \in \Gamma} d_{FR}(f_1,f_2 \circ \gamma)$, one finds a Riemannian metric that is invariant to re-parameterization. 
-
-To see this, we note that the SRVF of $f(\gamma(t))$ is $q(\gamma(t))\sqrt{\dot{\gamma}(t)}$, and thus defining the group action of $\Gamma$ on $\mathbb{L}^2$ to be $q * \gamma = q(\gamma(t))\sqrt{\dot{\gamma}(t)}$, we have that
-
-    \begin{equation*}
-    	\inf_{\gamma \in \Gamma} d_{FR}(f_1 \circ \gamma, f_2) = \inf_{\gamma \in \Gamma} ||q_1 * \gamma - q_2||
-    \end{equation*}
-
-Because $\Gamma$ is a group, we can define the orbit of an SRVF $q \in \mathbb{L}^2$ to be $[q] = closure\{q * \gamma : \gamma \in \Gamma \}$, referred to as a 'shape orbit', and define the shape space $\mathcal{S}$ to be the set of all such shape orbits. Thus, defining
-
-\begin{equation}
-	d_\mathcal{S}([q_1],[q_2]) = \inf_{\gamma \in \Gamma} ||q_1 - q_2 * \gamma||
-\end{equation}      
-
-it can be shown that $(\mathcal{S},d_\mathcal{S})$ is a metric space.
-
-\subsubsection{Pre-shape space}
-
-While $(\mathcal{S},d_\mathcal{S})$ is a metric space, because it is not a complete, seperable metric space, it is generally not possible to model distributions of shapes in the shape space with the distributions commonly used in statistics. Typically, to get around this, one simply defines distributions over the 'pre-shape' space between optimally aligned functions.   
-
+\subsection{Wrapped Normal Distributions and Wrapped Gaussian Mixtures on the sphere}
 
 \subsection{Optimal Transport/ Wasserstein distances}
+
+The Wasserstein distance is a distance between probability measures. 
+
+\begin{equation}
+	W_2^2(\mu_0, \mu_1) = \inf_{\gamma \in \Pi(\mu_0, \mu_1)} \int_{\mathcal{X}\times\mathcal{Y}} ||x - y|| d\gamma(x,y)
+\end{equation}
 
 \subsection{Wasserstein and Wasserstein-type distances for Gaussians and Wrapped Gaussians}
 
@@ -217,7 +232,7 @@ We present plots of simulated Wrapped Gaussian Mixtures on the sphere, and inclu
 \end{center}
 \end{figure}
 
-One possible application of this approach is the comparison of the distributions of shapes, such as set of DTMRI fiber tracts. The data for this example consists of Fiber tractography data for the right Cingulum Parahippocampal region of 93 subjects in the Grady Trauma Project. 41 are diagnosed with PTSD, 42 are not diagnosed with PTSD. The regions are sets of fiber tracts, represented as curves in $\mathbb{R}^3$. We estimate these distributions by identifying shape modes in the shape space (using k-mode kernel mixture clustering) representing the distributions as Gaussian mixtures in the pre-shape space (which is a sphere) and then calculating the Wrapped Gaussian Mixture Wasserstein-type distance between the distributions of subjects. We then use these distances to classify subjects with respect to their PTSD status.
+One possible application of this approach is the comparison of the distributions of shapes, such as set of DTMRI fiber tracts. The data for this example consists of Fiber tractography data for the right Cingulum Parahippocampal region of 93 subjects in the Grady Trauma Project. 41 are diagnosed with PTSD, 42 are considered not to have PTSD. The regions are sets of fiber tracts, represented as curves in $\mathbb{R}^3$. We estimate these distributions by identifying shape modes in the shape space (using k-mode kernel mixture clustering) representing the distributions as Gaussian mixtures in the pre-shape space (which is a sphere) and then calculating the Wrapped Gaussian Mixture Wasserstein-type distance between the distributions of subjects. We then use these distances to classify subjects with respect to their PTSD status.
 
 Specifically, let $X_i = \{ f_{ij}(t) \in L^2([0,1] \to \mathbb{R}^3), j = 1,...,M_j\}$, $i=1,...,93$ correspond to the set of fibers for subject $i$'s right Cingulum Parahippocampal region. For each $X_i$, we represent it as a wrapped Gaussian mixture $N(m_{ik}, \Sigma_{ik})$, where $m_k$ is the mode kth mode identified using the k-mode kernel mixture algorithm applied to the fibers for subject $i$, and $\Sigma_{ik}$ is the covariance of the fibers for subject $i$ assigned to cluster $k$, calculated in $T_{m_{ik}}(S^{d-1})$, the tangent space of the cluster mode in the pre-shape space. Using these as estimates for wrapped gaussian mixtures, we calculate Wasserstein-type distances using equation (\ref{eq: mixture distance}).       
 
